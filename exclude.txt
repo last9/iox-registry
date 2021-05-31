@@ -1,0 +1,15 @@
+.git*
+.idea
+.terraform
+exclude.txt
+terraform.tfstate
+terraform.tfstate*
+Makefile
+*.tf
+*.tfvars
+*.tar.*
+*.zip
+*.md
+*.txt
+last9
+

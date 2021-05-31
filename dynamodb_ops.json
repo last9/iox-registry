@@ -1,0 +1,15 @@
+[{
+  "Operation": "Query"
+}, {
+  "Operation": "Scan"
+}, {
+  "Operation": "GetItem"
+}, {
+  "Operation": "BatchWriteItem"
+}, {
+  "Operation": "DeleteItem"
+}, {
+  "Operation": "UpdateItem"
+}, {
+  "Operation": "PutItem"
+}]
