@@ -1,4 +1,4 @@
-ingester dynamodb_table_operation module {
+ingester aws_dynamodb_table_operation module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -95,7 +95,7 @@ ingester dynamodb_table_operation module {
   }
 }
 
-ingester dynamodb_table module {
+ingester aws_dynamodb_table module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

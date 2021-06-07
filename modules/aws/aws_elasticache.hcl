@@ -1,5 +1,5 @@
 // Elasticache Metrics Ingesters
-ingester elasticache_redis module {
+ingester aws_elasticache_redis module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -133,7 +133,7 @@ ingester elasticache_redis module {
   }
 }
 
-ingester elasticache_cluster module {
+ingester aws_elasticache_cluster module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

@@ -1,4 +1,4 @@
-ingester dax module {
+ingester aws_dax module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
