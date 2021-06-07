@@ -1,4 +1,4 @@
-ingester eks_service_containerinsights module {
+ingester aws_eks_containerinsights_service module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -48,7 +48,7 @@ ingester eks_service_containerinsights module {
   }
 }
 
-ingester eks_pod_containerinsights module {
+ingester aws_eks_containerinsights_pod module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -136,7 +136,7 @@ ingester eks_pod_containerinsights module {
   }
 }
 
-ingester eks_cluster_containerinsights module {
+ingester aws_eks_containerinsights_cluster module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
