@@ -1,4 +1,4 @@
-ingester aws_alb module {
+ingester aws_alb_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -98,7 +98,7 @@ ingester aws_alb module {
   }
 }
 
-ingester aws_alb_endpoint module {
+ingester aws_alb_endpoint_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -273,7 +273,7 @@ ingester aws_alb_endpoint module {
   }
 }
 
-ingester aws_alb_internal module {
+ingester aws_alb_internal_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -373,7 +373,7 @@ ingester aws_alb_internal module {
   }
 }
 
-ingester aws_alb_internal_endpoint module {
+ingester aws_alb_internal_endpoint_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

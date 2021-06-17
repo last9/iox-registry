@@ -1,4 +1,4 @@
-ingester aws_elb module {
+ingester aws_elb_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -84,7 +84,7 @@ ingester aws_elb module {
   }
 }
 
-ingester aws_elb_internal module {
+ingester aws_elb_internal_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -170,7 +170,7 @@ ingester aws_elb_internal module {
   }
 }
 
-ingester aws_elb_endpoint module {
+ingester aws_elb_endpoint_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -345,7 +345,7 @@ ingester aws_elb_endpoint module {
   }
 }
 
-ingester aws_elb_internal_endpoint module {
+ingester aws_elb_internal_endpoint_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

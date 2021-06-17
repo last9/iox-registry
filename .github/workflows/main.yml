@@ -22,7 +22,7 @@ jobs:
       - name: Get HCL files to release
         id: find_files
         run: |
-          files=`find modules/ -name '*.hcl'|xargs`
+          files=`find modules -name "*hcl"|awk '{a=$0; gsub("modules/", "", $0); gsub("/", "_", $0); print $0":"a}'|xargs`
           echo "::set-output name=hcl_files::$files"
         
       - name: Upload assets
