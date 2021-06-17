@@ -1,30 +1,31 @@
 # AWS modules for IOX
 
-| Module                            | File                          |
-|-----------------------------------|-------------------------------|
-| aws_ec2                           | aws_ec2.hcl                   |
-| aws_dax                           | aws_dax.hcl                   |
-| aws_elasticsearch                 | aws_elasticsearch.hcl         |
-| aws_elasticsearch_master          | aws_elasticsearch.hcl         |
-| aws_eks_containerinsights_service | aws_eks_containerinsights.hcl |
-| aws_eks_containerinsights_pod     | aws_eks_containerinsights.hcl |
-| aws_eks_containerinsights_cluster | aws_eks_containerinsights.hcl |
-| aws_rds_logical                   | aws_rds.hcl                   |
-| aws_rds_physical                  | aws_rds.hcl                   |
-| aws_elasticache_redis             | aws_elasticache.hcl           |
-| aws_elasticache_cluster           | aws_elasticache.hcl           |
-| aws_cloudfront                    | aws_cloudfront.hcl            |
-| aws_elb                           | aws_elb.hcl                   |
-| aws_elb_internal                  | aws_elb.hcl                   |
-| aws_elb_endpoint                  | aws_elb.hcl                   |
-| aws_elb_internal_endpoint         | aws_elb.hcl                   |
-| aws_dynamodb_table_operation      | aws_dynamodb.hcl              |
-| aws_dynamodb_table                | aws_dynamodb.hcl              |
-| aws_lambda                        | aws_lambda.hcl                |
-| aws_lambda_resource               | aws_lambda.hcl                |
-| aws_alb                           | aws_alb.hcl                   |
-| aws_alb_endpoint                  | aws_alb.hcl                   |
-| aws_alb_internal                  | aws_alb.hcl                   |
-| aws_alb_internal_endpoint         | aws_alb.hcl                   |
-| aws_apigateway                    | aws_apigateway.hcl            |
-| aws_apigateway_stage              | aws_apigateway.hcl            |
+|Modules                                     |Files                                   |
+|--------------------------------------------|----------------------------------------|
+|aws_alb_cloudwatch                          |aws_alb_cloudwatch.hcl                  |
+|aws_alb_endpoint_cloudwatch                 |aws_alb_cloudwatch.hcl                  |
+|aws_alb_internal_cloudwatch                 |aws_alb_cloudwatch.hcl                  |
+|aws_alb_internal_endpoint_cloudwatch        |aws_alb_cloudwatch.hcl                  |
+|aws_apigateway_cloudwatch                   |aws_apigateway_cloudwatch.hcl           |
+|aws_apigateway_stage_cloudwatch             |aws_apigateway_cloudwatch.hcl           |
+|aws_cloudfront_cloudwatch                   |aws_cloudfront_cloudwatch.hcl           |
+|aws_dax_cloudwatch                          |aws_dax_cloudwatch.hcl                  |
+|aws_dynamodb_table_cloudwatch               |aws_dynamodb_cloudwatch.hcl             |
+|aws_dynamodb_table_operation_cloudwatch     |aws_dynamodb_cloudwatch.hcl             |
+|aws_ec2_cloudwatch                          |aws_ec2_cloudwatch.hcl                  |
+|aws_eks_containerinsights_cluster_cloudwatch|aws_eks_containerinsights_cloudwatch.hcl|
+|aws_eks_containerinsights_pod_cloudwatch    |aws_eks_containerinsights_cloudwatch.hcl|
+|aws_eks_containerinsights_service_cloudwatch|aws_eks_containerinsights_cloudwatch.hcl|
+|aws_elasticache_cluster_cloudwatch          |aws_elasticache_cloudwatch.hcl          |
+|aws_elasticache_redis_cloudwatch            |aws_elasticache_cloudwatch.hcl          |
+|aws_elasticsearch_cloudwatch                |aws_elasticsearch_cloudwatch.hcl        |
+|aws_elasticsearch_master_cloudwatch         |aws_elasticsearch_cloudwatch.hcl        |
+|aws_elb_cloudwatch                          |aws_elb_cloudwatch.hcl                  |
+|aws_elb_endpoint_cloudwatch                 |aws_elb_cloudwatch.hcl                  |
+|aws_elb_internal_cloudwatch                 |aws_elb_cloudwatch.hcl                  |
+|aws_elb_internal_endpoint_cloudwatch        |aws_elb_cloudwatch.hcl                  |
+|aws_lambda_cloudwatch                       |aws_lambda_cloudwatch.hcl               |
+|aws_lambda_resource_cloudwatch              |aws_lambda_cloudwatch.hcl               |
+|aws_rds_logical_cloudwatch                  |aws_rds_cloudwatch.hcl                  |
+|aws_rds_physical_cloudwatch                 |aws_rds_cloudwatch.hcl                  |
+
