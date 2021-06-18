@@ -1,4 +1,4 @@
-ingester aws_apigateway module {
+ingester aws_apigateway_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -122,7 +122,7 @@ ingester aws_apigateway module {
 
 }
 
-ingester aws_apigateway_stage module {
+ingester aws_apigateway_stage_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

@@ -1,4 +1,4 @@
-ingester aws_rds_logical module {
+ingester aws_rds_logical_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -107,7 +107,7 @@ ingester aws_rds_logical module {
   }
 }
 
-ingester aws_rds_physical module {
+ingester aws_rds_physical_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

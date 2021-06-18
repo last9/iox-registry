@@ -1,4 +1,4 @@
-ingester aws_lambda module {
+ingester aws_lambda_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -117,7 +117,7 @@ ingester aws_lambda module {
   }
 }
 
-ingester aws_lambda_resource module {
+ingester aws_lambda_resource_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

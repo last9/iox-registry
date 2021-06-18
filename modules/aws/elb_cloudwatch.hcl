@@ -1,4 +1,4 @@
-ingester aws_elb module {
+ingester aws_elb_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -84,7 +84,7 @@ ingester aws_elb module {
   }
 }
 
-ingester aws_elb_internal module {
+ingester aws_elb_internal_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -126,132 +126,6 @@ ingester aws_elb_internal module {
       }
     }
   }
-  latency "latency_histo" {
-    error_margin = 0.05
-    source cloudwatch "throughput" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/ELB"
-        metric_name = "RequestCount"
-
-        dimensions = {
-          "LoadBalancerName" = "$input{LoadBalancerName}"
-        }
-      }
-    }
-
-    source cloudwatch "p50" {
-      query {
-        aggregator  = "p50"
-        namespace   = "AWS/ELB"
-        metric_name = "Latency"
-
-        dimensions = {
-          "LoadBalancerName" = "$input{LoadBalancerName}"
-        }
-      }
-    }
-
-    source cloudwatch "p75" {
-      query {
-        aggregator  = "p75"
-        namespace   = "AWS/ELB"
-        metric_name = "Latency"
-
-        dimensions = {
-          "LoadBalancerName" = "$input{LoadBalancerName}"
-        }
-      }
-    }
-
-    source cloudwatch "p90" {
-      query {
-        aggregator  = "p90"
-        namespace   = "AWS/ELB"
-        metric_name = "Latency"
-
-        dimensions = {
-          "LoadBalancerName" = "$input{LoadBalancerName}"
-        }
-      }
-    }
-
-    source cloudwatch "p99" {
-      query {
-        aggregator  = "p99"
-        namespace   = "AWS/ELB"
-        metric_name = "Latency"
-
-        dimensions = {
-          "LoadBalancerName" = "$input{LoadBalancerName}"
-        }
-      }
-    }
-
-    source cloudwatch "p100" {
-      query {
-        aggregator  = "Maximum"
-        namespace   = "AWS/ELB"
-        metric_name = "Latency"
-
-        dimensions = {
-          "LoadBalancerName" = "$input{LoadBalancerName}"
-        }
-      }
-    }
-  }
-  status_histo status_5xx {
-    source cloudwatch "status_500" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/ELB"
-        metric_name = "HTTPCode_Backend_5XX"
-
-        dimensions = {
-          "LoadBalancerName" = "$input{LoadBalancerName}"
-        }
-      }
-    }
-  }
-  status_histo status_4xx {
-    source cloudwatch "status_400" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/ELB"
-        metric_name = "HTTPCode_Backend_4XX"
-
-        dimensions = {
-          "LoadBalancerName" = "$input{LoadBalancerName}"
-        }
-      }
-    }
-  }
-  status_histo status_3xx {
-    source cloudwatch "status_300" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/ELB"
-        metric_name = "HTTPCode_Backend_3XX"
-
-        dimensions = {
-          "LoadBalancerName" = "$input{LoadBalancerName}"
-        }
-      }
-    }
-  }
-  status_histo status_2xx {
-    source cloudwatch "status_200" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/ELB"
-        metric_name = "HTTPCode_Backend_2XX"
-
-        dimensions = {
-          "LoadBalancerName" = "$input{LoadBalancerName}"
-        }
-      }
-    }
-  }
   gauge "surge_queue_length" {
     unit = "count"
     source cloudwatch "surge_queue_length" {
@@ -266,9 +140,37 @@ ingester aws_elb_internal module {
       }
     }
   }
+  gauge "connection_errors" {
+    unit = "count"
+    source cloudwatch "connection_errors" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ELB"
+        metric_name = "BackendConnectionErrors"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+  gauge "unhealthy_hosts" {
+    unit = "count"
+    source cloudwatch "unhealthy_hosts" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ELB"
+        metric_name = "UnHealthyHostCount"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
 }
 
-ingester aws_elb_endpoint module {
+ingester aws_elb_endpoint_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -443,7 +345,7 @@ ingester aws_elb_endpoint module {
   }
 }
 
-ingester aws_elb_internal_endpoint module {
+ingester aws_elb_internal_endpoint_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
