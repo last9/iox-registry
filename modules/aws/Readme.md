@@ -28,4 +28,5 @@
 |aws_lambda_resource_cloudwatch              |aws_lambda_cloudwatch.hcl               |
 |aws_rds_logical_cloudwatch                  |aws_rds_cloudwatch.hcl                  |
 |aws_rds_physical_cloudwatch                 |aws_rds_cloudwatch.hcl                  |
+|aws_sqs_cloudwatch                          |aws_sqs_cloudwatch.hcl                  |
 
