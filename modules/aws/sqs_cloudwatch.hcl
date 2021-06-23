@@ -11,12 +11,12 @@ ingester aws_sqs_cloudwatch module {
   }
 
   physical_component {
-    type = "aws_sqs"
+    type = "sqs"
     name = "$input{QueueName}"
   }
 
   data_for_graph_node {
-    type = "aws_sqs_queue"
+    type = "sqs_queue"
     name = "$input{QueueName}-queue"
   }
 
