@@ -16,7 +16,7 @@ ingester aws_sqs_cloudwatch module {
   }
 
   data_for_graph_node {
-    type = "aws_sqs"
+    type = "aws_sqs_queue"
     name = "$input{QueueName}"
   }
 
