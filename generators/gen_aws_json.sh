@@ -72,6 +72,10 @@ case "${n}" in
     dims='DomainName,ClientId'
     id='DomainName'
     ;;
+  AWS/SQS)
+    dims='QueueName'
+    id='QueueName'
+    ;;
   *)
     usage
     ;;
