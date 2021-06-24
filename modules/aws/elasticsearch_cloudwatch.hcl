@@ -147,7 +147,7 @@ ingester aws_elasticsearch_cloudwatch module {
   }
 
   gauge "cpu" {
-    unit = "percentage"
+    unit = "percent"
     aggregator  = "AVG"
     source cloudwatch "cpu" {
       query {
