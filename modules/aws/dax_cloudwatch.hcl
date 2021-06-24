@@ -33,6 +33,7 @@ ingester aws_dax_cloudwatch module {
 
   gauge "throughput" {
     unit = "count"
+    aggregator = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -48,6 +49,7 @@ ingester aws_dax_cloudwatch module {
   }
   gauge "errored" {
     unit = "count"
+    aggregator = "SUM"
     source cloudwatch "errors" {
       query {
         aggregator  = "Sum"
@@ -63,6 +65,7 @@ ingester aws_dax_cloudwatch module {
   }
   gauge "throttled" {
     unit = "count"
+    aggregator = "SUM"
     source cloudwatch "throttled" {
       query {
         aggregator  = "Sum"
@@ -78,6 +81,7 @@ ingester aws_dax_cloudwatch module {
   }
   gauge "connections" {
     unit = "count"
+    aggregator = "MAX"
     source cloudwatch "connections" {
       query {
         aggregator  = "Maximum"
@@ -93,6 +97,7 @@ ingester aws_dax_cloudwatch module {
   }
   gauge "query_miss" {
     unit = "count"
+    aggregator = "SUM"
     source cloudwatch "memory" {
       query {
         aggregator  = "Sum"
@@ -108,6 +113,7 @@ ingester aws_dax_cloudwatch module {
   }
   gauge "cache_memory" {
     unit = "percent"
+    aggregator  = "AVG"
     source cloudwatch "memory" {
       query {
         aggregator  = "Average"
@@ -123,6 +129,7 @@ ingester aws_dax_cloudwatch module {
   }
   gauge "cpu" {
     unit = "percent"
+    aggregator  = "AVG"
     source cloudwatch "cpu" {
       query {
         aggregator  = "Average"

@@ -33,6 +33,8 @@ ingester aws_elasticache_redis_cloudwatch module {
 
   gauge "curr_items" {
     unit = "count"
+    aggregator = "MAX"
+
     source cloudwatch "CurrItems" {
       query {
         aggregator  = "Maximum"
@@ -47,6 +49,8 @@ ingester aws_elasticache_redis_cloudwatch module {
   }
   gauge "cache_hit_rate" {
     unit = "percent"
+    aggregator = "MIN"
+
     source cloudwatch "CacheHitRate" {
       query {
         aggregator  = "Minimum"
@@ -61,6 +65,7 @@ ingester aws_elasticache_redis_cloudwatch module {
   }
   gauge "evictions" {
     unit = "count"
+    aggregator = "SUM"
     source cloudwatch "Evictions" {
       query {
         aggregator  = "Sum"
@@ -75,6 +80,8 @@ ingester aws_elasticache_redis_cloudwatch module {
   }
   latency "latency_histo" {
     error_margin = 0.05
+    unit = "ms" // TODO: correct unit is microseconds which is not supported right now.
+    aggregator = "percentile"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -161,7 +168,9 @@ ingester aws_elasticache_cluster_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "replication_lag" {
-    unit = "count"
+    unit = "s"
+    aggregator = "MAX"
+
     source cloudwatch "ReplicationLag" {
       query {
         aggregator  = "Maximum"
@@ -175,7 +184,9 @@ ingester aws_elasticache_cluster_cloudwatch module {
     }
   }
   gauge "bytes_out" {
-    unit = "count"
+    unit = "bytes"
+    aggregator = "SUM"
+
     source cloudwatch "NetworkBytesOut" {
       query {
         aggregator  = "Sum"
@@ -189,7 +200,9 @@ ingester aws_elasticache_cluster_cloudwatch module {
     }
   }
   gauge "bytes_in" {
-    unit = "count"
+    unit = "bytes"
+    aggregator = "SUM"
+
     source cloudwatch "NetworkBytesIn" {
       query {
         aggregator  = "Sum"
@@ -204,9 +217,11 @@ ingester aws_elasticache_cluster_cloudwatch module {
   }
   gauge "cpu_used" {
     unit = "percent"
+    aggregator = "AVG"
+
     source cloudwatch "EngineCPUUtilization" {
       query {
-        aggregator  = "Maximum"
+        aggregator  = "Average"
         namespace   = "AWS/ElastiCache"
         metric_name = "EngineCPUUtilization"
         dimensions = {

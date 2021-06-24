@@ -27,7 +27,8 @@ ingester aws_alb_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit = "tps"
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -41,7 +42,8 @@ ingester aws_alb_cloudwatch module {
     }
   }
   gauge "new_connections" {
-    unit = "tps"
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "new_connections" {
       query {
         aggregator  = "Sum"
@@ -55,7 +57,8 @@ ingester aws_alb_cloudwatch module {
     }
   }
   gauge "rejected_connections" {
-    unit = "tps"
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "rejected_connections" {
       query {
         aggregator  = "Sum"
@@ -69,7 +72,8 @@ ingester aws_alb_cloudwatch module {
     }
   }
   gauge "processed_bytes" {
-    unit = "tps"
+    unit = "bytes"
+    aggregator = "SUM"
     source cloudwatch "processed_bytes" {
       query {
         aggregator  = "Sum"
@@ -83,7 +87,8 @@ ingester aws_alb_cloudwatch module {
     }
   }
   gauge "lcu" {
-    unit = "tps"
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "lcu" {
       query {
         aggregator  = "Sum"
@@ -132,7 +137,8 @@ ingester aws_alb_endpoint_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit = "tps"
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -146,6 +152,8 @@ ingester aws_alb_endpoint_cloudwatch module {
     }
   }
   latency "latency_histo" {
+    unit = "s"
+    aggregator = "percentile"
     error_margin = 0.05
     source cloudwatch "throughput" {
       query {
@@ -220,6 +228,8 @@ ingester aws_alb_endpoint_cloudwatch module {
     }
   }
   status_histo status_5xx {
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"
@@ -233,6 +243,8 @@ ingester aws_alb_endpoint_cloudwatch module {
     }
   }
   status_histo status_4xx {
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
@@ -246,6 +258,8 @@ ingester aws_alb_endpoint_cloudwatch module {
     }
   }
   status_histo status_3xx {
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "status_300" {
       query {
         aggregator  = "Sum"
@@ -259,6 +273,8 @@ ingester aws_alb_endpoint_cloudwatch module {
     }
   }
   status_histo status_2xx {
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "status_200" {
       query {
         aggregator  = "Sum"
@@ -302,7 +318,8 @@ ingester aws_alb_internal_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit = "tps"
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -316,7 +333,8 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   gauge "new_connections" {
-    unit = "tps"
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "new_connections" {
       query {
         aggregator  = "Sum"
@@ -330,7 +348,8 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   gauge "rejected_connections" {
-    unit = "tps"
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "rejected_connections" {
       query {
         aggregator  = "Sum"
@@ -344,7 +363,8 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   gauge "processed_bytes" {
-    unit = "tps"
+    unit = "bytes"
+    aggregator = "SUM"
     source cloudwatch "processed_bytes" {
       query {
         aggregator  = "Sum"
@@ -358,7 +378,8 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   gauge "lcu" {
-    unit = "tps"
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "lcu" {
       query {
         aggregator  = "Sum"
@@ -407,7 +428,8 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit = "tps"
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -422,6 +444,8 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   }
   latency "latency_histo" {
     error_margin = 0.05
+    unit = "s"
+    aggregator = "percentile"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -495,6 +519,8 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_5xx {
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"
@@ -508,6 +534,8 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_4xx {
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
@@ -521,6 +549,8 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_3xx {
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "status_300" {
       query {
         aggregator  = "Sum"
@@ -534,6 +564,8 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_2xx {
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "status_200" {
       query {
         aggregator  = "Sum"

@@ -33,9 +33,10 @@ ingester aws_cloudfront_cloudwatch module {
 
   gauge "status_5xx" {
     unit = "percent"
+    aggregator = "AVERAGE"
     source cloudwatch "5xx" {
       query {
-        aggregator  = "Sum"
+        aggregator  = "Average"
         namespace   = "AWS/CloudFront"
         metric_name = "5xxErrorRate"
         dimensions = {
@@ -47,9 +48,10 @@ ingester aws_cloudfront_cloudwatch module {
   }
   gauge "status_4xx" {
     unit = "percent"
+    aggregator = "AVERAGE"
     source cloudwatch "4xx" {
       query {
-        aggregator  = "Sum"
+        aggregator  = "Average"
         namespace   = "AWS/CloudFront"
         metric_name = "4xxErrorRate"
         dimensions = {
@@ -61,6 +63,7 @@ ingester aws_cloudfront_cloudwatch module {
   }
   gauge "bytes_out" {
     unit = "count"
+    aggregator = "SUM"
     source cloudwatch "bytes_out" {
       query {
         aggregator  = "Sum"
@@ -75,6 +78,7 @@ ingester aws_cloudfront_cloudwatch module {
   }
   gauge "bytes_in" {
     unit = "count"
+    aggregator = "SUM"
     source cloudwatch "bytes_in" {
       query {
         aggregator  = "Sum"
@@ -89,6 +93,7 @@ ingester aws_cloudfront_cloudwatch module {
   }
   gauge "throughput" {
     unit = "count"
+    aggregator = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -138,9 +143,10 @@ ingester aws_cloudfront_endpoint_cloudwatch module {
 
   gauge "status_5xx" {
     unit = "percent"
+    aggregator = "AVERAGE"
     source cloudwatch "5xx" {
       query {
-        aggregator  = "Sum"
+        aggregator  = "Average"
         namespace   = "AWS/CloudFront"
         metric_name = "5xxErrorRate"
         dimensions = {
@@ -152,9 +158,10 @@ ingester aws_cloudfront_endpoint_cloudwatch module {
   }
   gauge "status_4xx" {
     unit = "percent"
+    aggregator = "AVERAGE"
     source cloudwatch "4xx" {
       query {
-        aggregator  = "Sum"
+        aggregator  = "Average"
         namespace   = "AWS/CloudFront"
         metric_name = "4xxErrorRate"
         dimensions = {
@@ -166,6 +173,7 @@ ingester aws_cloudfront_endpoint_cloudwatch module {
   }
   gauge "bytes_out" {
     unit = "count"
+    aggregator = "SUM"
     source cloudwatch "bytes_out" {
       query {
         aggregator  = "Sum"
@@ -180,6 +188,7 @@ ingester aws_cloudfront_endpoint_cloudwatch module {
   }
   gauge "bytes_in" {
     unit = "count"
+    aggregator = "SUM"
     source cloudwatch "bytes_in" {
       query {
         aggregator  = "Sum"
@@ -194,6 +203,7 @@ ingester aws_cloudfront_endpoint_cloudwatch module {
   }
   gauge "throughput" {
     unit = "count"
+    aggregator = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"

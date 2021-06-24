@@ -28,10 +28,11 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
 
   gauge "system_errors" {
     unit = "count"
+    aggregator = "SUM"
 
     source cloudwatch "system_errors" {
       query {
-        aggregator  = "Maximum"
+        aggregator  = "Sum"
         namespace   = "AWS/DynamoDB"
         metric_name = "SystemErrors"
 
@@ -45,6 +46,7 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
 
   gauge "returned_items" {
     unit = "count"
+    aggregator = "MAX"
 
     source cloudwatch "returned_items" {
       query {
@@ -62,10 +64,11 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
 
   gauge "throttled" {
     unit = "count"
+    aggregator = "SUM"
 
     source cloudwatch "latency_update" {
       query {
-        aggregator  = "Maximum"
+        aggregator  = "Sum"
         namespace   = "AWS/DynamoDB"
         metric_name = "ThrottledRequests"
 
@@ -79,6 +82,7 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
 
   gauge "latency" {
     unit = "ms"
+    aggregator = "AVG"
 
     source cloudwatch "latency" {
       query {
@@ -125,10 +129,11 @@ ingester aws_dynamodb_table_cloudwatch module {
 
   gauge "rcu" {
     unit = "count"
+    aggregator = "SUM"
 
     source cloudwatch "rcu" {
       query {
-        aggregator  = "Maximum"
+        aggregator  = "Sum"
         namespace   = "AWS/DynamoDB"
         metric_name = "ConsumedReadCapacityUnits"
 
@@ -141,10 +146,11 @@ ingester aws_dynamodb_table_cloudwatch module {
 
   gauge "wcu" {
     unit = "count"
+    aggregator = "SUM"
 
     source cloudwatch "wcu" {
       query {
-        aggregator  = "Maximum"
+        aggregator  = "Sum"
         namespace   = "AWS/DynamoDB"
         metric_name = "ConsumedWriteCapacityUnits"
 
@@ -157,10 +163,11 @@ ingester aws_dynamodb_table_cloudwatch module {
 
   gauge "read_throttled" {
     unit = "count"
+    aggregator = "SUM"
 
     source cloudwatch "read_throttled" {
       query {
-        aggregator  = "Maximum"
+        aggregator  = "Sum"
         namespace   = "AWS/DynamoDB"
         metric_name = "ReadThrottledEvents"
 
@@ -173,10 +180,11 @@ ingester aws_dynamodb_table_cloudwatch module {
 
   gauge "write_throttled" {
     unit = "count"
+    aggregator = "SUM"
 
     source cloudwatch "write_throttled" {
       query {
-        aggregator  = "Maximum"
+        aggregator  = "Sum"
         namespace   = "AWS/DynamoDB"
         metric_name = "WriteThrottledEvents"
 

@@ -32,7 +32,9 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
   }
 
   gauge "running_pods" {
-    unit = "Count"
+    unit = "count"
+    aggregator = "SUM"
+
     source cloudwatch "service_number_of_running_pods" {
       query {
         aggregator  = "Sum"
@@ -88,9 +90,11 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
 
   gauge "cpu" {
     unit = "percent"
+    aggregator  = "AVG"
+
     source cloudwatch "pod_cpu_utilization" {
       query {
-        aggregator  = "Maximum"
+        aggregator  = "Average"
         namespace   = "ContainerInsights"
         metric_name = "pod_cpu_utilization"
         dimensions = {
@@ -105,9 +109,11 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
 
   gauge "memory" {
     unit = "percent"
+    aggregator  = "AVG"
+
     source cloudwatch "pod_memory_utilization" {
       query {
-        aggregator  = "Maximum"
+        aggregator  = "Average"
         namespace   = "ContainerInsights"
         metric_name = "pod_memory_utilization"
         dimensions = {
@@ -120,7 +126,8 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
   }
 
   gauge "restarts" {
-    unit = "Count"
+    unit = "count"
+    aggregator = "SUM"
     source cloudwatch "pod_number_of_container_restarts" {
       query {
         aggregator  = "Sum"
@@ -165,7 +172,9 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
   }
 
   gauge "total_nodes" {
-    unit = "Count"
+    unit = "count"
+    aggregator  = "MAX"
+
     source cloudwatch "cluster_node_count" {
       query {
         aggregator  = "Maximum"
@@ -179,7 +188,8 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
   }
 
   gauge "failed_nodes" {
-    unit = "Count"
+    unit = "count"
+    aggregator  = "MIN"
     source cloudwatch "cluster_failed_node_count" {
       query {
         aggregator  = "Minimum"

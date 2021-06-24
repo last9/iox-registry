@@ -28,6 +28,7 @@ ingester aws_lambda_cloudwatch module {
 
   gauge "invocations" {
     unit = "count"
+    aggregator = "SUM"
     source cloudwatch "invocations" {
       query {
         aggregator  = "Sum"
@@ -42,7 +43,8 @@ ingester aws_lambda_cloudwatch module {
   }
 
   gauge "duration" {
-    unit = "millisecond"
+    unit = "ms"
+    aggregator = "SUM"
     source cloudwatch "duration" {
       query {
         aggregator  = "Sum"
@@ -58,6 +60,7 @@ ingester aws_lambda_cloudwatch module {
 
   gauge "concurrent_executions" {
     unit = "count"
+    aggregator  = "MAX"
     source cloudwatch "concurrent_executions" {
       query {
         aggregator  = "Maximum"
@@ -73,6 +76,7 @@ ingester aws_lambda_cloudwatch module {
 
   gauge "concurrency_spillover" {
     unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "concurrency_spillover" {
       query {
         aggregator  = "Sum"
@@ -88,6 +92,7 @@ ingester aws_lambda_cloudwatch module {
 
   gauge "throttles" {
     unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "throttles" {
       query {
         aggregator  = "Sum"
@@ -103,6 +108,7 @@ ingester aws_lambda_cloudwatch module {
 
   gauge "errors" {
     unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "errors" {
       query {
         aggregator  = "Sum"
@@ -152,6 +158,7 @@ ingester aws_lambda_resource_cloudwatch module {
 
   gauge "invocations" {
     unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "invocations" {
       query {
         aggregator  = "Sum"
@@ -167,7 +174,8 @@ ingester aws_lambda_resource_cloudwatch module {
   }
 
   gauge "duration" {
-    unit = "millisecond"
+    unit = "ms"
+    aggregator  = "SUM"
     source cloudwatch "duration" {
       query {
         aggregator  = "Sum"
@@ -184,6 +192,7 @@ ingester aws_lambda_resource_cloudwatch module {
 
   gauge "concurrent_executions" {
     unit = "count"
+    aggregator  = "MAX"
     source cloudwatch "concurrent_executions" {
       query {
         aggregator  = "Maximum"
@@ -201,6 +210,7 @@ ingester aws_lambda_resource_cloudwatch module {
 
   gauge "concurrency_spillover" {
     unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "concurrency_spillover" {
       query {
         aggregator  = "Sum"
@@ -217,6 +227,7 @@ ingester aws_lambda_resource_cloudwatch module {
 
   gauge "throttles" {
     unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "throttles" {
       query {
         aggregator  = "Sum"
@@ -233,6 +244,7 @@ ingester aws_lambda_resource_cloudwatch module {
 
   gauge "errors" {
     unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "errors" {
       query {
         aggregator  = "Sum"

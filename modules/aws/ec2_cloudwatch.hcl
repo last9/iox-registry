@@ -35,10 +35,11 @@ ingester aws_ec2_cloudwatch module {
 
   gauge "cpu" {
     unit = "percent"
+    aggregator = "AVG"
 
     source cloudwatch "cpu" {
       query {
-        aggregator  = "Maximum"
+        aggregator  = "Average"
         namespace   = "AWS/EC2"
         metric_name = "CPUUtilization"
 
@@ -50,7 +51,8 @@ ingester aws_ec2_cloudwatch module {
   }
 
   gauge "disk_read_ops" {
-    unit = "tps"
+    unit = "count"
+    aggregator = "SUM"
 
     source cloudwatch "disk_read_ops" {
       query {
@@ -66,7 +68,8 @@ ingester aws_ec2_cloudwatch module {
   }
 
   gauge "disk_write_ops" {
-    unit = "tps"
+    unit = "count"
+    aggregator = "SUM"
 
     source cloudwatch "disk_write_ops" {
       query {
@@ -82,7 +85,8 @@ ingester aws_ec2_cloudwatch module {
   }
 
   gauge "network_in" {
-    unit = "bpm"
+    unit = "bytes"
+    aggregator = "SUM"
 
     source cloudwatch "network_in" {
       query {
@@ -98,7 +102,8 @@ ingester aws_ec2_cloudwatch module {
   }
 
   gauge "network_out" {
-    unit = "bpm"
+    unit = "bytes"
+    aggregator = "SUM"
 
     source cloudwatch "network_out" {
       query {
@@ -115,6 +120,7 @@ ingester aws_ec2_cloudwatch module {
 
   gauge "status_check_failed" {
     unit = "count"
+    aggregator = "SUM"
 
     source cloudwatch "status_check_failed" {
       query {
@@ -131,6 +137,7 @@ ingester aws_ec2_cloudwatch module {
 
   gauge "cpu_balance" {
     unit = "count"
+    aggregator = "MIN"
 
     source cloudwatch "cpu_balance" {
       query {
