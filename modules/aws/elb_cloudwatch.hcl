@@ -83,7 +83,6 @@ ingester aws_elb_cloudwatch module {
     }
   }
   status_histo status_5xx {
-    unit = "count"
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"
@@ -108,7 +107,6 @@ ingester aws_elb_cloudwatch module {
     }
   }
   status_histo status_4xx {
-    unit = "count"
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
@@ -219,7 +217,6 @@ ingester aws_elb_internal_cloudwatch module {
     }
   }
   status_histo status_5xx {
-    unit = "count"
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"
@@ -244,7 +241,6 @@ ingester aws_elb_internal_cloudwatch module {
     }
   }
   status_histo status_4xx {
-    unit = "count"
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
@@ -392,7 +388,6 @@ ingester aws_elb_endpoint_cloudwatch module {
     }
   }
   status_histo status_5xx {
-    unit = "count"
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"
@@ -417,7 +412,6 @@ ingester aws_elb_endpoint_cloudwatch module {
     }
   }
   status_histo status_4xx {
-    unit = "count"
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
@@ -591,7 +585,6 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_5xx {
-    unit = "count"
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"
@@ -616,7 +609,6 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_4xx {
-    unit = "count"
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
