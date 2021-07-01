@@ -81,7 +81,7 @@ ingester aws_elasticache_redis_cloudwatch module {
   latency "latency_histo" {
     error_margin = 0.05
     unit = "ms" // TODO: correct unit is microseconds which is not supported right now.
-    aggregator = "percentile"
+    aggregator = "PERCENTILE"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"

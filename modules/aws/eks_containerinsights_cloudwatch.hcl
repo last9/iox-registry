@@ -31,15 +31,141 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
     name = "$input{K8sService}"
   }
 
-  gauge "running_pods" {
+  gauge "pods_min" {
     unit = "count"
-    aggregator = "SUM"
+    aggregator = "MIN"
 
-    source cloudwatch "service_number_of_running_pods" {
+    source cloudwatch "service_number_of_running_pods_min" {
       query {
-        aggregator  = "Sum"
+        aggregator  = "Minimum"
         namespace   = "ContainerInsights"
         metric_name = "service_number_of_running_pods"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+          "Namespace"   = "$input{K8sNamespace}"
+          "Service"     = "$input{K8sService}"
+        }
+      }
+    }
+  }
+
+  gauge "pods_max" {
+    unit = "count"
+    aggregator = "MAX"
+
+    source cloudwatch "service_number_of_running_pods_max" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "ContainerInsights"
+        metric_name = "service_number_of_running_pods"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+          "Namespace"   = "$input{K8sNamespace}"
+          "Service"     = "$input{K8sService}"
+        }
+      }
+    }
+  }
+
+  gauge "cpu" {
+    unit = "percent"
+    aggregator = "AVG"
+
+    source cloudwatch "cpu" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "pod_cpu_utilization"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+          "Namespace"   = "$input{K8sNamespace}"
+          "Service"     = "$input{K8sService}"
+        }
+      }
+    }
+  }
+
+  gauge "memory" {
+    unit = "percent"
+    aggregator = "AVG"
+
+    source cloudwatch "memory" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "pod_memory_utilization"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+          "Namespace"   = "$input{K8sNamespace}"
+          "Service"     = "$input{K8sService}"
+        }
+      }
+    }
+  }
+
+  gauge "cpu_overlimit" {
+    unit = "percent"
+    aggregator = "AVG"
+
+    source cloudwatch "cpu_overlimit" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "pod_cpu_utilization_over_pod_limit"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+          "Namespace"   = "$input{K8sNamespace}"
+          "Service"     = "$input{K8sService}"
+        }
+      }
+    }
+  }
+
+  gauge "memory_overlimit" {
+    unit = "percent"
+    aggregator = "AVG"
+
+    source cloudwatch "memory_overlimit" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "pod_memory_utilization_over_pod_limit"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+          "Namespace"   = "$input{K8sNamespace}"
+          "Service"     = "$input{K8sService}"
+        }
+      }
+    }
+  }
+
+  gauge "bytes_in" {
+    unit = "bps"
+    aggregator = "AVG"
+
+    source cloudwatch "bytes_in" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "pod_network_rx_bytes"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+          "Namespace"   = "$input{K8sNamespace}"
+          "Service"     = "$input{K8sService}"
+        }
+      }
+    }
+  }
+
+  gauge "bytes_out" {
+    unit = "bps"
+    aggregator = "AVG"
+
+    source cloudwatch "bytes_out" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "pod_network_tx_bytes"
         dimensions = {
           "ClusterName" = "$input{ClusterName}"
           "Namespace"   = "$input{K8sNamespace}"
@@ -90,9 +216,9 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
 
   gauge "cpu" {
     unit = "percent"
-    aggregator  = "AVG"
+    aggregator = "AVG"
 
-    source cloudwatch "pod_cpu_utilization" {
+    source cloudwatch "cpu" {
       query {
         aggregator  = "Average"
         namespace   = "ContainerInsights"
@@ -106,16 +232,87 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
     }
   }
 
-
   gauge "memory" {
     unit = "percent"
-    aggregator  = "AVG"
+    aggregator = "AVG"
 
-    source cloudwatch "pod_memory_utilization" {
+    source cloudwatch "memory" {
       query {
         aggregator  = "Average"
         namespace   = "ContainerInsights"
         metric_name = "pod_memory_utilization"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+          "Namespace"   = "$input{K8sNamespace}"
+          "PodName"     = "$input{PodName}"
+        }
+      }
+    }
+  }
+
+  gauge "cpu_overlimit" {
+    unit = "percent"
+    aggregator = "AVG"
+
+    source cloudwatch "cpu_overlimit" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "pod_cpu_utilization_over_pod_limit"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+          "Namespace"   = "$input{K8sNamespace}"
+          "PodName"     = "$input{PodName}"
+        }
+      }
+    }
+  }
+
+  gauge "memory_overlimit" {
+    unit = "percent"
+    aggregator = "AVG"
+
+    source cloudwatch "memory_overlimit" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "pod_memory_utilization_over_pod_limit"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+          "Namespace"   = "$input{K8sNamespace}"
+          "PodName"     = "$input{PodName}"
+        }
+      }
+    }
+  }
+
+  gauge "bytes_in" {
+    unit = "bps"
+    aggregator = "AVG"
+
+    source cloudwatch "bytes_in" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "pod_network_rx_bytes"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+          "Namespace"   = "$input{K8sNamespace}"
+          "PodName"     = "$input{PodName}"
+        }
+      }
+    }
+  }
+
+  gauge "bytes_out" {
+    unit = "bps"
+    aggregator = "AVG"
+
+    source cloudwatch "bytes_out" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "pod_network_tx_bytes"
         dimensions = {
           "ClusterName" = "$input{ClusterName}"
           "Namespace"   = "$input{K8sNamespace}"
@@ -189,12 +386,57 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
 
   gauge "failed_nodes" {
     unit = "count"
-    aggregator  = "MIN"
+    aggregator  = "MAX"
     source cloudwatch "cluster_failed_node_count" {
       query {
-        aggregator  = "Minimum"
+        aggregator  = "Maximum"
         namespace   = "ContainerInsights"
         metric_name = "cluster_failed_node_count"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+        }
+      }
+    }
+  }
+
+  gauge "cpu_limit" {
+    unit = "count"
+    aggregator  = "AVG"
+    source cloudwatch "cluster_cpu_limit" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "node_cpu_limit"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+        }
+      }
+    }
+  }
+
+  gauge "memory_limit" {
+    unit = "bytes"
+    aggregator  = "AVG"
+    source cloudwatch "cluster_memory_limit" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "node_memory_limit"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+        }
+      }
+    }
+  }
+
+  gauge "disk_used" {
+    unit = "percent"
+    aggregator  = "AVG"
+    source cloudwatch "cluster_memory_limit" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "node_filesystem_utilization"
         dimensions = {
           "ClusterName" = "$input{ClusterName}"
         }

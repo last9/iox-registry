@@ -43,7 +43,7 @@ ingester aws_rds_logical_cloudwatch module {
   }
 
   gauge "write_iops" {
-    unit = "tps"
+    unit = "iops"
     aggregator = "AVG"
     source cloudwatch "write_iops" {
       query {
@@ -59,7 +59,7 @@ ingester aws_rds_logical_cloudwatch module {
   }
 
   gauge "read_iops" {
-    unit = "tps"
+    unit = "iops"
     aggregator = "AVG"
     source cloudwatch "read_iops" {
       query {

@@ -153,7 +153,7 @@ ingester aws_alb_endpoint_cloudwatch module {
   }
   latency "latency_histo" {
     unit = "s"
-    aggregator = "percentile"
+    aggregator = "PERCENTILE"
     error_margin = 0.05
     source cloudwatch "throughput" {
       query {
@@ -444,8 +444,8 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   }
   latency "latency_histo" {
     error_margin = 0.05
-    unit = "s"
-    aggregator = "percentile"
+    unit = "ms"
+    aggregator = "PERCENTILE"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
