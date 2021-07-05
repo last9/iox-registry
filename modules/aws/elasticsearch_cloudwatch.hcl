@@ -112,7 +112,7 @@ ingester aws_elasticsearch_cloudwatch module {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ES"
-        metric_name = "2xx"
+        metric_name = "4xx"
 
         dimensions = {
           "DomainName" = "$input{DomainName}"
