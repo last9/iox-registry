@@ -134,6 +134,82 @@ ingester aws_elb_cloudwatch module {
       }
     }
   }
+  latency "latency_histo" {
+    unit = "s"
+    aggregator = "percentile"
+    error_margin = 0.05
+    source cloudwatch "throughput" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ELB"
+        metric_name = "RequestCount"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p50" {
+      query {
+        aggregator  = "p50"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p75" {
+      query {
+        aggregator  = "p75"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p90" {
+      query {
+        aggregator  = "p90"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p99" {
+      query {
+        aggregator  = "p99"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p100" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
 }
 
 ingester aws_elb_internal_cloudwatch module {
@@ -265,6 +341,82 @@ ingester aws_elb_internal_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/ELB"
         metric_name = "HTTPCode_ELB_4XX"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+  latency "latency_histo" {
+    unit = "s"
+    aggregator = "percentile"
+    error_margin = 0.05
+    source cloudwatch "throughput" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ELB"
+        metric_name = "RequestCount"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p50" {
+      query {
+        aggregator  = "p50"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p75" {
+      query {
+        aggregator  = "p75"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p90" {
+      query {
+        aggregator  = "p90"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p99" {
+      query {
+        aggregator  = "p99"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p100" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
 
         dimensions = {
           "LoadBalancerName" = "$input{LoadBalancerName}"

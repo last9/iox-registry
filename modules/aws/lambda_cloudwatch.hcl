@@ -1,4 +1,4 @@
-ingester aws_lambda_fn_cloudwatch module {
+ingester aws_lambda_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -25,8 +25,8 @@ ingester aws_lambda_fn_cloudwatch module {
   }
 
   data_for_graph_node {
-    type = "aws_lambda_fn"
-    name = "$input{FunctionName}-fn"
+    type = "aws_lambda"
+    name = "$input{FunctionName}"
   }
 
   inputs = "$input{inputs}"

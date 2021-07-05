@@ -156,6 +156,83 @@ ingester aws_alb_cloudwatch module {
       }
     }
   }
+
+  latency "latency_histo" {
+    unit = "s"
+    aggregator = "PERCENTILE"
+    error_margin = 0.05
+    source cloudwatch "throughput" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "RequestCount"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p50" {
+      query {
+        aggregator  = "p50"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p75" {
+      query {
+        aggregator  = "p75"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p90" {
+      query {
+        aggregator  = "p90"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p99" {
+      query {
+        aggregator  = "p99"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p100" {
+      query {
+        aggregator  = "p100"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
 }
 
 ingester aws_alb_endpoint_cloudwatch module {
@@ -531,6 +608,82 @@ ingester aws_alb_internal_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/ApplicationELB"
         metric_name = "HTTPCode_Target_4XX_Count"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+  latency "latency_histo" {
+    unit = "s"
+    aggregator = "PERCENTILE"
+    error_margin = 0.05
+    source cloudwatch "throughput" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "RequestCount"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p50" {
+      query {
+        aggregator  = "p50"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p75" {
+      query {
+        aggregator  = "p75"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p90" {
+      query {
+        aggregator  = "p90"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p99" {
+      query {
+        aggregator  = "p99"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p100" {
+      query {
+        aggregator  = "p100"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}"
