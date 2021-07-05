@@ -141,6 +141,24 @@ ingester aws_cloudfront_endpoint_cloudwatch module {
     name = "$input{domain}/"
   }
 
+  latency "latency_histo" {
+    gauge "throughput" {
+      unit = "count"
+      aggregator = "SUM"
+      source cloudwatch "throughput" {
+        query {
+          aggregator  = "Sum"
+          namespace   = "AWS/CloudFront"
+          metric_name = "Requests"
+          dimensions = {
+            "DistributionId" = "$input{DistributionId}"
+            "Region"         = "$input{Region}"
+          }
+        }
+      }
+    }
+  }
+
   gauge "status_5xx" {
     unit = "percent"
     aggregator = "AVERAGE"
