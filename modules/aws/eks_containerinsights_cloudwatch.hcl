@@ -48,7 +48,9 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
   }
 
   gauge "pods_max" {
-    unit = "count"
+    unit       = "count"
+    aggregator = "MAX"
+
     source cloudwatch "service_number_of_running_pods_max" {
       query {
         aggregator  = "Maximum"
