@@ -27,7 +27,8 @@ ingester aws_elb_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit = "tps"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -41,7 +42,8 @@ ingester aws_elb_cloudwatch module {
     }
   }
   gauge "surge_queue_length" {
-    unit = "count"
+    unit       = "count"
+    aggregator = "MAX"
     source cloudwatch "surge_queue_length" {
       query {
         aggregator  = "Maximum"
@@ -55,7 +57,8 @@ ingester aws_elb_cloudwatch module {
     }
   }
   gauge "connection_errors" {
-    unit = "count"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "connection_errors" {
       query {
         aggregator  = "Sum"
@@ -69,10 +72,11 @@ ingester aws_elb_cloudwatch module {
     }
   }
   gauge "unhealthy_hosts" {
-    unit = "count"
+    unit       = "count"
+    aggregator = "MAX"
     source cloudwatch "unhealthy_hosts" {
       query {
-        aggregator  = "Sum"
+        aggregator  = "Maximum"
         namespace   = "AWS/ELB"
         metric_name = "UnHealthyHostCount"
 
@@ -123,6 +127,82 @@ ingester aws_elb_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/ELB"
         metric_name = "HTTPCode_ELB_4XX"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+  latency "latency_histo" {
+    unit         = "s"
+    aggregator   = "percentile"
+    error_margin = 0.05
+    source cloudwatch "throughput" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ELB"
+        metric_name = "RequestCount"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p50" {
+      query {
+        aggregator  = "p50"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p75" {
+      query {
+        aggregator  = "p75"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p90" {
+      query {
+        aggregator  = "p90"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p99" {
+      query {
+        aggregator  = "p99"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p100" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
 
         dimensions = {
           "LoadBalancerName" = "$input{LoadBalancerName}"
@@ -161,7 +241,8 @@ ingester aws_elb_internal_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit = "tps"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -175,7 +256,8 @@ ingester aws_elb_internal_cloudwatch module {
     }
   }
   gauge "surge_queue_length" {
-    unit = "count"
+    unit       = "count"
+    aggregator = "MAX"
     source cloudwatch "surge_queue_length" {
       query {
         aggregator  = "Maximum"
@@ -189,7 +271,8 @@ ingester aws_elb_internal_cloudwatch module {
     }
   }
   gauge "connection_errors" {
-    unit = "count"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "connection_errors" {
       query {
         aggregator  = "Sum"
@@ -203,10 +286,11 @@ ingester aws_elb_internal_cloudwatch module {
     }
   }
   gauge "unhealthy_hosts" {
-    unit = "count"
+    unit       = "count"
+    aggregator = "MAX"
     source cloudwatch "unhealthy_hosts" {
       query {
-        aggregator  = "Sum"
+        aggregator  = "Maximum"
         namespace   = "AWS/ELB"
         metric_name = "UnHealthyHostCount"
 
@@ -257,6 +341,82 @@ ingester aws_elb_internal_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/ELB"
         metric_name = "HTTPCode_ELB_4XX"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+  latency "latency_histo" {
+    unit         = "s"
+    aggregator   = "percentile"
+    error_margin = 0.05
+    source cloudwatch "throughput" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ELB"
+        metric_name = "RequestCount"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p50" {
+      query {
+        aggregator  = "p50"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p75" {
+      query {
+        aggregator  = "p75"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p90" {
+      query {
+        aggregator  = "p90"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p99" {
+      query {
+        aggregator  = "p99"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+
+    source cloudwatch "p100" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
 
         dimensions = {
           "LoadBalancerName" = "$input{LoadBalancerName}"
@@ -300,7 +460,8 @@ ingester aws_elb_endpoint_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "throughput" {
-    unit = "tps"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -314,6 +475,8 @@ ingester aws_elb_endpoint_cloudwatch module {
     }
   }
   latency "latency_histo" {
+    unit         = "s"
+    aggregator   = "percentile"
     error_margin = 0.05
     source cloudwatch "throughput" {
       query {
@@ -388,6 +551,8 @@ ingester aws_elb_endpoint_cloudwatch module {
     }
   }
   status_histo status_5xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"
@@ -412,6 +577,8 @@ ingester aws_elb_endpoint_cloudwatch module {
     }
   }
   status_histo status_4xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
@@ -436,6 +603,8 @@ ingester aws_elb_endpoint_cloudwatch module {
     }
   }
   status_histo status_3xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_300" {
       query {
         aggregator  = "Sum"
@@ -449,6 +618,8 @@ ingester aws_elb_endpoint_cloudwatch module {
     }
   }
   status_histo status_2xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_200" {
       query {
         aggregator  = "Sum"
@@ -497,7 +668,8 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "throughput" {
-    unit = "tps"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -511,6 +683,8 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
     }
   }
   latency "latency_histo" {
+    unit         = "s"
+    aggregator   = "percentile"
     error_margin = 0.05
     source cloudwatch "throughput" {
       query {
@@ -585,6 +759,8 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_5xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"
@@ -609,6 +785,8 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_4xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
@@ -633,6 +811,8 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_3xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_300" {
       query {
         aggregator  = "Sum"
@@ -646,6 +826,8 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_2xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_200" {
       query {
         aggregator  = "Sum"

@@ -27,7 +27,8 @@ ingester aws_alb_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit = "tps"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -41,7 +42,8 @@ ingester aws_alb_cloudwatch module {
     }
   }
   gauge "new_connections" {
-    unit = "tps"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "new_connections" {
       query {
         aggregator  = "Sum"
@@ -55,7 +57,8 @@ ingester aws_alb_cloudwatch module {
     }
   }
   gauge "rejected_connections" {
-    unit = "tps"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "rejected_connections" {
       query {
         aggregator  = "Sum"
@@ -69,7 +72,8 @@ ingester aws_alb_cloudwatch module {
     }
   }
   gauge "processed_bytes" {
-    unit = "tps"
+    unit       = "bytes"
+    aggregator = "SUM"
     source cloudwatch "processed_bytes" {
       query {
         aggregator  = "Sum"
@@ -83,7 +87,8 @@ ingester aws_alb_cloudwatch module {
     }
   }
   gauge "lcu" {
-    unit = "tps"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "lcu" {
       query {
         aggregator  = "Sum"
@@ -98,6 +103,8 @@ ingester aws_alb_cloudwatch module {
   }
 
   status_histo status_5xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"
@@ -123,6 +130,8 @@ ingester aws_alb_cloudwatch module {
     }
   }
   status_histo status_4xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
@@ -140,6 +149,83 @@ ingester aws_alb_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/ApplicationELB"
         metric_name = "HTTPCode_Target_4XX_Count"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+
+  latency "latency_histo" {
+    unit         = "s"
+    aggregator   = "PERCENTILE"
+    error_margin = 0.05
+    source cloudwatch "throughput" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "RequestCount"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p50" {
+      query {
+        aggregator  = "p50"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p75" {
+      query {
+        aggregator  = "p75"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p90" {
+      query {
+        aggregator  = "p90"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p99" {
+      query {
+        aggregator  = "p99"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p100" {
+      query {
+        aggregator  = "p100"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}"
@@ -183,7 +269,8 @@ ingester aws_alb_endpoint_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit = "tps"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -197,6 +284,8 @@ ingester aws_alb_endpoint_cloudwatch module {
     }
   }
   latency "latency_histo" {
+    unit         = "s"
+    aggregator   = "PERCENTILE"
     error_margin = 0.05
     source cloudwatch "throughput" {
       query {
@@ -271,6 +360,8 @@ ingester aws_alb_endpoint_cloudwatch module {
     }
   }
   status_histo status_5xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"
@@ -295,7 +386,10 @@ ingester aws_alb_endpoint_cloudwatch module {
       }
     }
   }
+
   status_histo status_4xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
@@ -320,7 +414,10 @@ ingester aws_alb_endpoint_cloudwatch module {
       }
     }
   }
+
   status_histo status_3xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_300" {
       query {
         aggregator  = "Sum"
@@ -345,6 +442,8 @@ ingester aws_alb_endpoint_cloudwatch module {
     }
   }
   status_histo status_2xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_200" {
       query {
         aggregator  = "Sum"
@@ -388,7 +487,8 @@ ingester aws_alb_internal_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit = "tps"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -402,7 +502,8 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   gauge "new_connections" {
-    unit = "tps"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "new_connections" {
       query {
         aggregator  = "Sum"
@@ -416,7 +517,8 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   gauge "rejected_connections" {
-    unit = "tps"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "rejected_connections" {
       query {
         aggregator  = "Sum"
@@ -430,7 +532,8 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   gauge "processed_bytes" {
-    unit = "tps"
+    unit       = "bytes"
+    aggregator = "SUM"
     source cloudwatch "processed_bytes" {
       query {
         aggregator  = "Sum"
@@ -444,7 +547,8 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   gauge "lcu" {
-    unit = "tps"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "lcu" {
       query {
         aggregator  = "Sum"
@@ -458,6 +562,8 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   status_histo status_5xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"
@@ -483,6 +589,8 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   status_histo status_4xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
@@ -507,56 +615,9 @@ ingester aws_alb_internal_cloudwatch module {
       }
     }
   }
-}
-
-ingester aws_alb_internal_endpoint_cloudwatch module {
-  frequency  = 60
-  lookback   = 600
-  timeout    = 30
-  resolution = 60
-  lag        = 60
-
-  using = {
-    "default" : "$input{using}"
-  }
-
-  inputs = "$input{inputs}"
-
-  label {
-    type = "service"
-    name = "$input{service}"
-  }
-
-  label {
-    type = "namespace"
-    name = "$input{namespace}"
-  }
-
-  physical_component {
-    type = "internalAlb"
-    name = "$input{LoadBalancer}"
-  }
-
-  data_for_graph_node {
-    type = "endpoint"
-    name = "$input{namespace}$input{endpoint}"
-  }
-
-  gauge "throughput" {
-    unit = "tps"
-    source cloudwatch "throughput" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/ApplicationELB"
-        metric_name = "RequestCount"
-
-        dimensions = {
-          "LoadBalancer" = "$input{LoadBalancer}"
-        }
-      }
-    }
-  }
   latency "latency_histo" {
+    unit         = "s"
+    aggregator   = "PERCENTILE"
     error_margin = 0.05
     source cloudwatch "throughput" {
       query {
@@ -630,7 +691,135 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
       }
     }
   }
+}
+
+ingester aws_alb_internal_endpoint_cloudwatch module {
+  frequency  = 60
+  lookback   = 600
+  timeout    = 30
+  resolution = 60
+  lag        = 60
+
+  using = {
+    "default" : "$input{using}"
+  }
+
+  inputs = "$input{inputs}"
+
+  label {
+    type = "service"
+    name = "$input{service}"
+  }
+
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
+  physical_component {
+    type = "internalAlb"
+    name = "$input{LoadBalancer}"
+  }
+
+  data_for_graph_node {
+    type = "endpoint"
+    name = "$input{namespace}$input{endpoint}"
+  }
+
+  gauge "throughput" {
+    unit       = "count"
+    aggregator = "SUM"
+    source cloudwatch "throughput" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "RequestCount"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+  latency "latency_histo" {
+    error_margin = 0.05
+    unit         = "ms"
+    aggregator   = "PERCENTILE"
+    source cloudwatch "throughput" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "RequestCount"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p50" {
+      query {
+        aggregator  = "p50"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p75" {
+      query {
+        aggregator  = "p75"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p90" {
+      query {
+        aggregator  = "p90"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p99" {
+      query {
+        aggregator  = "p99"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+
+    source cloudwatch "p100" {
+      query {
+        aggregator  = "p100"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
   status_histo status_5xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"
@@ -656,6 +845,8 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_4xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
@@ -681,6 +872,8 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_3xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_300" {
       query {
         aggregator  = "Sum"
@@ -705,6 +898,8 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_2xx {
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "status_200" {
       query {
         aggregator  = "Sum"

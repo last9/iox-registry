@@ -9,6 +9,9 @@ load_last9_cli:
 lint:
 	find ../modules -name "*.hcl" | xargs -I {} bash -c "printf 'Linting {}\n' && diff {} <(hclfmt -check {})"
 
+hclfmt:
+	find ../modules -name "*.hcl" | xargs hclfmt -w
+
 plan: load_last9_cli
 	/tmp/last9/last9 iox plan --dir . --subgraph
 
