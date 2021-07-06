@@ -32,7 +32,7 @@ ingester aws_elasticache_redis_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "curr_items" {
-    unit = "count"
+    unit       = "count"
     aggregator = "MAX"
 
     source cloudwatch "CurrItems" {
@@ -48,7 +48,7 @@ ingester aws_elasticache_redis_cloudwatch module {
     }
   }
   gauge "cache_hit_rate" {
-    unit = "percent"
+    unit       = "percent"
     aggregator = "MIN"
 
     source cloudwatch "CacheHitRate" {
@@ -64,7 +64,7 @@ ingester aws_elasticache_redis_cloudwatch module {
     }
   }
   gauge "evictions" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source cloudwatch "Evictions" {
       query {
@@ -80,8 +80,8 @@ ingester aws_elasticache_redis_cloudwatch module {
   }
   latency "latency_histo" {
     error_margin = 0.05
-    unit = "ms" // TODO: correct unit is microseconds which is not supported right now.
-    aggregator = "PERCENTILE"
+    unit         = "ms" // TODO: correct unit is microseconds which is not supported right now.
+    aggregator   = "PERCENTILE"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -168,7 +168,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "replication_lag" {
-    unit = "s"
+    unit       = "s"
     aggregator = "MAX"
 
     source cloudwatch "ReplicationLag" {
@@ -184,7 +184,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
     }
   }
   gauge "bytes_out" {
-    unit = "bytes"
+    unit       = "bytes"
     aggregator = "SUM"
 
     source cloudwatch "NetworkBytesOut" {
@@ -200,7 +200,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
     }
   }
   gauge "bytes_in" {
-    unit = "bytes"
+    unit       = "bytes"
     aggregator = "SUM"
 
     source cloudwatch "NetworkBytesIn" {
@@ -216,7 +216,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
     }
   }
   gauge "cpu_used" {
-    unit = "percent"
+    unit       = "percent"
     aggregator = "AVG"
 
     source cloudwatch "EngineCPUUtilization" {

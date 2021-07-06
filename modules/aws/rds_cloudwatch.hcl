@@ -27,7 +27,7 @@ ingester aws_rds_logical_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "connections" {
-    unit = "count"
+    unit       = "count"
     aggregator = "MAX"
     source cloudwatch "connections" {
       query {
@@ -43,7 +43,7 @@ ingester aws_rds_logical_cloudwatch module {
   }
 
   gauge "write_iops" {
-    unit = "iops"
+    unit       = "iops"
     aggregator = "AVG"
     source cloudwatch "write_iops" {
       query {
@@ -59,7 +59,7 @@ ingester aws_rds_logical_cloudwatch module {
   }
 
   gauge "read_iops" {
-    unit = "iops"
+    unit       = "iops"
     aggregator = "AVG"
     source cloudwatch "read_iops" {
       query {
@@ -75,7 +75,7 @@ ingester aws_rds_logical_cloudwatch module {
   }
 
   gauge "read_latency" {
-    unit = "s"
+    unit       = "s"
     aggregator = "AVG"
     source cloudwatch "read_latency" {
       query {
@@ -91,7 +91,7 @@ ingester aws_rds_logical_cloudwatch module {
   }
 
   gauge "write_latency" {
-    unit = "s"
+    unit       = "s"
     aggregator = "AVG"
     source cloudwatch "wrtie_latency" {
       query {
@@ -136,7 +136,7 @@ ingester aws_rds_physical_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "network_in" {
-    unit = "bps"
+    unit       = "bps"
     aggregator = "AVG"
     source cloudwatch "network_in" {
       query {
@@ -152,7 +152,7 @@ ingester aws_rds_physical_cloudwatch module {
   }
 
   gauge "network_out" {
-    unit = "bps"
+    unit       = "bps"
     aggregator = "AVG"
     source cloudwatch "network_out" {
       query {
@@ -168,7 +168,7 @@ ingester aws_rds_physical_cloudwatch module {
   }
 
   gauge "cpu" {
-    unit = "percent"
+    unit       = "percent"
     aggregator = "AVG"
     source cloudwatch "cpu" {
       query {
@@ -184,7 +184,7 @@ ingester aws_rds_physical_cloudwatch module {
   }
 
   gauge "free_space" {
-    unit = "bytes"
+    unit       = "bytes"
     aggregator = "MIN"
     source cloudwatch "free_space" {
       query {
@@ -200,7 +200,7 @@ ingester aws_rds_physical_cloudwatch module {
   }
 
   gauge "replica_lag" {
-    unit = "s"
+    unit       = "s"
     aggregator = "MAX"
     source cloudwatch "replica_lag" {
       query {
@@ -216,7 +216,7 @@ ingester aws_rds_physical_cloudwatch module {
   }
 
   gauge "queue_depth" {
-    unit = "count"
+    unit       = "count"
     aggregator = "MAX"
     source cloudwatch "queue_depth" {
       query {

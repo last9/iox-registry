@@ -27,7 +27,7 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "system_errors" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
 
     source cloudwatch "system_errors" {
@@ -45,7 +45,7 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
   }
 
   gauge "returned_items" {
-    unit = "count"
+    unit       = "count"
     aggregator = "MAX"
 
     source cloudwatch "returned_items" {
@@ -63,7 +63,7 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
   }
 
   gauge "throttled" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
 
     source cloudwatch "latency_update" {
@@ -81,7 +81,7 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
   }
 
   gauge "latency" {
-    unit = "ms"
+    unit       = "ms"
     aggregator = "AVG"
 
     source cloudwatch "latency" {
@@ -128,7 +128,7 @@ ingester aws_dynamodb_table_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "rcu" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
 
     source cloudwatch "rcu" {
@@ -145,7 +145,7 @@ ingester aws_dynamodb_table_cloudwatch module {
   }
 
   gauge "wcu" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
 
     source cloudwatch "wcu" {
@@ -162,7 +162,7 @@ ingester aws_dynamodb_table_cloudwatch module {
   }
 
   gauge "read_throttled" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
 
     source cloudwatch "read_throttled" {
@@ -179,7 +179,7 @@ ingester aws_dynamodb_table_cloudwatch module {
   }
 
   gauge "write_throttled" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
 
     source cloudwatch "write_throttled" {

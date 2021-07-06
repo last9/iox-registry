@@ -27,7 +27,7 @@ ingester aws_sqs_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "sent" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source cloudwatch "sent" {
       query {
@@ -43,7 +43,7 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "received" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source cloudwatch "received" {
       query {
@@ -59,7 +59,7 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "visible" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source cloudwatch "visible" {
       query {
@@ -75,7 +75,7 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "empty_receives" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source cloudwatch "empty_receives" {
       query {
@@ -91,7 +91,7 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "deleted" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source cloudwatch "deleted" {
       query {
@@ -107,7 +107,7 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "delayed" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source cloudwatch "delayed" {
       query {
@@ -123,7 +123,7 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "oldest" {
-    unit = "s"
+    unit       = "s"
     aggregator = "MAX"
     source cloudwatch "oldest" {
       query {

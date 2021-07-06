@@ -27,7 +27,7 @@ ingester aws_apigateway_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "throughput" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source cloudwatch "througput" {
       query {
@@ -44,8 +44,8 @@ ingester aws_apigateway_cloudwatch module {
   }
 
   latency "latency_histo" {
-    unit = "ms"
-    aggregator = "PERCENTILE"
+    unit         = "ms"
+    aggregator   = "PERCENTILE"
     error_margin = 0.05
 
     source cloudwatch "througput" {
@@ -97,7 +97,9 @@ ingester aws_apigateway_cloudwatch module {
           "Stage"   = "$input{Stage}"
         }
       }
-    }source cloudwatch "p90" {
+    }
+
+    source cloudwatch "p90" {
       query {
         aggregator  = "p90"
         namespace   = "AWS/ApiGateway"
@@ -108,7 +110,9 @@ ingester aws_apigateway_cloudwatch module {
           "Stage"   = "$input{Stage}"
         }
       }
-    }source cloudwatch "p99" {
+    }
+
+    source cloudwatch "p99" {
       query {
         aggregator  = "p99"
         namespace   = "AWS/ApiGateway"
@@ -119,7 +123,9 @@ ingester aws_apigateway_cloudwatch module {
           "Stage"   = "$input{Stage}"
         }
       }
-    }source cloudwatch "p100" {
+    }
+
+    source cloudwatch "p100" {
       query {
         aggregator  = "p100"
         namespace   = "AWS/ApiGateway"
@@ -134,7 +140,7 @@ ingester aws_apigateway_cloudwatch module {
   }
 
   gauge "integration_latency" {
-    unit = "ms"
+    unit       = "ms"
     aggregator = "AVG"
     source cloudwatch "integration_latency" {
       query {
@@ -153,7 +159,7 @@ ingester aws_apigateway_cloudwatch module {
   // The Average statistic represents the cache hit rate, namely, the total count of the cache hits divided by
   // the total number of requests during the period
   gauge "cache_miss" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source cloudwatch "cache_miss" {
       query {
@@ -172,7 +178,7 @@ ingester aws_apigateway_cloudwatch module {
   // The Average statistic represents the 4XXError error rate, namely, the total count of the 4XXError errors divided by
   // the total number of requests during the period.
   status_histo "status_4xx" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source cloudwatch "status_400" {
       query {
@@ -190,7 +196,7 @@ ingester aws_apigateway_cloudwatch module {
   // The Average statistic represents the 5XXError error rate, namely, the total count of the 5XXError errors divided by
   // the total number of requests during the period.
   status_histo "status_5xx" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source cloudwatch "status_500" {
       query {

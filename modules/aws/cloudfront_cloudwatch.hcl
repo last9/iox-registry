@@ -32,7 +32,7 @@ ingester aws_cloudfront_cloudwatch module {
   }
 
   gauge "status_5xx" {
-    unit = "percent"
+    unit       = "percent"
     aggregator = "AVERAGE"
     source cloudwatch "5xx" {
       query {
@@ -47,7 +47,7 @@ ingester aws_cloudfront_cloudwatch module {
     }
   }
   gauge "status_4xx" {
-    unit = "percent"
+    unit       = "percent"
     aggregator = "AVERAGE"
     source cloudwatch "4xx" {
       query {
@@ -62,7 +62,7 @@ ingester aws_cloudfront_cloudwatch module {
     }
   }
   gauge "bytes_out" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source cloudwatch "bytes_out" {
       query {
@@ -77,7 +77,7 @@ ingester aws_cloudfront_cloudwatch module {
     }
   }
   gauge "bytes_in" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source cloudwatch "bytes_in" {
       query {
@@ -92,7 +92,7 @@ ingester aws_cloudfront_cloudwatch module {
     }
   }
   gauge "throughput" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source cloudwatch "throughput" {
       query {

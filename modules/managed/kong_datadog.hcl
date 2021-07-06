@@ -32,7 +32,7 @@ ingester managed_kong_endpoint_datadog module {
   }
 
   gauge "throughput" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
     source datadog "throughput" {
       query = "sum:kong.request.count{*} by {cluster,env,kong_upstream,route}.rollup(sum, 60)"
@@ -46,7 +46,7 @@ ingester managed_kong_endpoint_datadog module {
   }
 
   gauge "latency" {
-    unit = "ms"
+    unit       = "ms"
     aggregator = "AVG"
     source datadog "avg_latency" {
       query = "avg:kong.latency.avg{*} by {cluster,env,kong_upstream,route}.rollup(sum, 60)"

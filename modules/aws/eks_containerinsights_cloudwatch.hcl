@@ -32,7 +32,7 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
   }
 
   gauge "pods_min" {
-    unit = "count"
+    unit       = "count"
     aggregator = "MIN"
 
     source cloudwatch "service_number_of_running_pods_min" {
@@ -50,7 +50,7 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
   }
 
   gauge "pods_max" {
-    unit = "count"
+    unit       = "count"
     aggregator = "MAX"
 
     source cloudwatch "service_number_of_running_pods_max" {
@@ -68,7 +68,7 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
   }
 
   gauge "pods_max" {
-    unit = "count"
+    unit       = "count"
     aggregator = "MAX"
 
     source cloudwatch "service_number_of_running_pods_max" {
@@ -86,7 +86,7 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
   }
 
   gauge "cpu" {
-    unit = "percent"
+    unit       = "percent"
     aggregator = "AVG"
 
     source cloudwatch "cpu" {
@@ -104,7 +104,7 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
   }
 
   gauge "memory" {
-    unit = "percent"
+    unit       = "percent"
     aggregator = "AVG"
 
     source cloudwatch "memory" {
@@ -122,7 +122,7 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
   }
 
   gauge "cpu_overlimit" {
-    unit = "percent"
+    unit       = "percent"
     aggregator = "AVG"
 
     source cloudwatch "cpu_overlimit" {
@@ -140,7 +140,7 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
   }
 
   gauge "memory_overlimit" {
-    unit = "percent"
+    unit       = "percent"
     aggregator = "AVG"
 
     source cloudwatch "memory_overlimit" {
@@ -158,7 +158,7 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
   }
 
   gauge "bytes_in" {
-    unit = "bps"
+    unit       = "bps"
     aggregator = "AVG"
 
     source cloudwatch "bytes_in" {
@@ -176,7 +176,7 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
   }
 
   gauge "bytes_out" {
-    unit = "bps"
+    unit       = "bps"
     aggregator = "AVG"
 
     source cloudwatch "bytes_out" {
@@ -233,7 +233,7 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
   }
 
   gauge "cpu" {
-    unit = "percent"
+    unit       = "percent"
     aggregator = "AVG"
 
     source cloudwatch "cpu" {
@@ -251,7 +251,7 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
   }
 
   gauge "memory" {
-    unit = "percent"
+    unit       = "percent"
     aggregator = "AVG"
 
     source cloudwatch "memory" {
@@ -269,7 +269,7 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
   }
 
   gauge "cpu_overlimit" {
-    unit = "percent"
+    unit       = "percent"
     aggregator = "AVG"
 
     source cloudwatch "cpu_overlimit" {
@@ -287,7 +287,7 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
   }
 
   gauge "memory_overlimit" {
-    unit = "percent"
+    unit       = "percent"
     aggregator = "AVG"
 
     source cloudwatch "memory_overlimit" {
@@ -305,7 +305,7 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
   }
 
   gauge "bytes_in" {
-    unit = "bps"
+    unit       = "bps"
     aggregator = "AVG"
 
     source cloudwatch "bytes_in" {
@@ -323,7 +323,7 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
   }
 
   gauge "bytes_out" {
-    unit = "bps"
+    unit       = "bps"
     aggregator = "AVG"
 
     source cloudwatch "bytes_out" {
@@ -341,7 +341,7 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
   }
 
   gauge "restarts" {
-    unit = "count"
+    unit       = "count"
     aggregator = "SUM"
 
     source cloudwatch "pod_number_of_container_restarts" {
@@ -388,8 +388,8 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
   }
 
   gauge "total_nodes" {
-    unit = "count"
-    aggregator  = "MAX"
+    unit       = "count"
+    aggregator = "MAX"
 
     source cloudwatch "cluster_node_count" {
       query {
@@ -404,8 +404,8 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
   }
 
   gauge "failed_nodes" {
-    unit = "count"
-    aggregator  = "MAX"
+    unit       = "count"
+    aggregator = "MAX"
 
     source cloudwatch "cluster_failed_node_count" {
       query {
@@ -420,8 +420,8 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
   }
 
   gauge "cpu_limit" {
-    unit = "count"
-    aggregator  = "AVG"
+    unit       = "count"
+    aggregator = "AVG"
 
     source cloudwatch "cluster_cpu_limit" {
       query {
@@ -436,8 +436,8 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
   }
 
   gauge "memory_limit" {
-    unit = "bytes"
-    aggregator  = "AVG"
+    unit       = "bytes"
+    aggregator = "AVG"
 
     source cloudwatch "cluster_memory_limit" {
       query {
@@ -452,8 +452,8 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
   }
 
   gauge "disk_used" {
-    unit = "percent"
-    aggregator  = "AVG"
+    unit       = "percent"
+    aggregator = "AVG"
 
     source cloudwatch "cluster_memory_limit" {
       query {
