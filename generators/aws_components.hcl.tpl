@@ -176,3 +176,27 @@ extends aws_cloudfront_endpoint_cloudwatch "cloudfront_<region>" {
         inputs = file("${pwd}/cloudfront_<region>.json")
     }
 }
+
+extends aws_eks_containerinsights_service_cloudwatch "eks_service_containerinsights_<region>" {
+  source_uri = "https://github.com/last9/iox-registry/releases/download/v0.0.13/aws_eks_containerinsights_cloudwatch.hcl"
+    vars = {
+      using  = "<region>"
+        inputs = file("${pwd}/eks_service_containerinsights_<region>.json")
+    }
+}
+
+extends aws_eks_containerinsights_pod_cloudwatch "eks_pod_containerinsights_<region>" {
+  source_uri = "https://github.com/last9/iox-registry/releases/download/v0.0.13/aws_eks_containerinsights_cloudwatch.hcl"
+    vars = {
+      using  = "<region>"
+        inputs = file("${pwd}/eks_pod_containerinsights_<region>.json")
+    }
+}
+
+extends aws_eks_containerinsights_cluster_cloudwatch "eks_cluster_containerinsights_<region>" {
+  source_uri = "https://github.com/last9/iox-registry/releases/download/v0.0.13/aws_eks_containerinsights_cloudwatch.hcl"
+    vars = {
+      using  = "<region>"
+        inputs = file("${pwd}/eks_cluster_containerinsights_<region>.json")
+    }
+}
