@@ -27,7 +27,8 @@ ingester aws_sqs_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "sent" {
-    unit = "count"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "sent" {
       query {
         aggregator  = "Sum"
@@ -42,7 +43,8 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "received" {
-    unit = "count"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "received" {
       query {
         aggregator  = "Sum"
@@ -57,7 +59,8 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "visible" {
-    unit = "count"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "visible" {
       query {
         aggregator  = "Sum"
@@ -72,7 +75,8 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "empty_receives" {
-    unit = "count"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "empty_receives" {
       query {
         aggregator  = "Sum"
@@ -87,7 +91,8 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "deleted" {
-    unit = "count"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "deleted" {
       query {
         aggregator  = "Sum"
@@ -102,7 +107,8 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "delayed" {
-    unit = "count"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "delayed" {
       query {
         aggregator  = "Sum"
@@ -117,10 +123,11 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "oldest" {
-    unit = "seconds"
+    unit       = "s"
+    aggregator = "MAX"
     source cloudwatch "oldest" {
       query {
-        aggregator  = "Sum"
+        aggregator  = "Maximum"
         namespace   = "AWS/SQS"
         metric_name = "ApproximateAgeOfOldestMessage"
 

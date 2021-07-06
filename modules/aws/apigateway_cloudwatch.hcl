@@ -12,12 +12,12 @@ ingester aws_apigateway_cloudwatch module {
 
   physical_component {
     type = "aws_apigateway"
-    name = "$input{ApiName}"
+    name = "$input{ApiName}-$input{Stage}"
   }
 
   data_for_graph_node {
     type = "aws_apigateway"
-    name = "$input{ApiName}"
+    name = "$input{ApiName}-$input{Stage}"
   }
 
   using = {
@@ -27,136 +27,8 @@ ingester aws_apigateway_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "throughput" {
-    unit = "count"
-    source cloudwatch "througput" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/ApiGateway"
-        metric_name = "Count"
-
-        dimensions = {
-          "ApiName" = "$input{ApiName}"
-        }
-      }
-    }
-  }
-
-  gauge "latency" {
-    unit = "millisecond"
-    source cloudwatch "latency" {
-      query {
-        aggregator  = "Average"
-        namespace   = "AWS/ApiGateway"
-        metric_name = "Latency"
-
-        dimensions = {
-          "ApiName" = "$input{ApiName}"
-        }
-      }
-    }
-  }
-
-  gauge "integration_latency" {
-    unit = "count"
-    source cloudwatch "integration_latency" {
-      query {
-        aggregator  = "Average"
-        namespace   = "AWS/ApiGateway"
-        metric_name = "IntegrationLatency"
-
-        dimensions = {
-          "ApiName" = "$input{ApiName}"
-        }
-      }
-    }
-  }
-
-  // The Average statistic represents the cache hit rate, namely, the total count of the cache hits divided by
-  // the total number of requests during the period
-  gauge "cache_hit_rate" {
-    unit = "average"
-    source cloudwatch "cache_hit_rate" {
-      query {
-        aggregator  = "Average"
-        namespace   = "AWS/ApiGateway"
-        metric_name = "CacheHitCount"
-
-        dimensions = {
-          "ApiName" = "$input{ApiName}"
-        }
-      }
-    }
-  }
-
-  // The Average statistic represents the 4XXError error rate, namely, the total count of the 4XXError errors divided by
-  // the total number of requests during the period.
-  gauge "status_4xx" {
-    unit = "percent"
-    source cloudwatch "4xx" {
-      query {
-        aggregator  = "Average"
-        namespace   = "AWS/ApiGateway"
-        metric_name = "4xxError"
-        dimensions = {
-          "ApiName" = "$input{ApiName}"
-        }
-      }
-    }
-  }
-
-  // The Average statistic represents the 5XXError error rate, namely, the total count of the 5XXError errors divided by
-  // the total number of requests during the period.
-  gauge "status_5xx" {
-    unit = "percent"
-    source cloudwatch "5xx" {
-      query {
-        aggregator  = "Average"
-        namespace   = "AWS/ApiGateway"
-        metric_name = "5xxError"
-        dimensions = {
-          "ApiName" = "$input{ApiName}"
-        }
-      }
-    }
-  }
-
-}
-
-ingester aws_apigateway_stage_cloudwatch module {
-  frequency  = 60
-  lookback   = 600
-  timeout    = 30
-  resolution = 60
-  lag        = 60
-
-  label {
-    type = "service"
-    name = "$input{service}"
-  }
-
-  label {
-    type = "namespace"
-    name = "$input{namespace}"
-  }
-
-  physical_component {
-    type = "aws_apigateway"
-    name = "$input{ApiName}"
-  }
-
-  data_for_graph_node {
-    type = "aws_apigateway_stage"
-    name = "$input{Stage}"
-  }
-
-  using = {
-    "default" : "$input{using}"
-  }
-
-  inputs = "$input{inputs}"
-
-  gauge "throughput" {
-    unit = "count"
+    unit       = "count"
+    aggregator = "SUM"
     source cloudwatch "througput" {
       query {
         aggregator  = "Sum"
@@ -171,8 +43,24 @@ ingester aws_apigateway_stage_cloudwatch module {
     }
   }
 
-  gauge "latency" {
-    unit = "millisecond"
+  latency "latency_histo" {
+    unit         = "ms"
+    aggregator   = "PERCENTILE"
+    error_margin = 0.05
+
+    source cloudwatch "througput" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApiGateway"
+        metric_name = "Count"
+
+        dimensions = {
+          "ApiName" = "$input{ApiName}"
+          "Stage"   = "$input{Stage}"
+        }
+      }
+    }
+
     source cloudwatch "latency" {
       query {
         aggregator  = "Average"
@@ -185,10 +73,75 @@ ingester aws_apigateway_stage_cloudwatch module {
         }
       }
     }
+
+    source cloudwatch "p50" {
+      query {
+        aggregator  = "p50"
+        namespace   = "AWS/ApiGateway"
+        metric_name = "Latency"
+
+        dimensions = {
+          "ApiName" = "$input{ApiName}"
+          "Stage"   = "$input{Stage}"
+        }
+      }
+    }
+    source cloudwatch "p75" {
+      query {
+        aggregator  = "p75"
+        namespace   = "AWS/ApiGateway"
+        metric_name = "Latency"
+
+        dimensions = {
+          "ApiName" = "$input{ApiName}"
+          "Stage"   = "$input{Stage}"
+        }
+      }
+    }
+
+    source cloudwatch "p90" {
+      query {
+        aggregator  = "p90"
+        namespace   = "AWS/ApiGateway"
+        metric_name = "Latency"
+
+        dimensions = {
+          "ApiName" = "$input{ApiName}"
+          "Stage"   = "$input{Stage}"
+        }
+      }
+    }
+
+    source cloudwatch "p99" {
+      query {
+        aggregator  = "p99"
+        namespace   = "AWS/ApiGateway"
+        metric_name = "Latency"
+
+        dimensions = {
+          "ApiName" = "$input{ApiName}"
+          "Stage"   = "$input{Stage}"
+        }
+      }
+    }
+
+    source cloudwatch "p100" {
+      query {
+        aggregator  = "p100"
+        namespace   = "AWS/ApiGateway"
+        metric_name = "Latency"
+
+        dimensions = {
+          "ApiName" = "$input{ApiName}"
+          "Stage"   = "$input{Stage}"
+        }
+      }
+    }
   }
 
   gauge "integration_latency" {
-    unit = "millisecond"
+    unit       = "ms"
+    aggregator = "AVG"
     source cloudwatch "integration_latency" {
       query {
         aggregator  = "Average"
@@ -205,13 +158,14 @@ ingester aws_apigateway_stage_cloudwatch module {
 
   // The Average statistic represents the cache hit rate, namely, the total count of the cache hits divided by
   // the total number of requests during the period
-  gauge "cache_hit_rate" {
-    unit = "average"
-    source cloudwatch "cache_hit_rate" {
+  gauge "cache_miss" {
+    unit       = "count"
+    aggregator = "SUM"
+    source cloudwatch "cache_miss" {
       query {
-        aggregator  = "Average"
+        aggregator  = "Sum"
         namespace   = "AWS/ApiGateway"
-        metric_name = "CacheHitCount"
+        metric_name = "CacheMissCount"
 
         dimensions = {
           "ApiName" = "$input{ApiName}"
@@ -223,11 +177,12 @@ ingester aws_apigateway_stage_cloudwatch module {
 
   // The Average statistic represents the 4XXError error rate, namely, the total count of the 4XXError errors divided by
   // the total number of requests during the period.
-  gauge "status_4xx" {
-    unit = "percent"
-    source cloudwatch "4xx" {
+  status_histo "status_4xx" {
+    unit       = "count"
+    aggregator = "SUM"
+    source cloudwatch "status_400" {
       query {
-        aggregator  = "Average"
+        aggregator  = "Sum"
         namespace   = "AWS/ApiGateway"
         metric_name = "4xxError"
         dimensions = {
@@ -240,11 +195,12 @@ ingester aws_apigateway_stage_cloudwatch module {
 
   // The Average statistic represents the 5XXError error rate, namely, the total count of the 5XXError errors divided by
   // the total number of requests during the period.
-  gauge "status_5xx" {
-    unit = "percent"
-    source cloudwatch "5xx" {
+  status_histo "status_5xx" {
+    unit       = "count"
+    aggregator = "SUM"
+    source cloudwatch "status_500" {
       query {
-        aggregator  = "Average"
+        aggregator  = "Sum"
         namespace   = "AWS/ApiGateway"
         metric_name = "5xxError"
         dimensions = {
@@ -254,4 +210,5 @@ ingester aws_apigateway_stage_cloudwatch module {
       }
     }
   }
+
 }
