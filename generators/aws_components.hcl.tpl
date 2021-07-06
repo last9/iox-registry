@@ -168,3 +168,11 @@ extends aws_sqs_cloudwatch "sqs_<region>" {
         inputs = file("${pwd}/sqs_<region>.json")
     }
 }
+
+extends aws_cloudfront_endpoint_cloudwatch "cloudfront_<region>" {
+  source_uri = "https://github.com/last9/iox-registry/releases/download/v0.0.13/aws_cloudfront_cloudwatch.hcl"
+    vars = {
+      using  = "<region>"
+        inputs = file("${pwd}/cloudfront_<region>.json")
+    }
+}
