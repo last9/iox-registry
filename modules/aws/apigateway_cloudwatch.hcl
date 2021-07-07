@@ -48,7 +48,7 @@ ingester aws_apigateway_cloudwatch module {
     aggregator   = "PERCENTILE"
     error_margin = 0.05
 
-    source cloudwatch "througput" {
+    source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ApiGateway"
