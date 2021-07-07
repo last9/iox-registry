@@ -103,11 +103,11 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
     }
   }
 
-  gauge "cpu_usage_of_limit" {
+  gauge "cpu_overlimit" {
     unit       = "percent"
     aggregator = "AVG"
 
-    source cloudwatch "cpu_usage_of_limit" {
+    source cloudwatch "cpu_overlimit" {
       query {
         aggregator  = "Average"
         namespace   = "ContainerInsights"
@@ -121,11 +121,11 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
     }
   }
 
-  gauge "memory_usage_of_limit" {
+  gauge "memory_overlimit" {
     unit       = "percent"
     aggregator = "AVG"
 
-    source cloudwatch "memory_usage_of_limit" {
+    source cloudwatch "memory_overlimit" {
       query {
         aggregator  = "Average"
         namespace   = "ContainerInsights"
@@ -250,11 +250,11 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
     }
   }
 
-  gauge "cpu_usage_of_limit" {
+  gauge "cpu_overlimit" {
     unit       = "percent"
     aggregator = "AVG"
 
-    source cloudwatch "cpu_usage_of_limit" {
+    source cloudwatch "cpu_overlimit" {
       query {
         aggregator  = "Average"
         namespace   = "ContainerInsights"
@@ -268,11 +268,11 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
     }
   }
 
-  gauge "memory_usage_of_limit" {
+  gauge "memory_overlimit" {
     unit       = "percent"
     aggregator = "AVG"
 
-    source cloudwatch "memory_usage_of_limit" {
+    source cloudwatch "memory_overlimit" {
       query {
         aggregator  = "Average"
         namespace   = "ContainerInsights"
