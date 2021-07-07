@@ -23,7 +23,7 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
 
   physical_component {
     type = "k8s_cluster"
-    name = "$input{ClusterName}-$input{K8sNamespace}"
+    name = "$input{ClusterName}"
   }
 
   data_for_graph_node {
@@ -201,7 +201,7 @@ ingester aws_eks_containerinsights_pod_cloudwatch module {
 
   physical_component {
     type = "k8s_cluster"
-    name = "$input{ClusterName}-$input{K8sNamespace}"
+    name = "$input{ClusterName}"
   }
 
   physical_address {
@@ -361,12 +361,12 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
 
   physical_component {
     type = "k8s_cluster"
-    name = "$input{ClusterName}-$input{K8sNamespace}"
+    name = "$input{ClusterName}"
   }
 
   data_for_graph_node {
     type = "k8s_cluster"
-    name = "$input{ClusterName}-$input{K8sNamespace}"
+    name = "$input{ClusterName}"
   }
 
   gauge "total_nodes" {
