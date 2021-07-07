@@ -33,7 +33,7 @@ ingester aws_cloudfront_cloudwatch module {
 
   gauge "status_5xx" {
     unit       = "percent"
-    aggregator = "AVERAGE"
+    aggregator = "AVG"
     source cloudwatch "5xx" {
       query {
         aggregator  = "Average"
@@ -48,7 +48,7 @@ ingester aws_cloudfront_cloudwatch module {
   }
   gauge "status_4xx" {
     unit       = "percent"
-    aggregator = "AVERAGE"
+    aggregator = "AVG"
     source cloudwatch "4xx" {
       query {
         aggregator  = "Average"
