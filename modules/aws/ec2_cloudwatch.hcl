@@ -26,13 +26,6 @@ ingester aws_ec2_cloudwatch module {
     name = "$input{InstanceId}"
   }
 
-  logical_parent_nodes = [
-    {
-      type = "process"
-      name = "PID 1"
-    },
-  ]
-
   gauge "cpu" {
     unit       = "percent"
     aggregator = "AVG"

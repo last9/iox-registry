@@ -10,6 +10,11 @@ ingester aws_apigateway_cloudwatch module {
     name = "$input{service}"
   }
 
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
   physical_component {
     type = "aws_apigateway"
     name = "$input{ApiName}-$input{Stage}"

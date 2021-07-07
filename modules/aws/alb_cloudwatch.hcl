@@ -12,6 +12,11 @@ ingester aws_alb_cloudwatch module {
     name = "$input{service}"
   }
 
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
   physical_component {
     type = "alb"
     name = "$input{LoadBalancer}"
@@ -470,6 +475,11 @@ ingester aws_alb_internal_cloudwatch module {
   label {
     type = "service"
     name = "$input{service}"
+  }
+
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
   }
 
   physical_component {

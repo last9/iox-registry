@@ -12,6 +12,11 @@ ingester aws_elb_cloudwatch module {
     name = "$input{service}"
   }
 
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
   physical_component {
     type = "elb"
     name = "$input{LoadBalancerName}"
@@ -224,6 +229,11 @@ ingester aws_elb_internal_cloudwatch module {
   label {
     type = "service"
     name = "$input{service}"
+  }
+
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
   }
 
   physical_component {

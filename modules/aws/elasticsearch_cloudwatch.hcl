@@ -10,6 +10,11 @@ ingester aws_elasticsearch_cloudwatch module {
     name = "$input{service}"
   }
 
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
   physical_component {
     type = "aws_elasticsearch_cluster"
     name = "$input{DomainName}"
