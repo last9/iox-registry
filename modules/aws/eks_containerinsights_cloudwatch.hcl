@@ -26,13 +26,8 @@ ingester aws_eks_containerinsights_pod_logical_cloudwatch module {
     name = "$input{ClusterName}"
   }
 
-  physical_address {
-    type = "k8s_pod"
-    name = "$input{PodName}"
-  }
-
   data_for_graph_node {
-    type = "k8s_pod"
+    type = "k8s_pod_logical"
     name = "$input{PodName}"
   }
 
