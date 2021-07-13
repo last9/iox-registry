@@ -27,8 +27,8 @@ ingester aws_eks_containerinsights_pod_logical_cloudwatch module {
   }
 
   data_for_graph_node {
-    type = "k8s_pod_logical"
-    name = "$input{PodName}"
+    type = "k8s_service"
+    name = "$input{PodName}-$input{K8sNamespace}"
   }
 
   gauge "cpu" {
@@ -266,3 +266,4 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
     }
   }
 }
+
