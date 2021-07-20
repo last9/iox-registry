@@ -82,15 +82,6 @@ extends aws_cloudfront_cloudwatch "cloudfront" {
     EOF
   }
 }
-extends aws_cloudfront_endpoint_cloudwatch "cloudfront_endpoint" {
-  source_uri = "../modules/aws/cloudfront_cloudwatch.hcl"
-  vars = {
-    using  = "default"
-    inputs = <<-EOF
-    [{"DistributionId": "blah"}]
-    EOF
-  }
-}
 extends aws_ec2_cloudwatch "ec2" {
   source_uri = "../modules/aws/ec2_cloudwatch.hcl"
   vars = {
@@ -100,16 +91,7 @@ extends aws_ec2_cloudwatch "ec2" {
     EOF
   }
 }
-extends aws_eks_containerinsights_service_cloudwatch "eks_containerinsights_service" {
-  source_uri = "../modules/aws/eks_containerinsights_cloudwatch.hcl"
-  vars = {
-    using  = "default"
-    inputs = <<-EOF
-    [{"ClusterName": "blah"}]
-    EOF
-  }
-}
-extends aws_eks_containerinsights_pod_cloudwatch "eks_containerinsights_pod" {
+extends aws_eks_containerinsights_pod_logical_cloudwatch "eks_containerinsights_pod" {
   source_uri = "../modules/aws/eks_containerinsights_cloudwatch.hcl"
   vars = {
     using  = "default"
@@ -154,15 +136,6 @@ extends aws_lambda_cloudwatch "lambda" {
     EOF
   }
 }
-extends aws_lambda_resource_cloudwatch "lambda_resource" {
-  source_uri = "../modules/aws/lambda_cloudwatch.hcl"
-  vars = {
-    using  = "default"
-    inputs = <<-EOF
-    [{"FunctionName": "blah"}]
-    EOF
-  }
-}
 extends aws_dynamodb_table_operation_cloudwatch "dynamodb_table_operation" {
   source_uri = "../modules/aws/dynamodb_cloudwatch.hcl"
   vars = {
@@ -186,16 +159,7 @@ extends aws_apigateway_cloudwatch "apigateway" {
   vars = {
     using  = "default"
     inputs = <<-EOF
-    [{"ApiName": "blah"}]
-    EOF
-  }
-}
-extends aws_apigateway_stage_cloudwatch "apigateway_stage" {
-  source_uri = "../modules/aws/apigateway_cloudwatch.hcl"
-  vars = {
-    using  = "default"
-    inputs = <<-EOF
-    [{"ApiName": "blah"}]
+    [{"ApiName": "blah", "Stage": "foo"}]
     EOF
   }
 }
