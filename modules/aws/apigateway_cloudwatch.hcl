@@ -52,6 +52,7 @@ ingester aws_apigateway_cloudwatch module {
     unit         = "ms"
     aggregator   = "PERCENTILE"
     error_margin = 0.05
+    multiplier   = 1
 
     source cloudwatch "throughput" {
       query {
