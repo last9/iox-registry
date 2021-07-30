@@ -113,14 +113,6 @@ extends aws_lambda_cloudwatch "lambda_<region>" {
     }
 }
 
-extends aws_lambda_resource_cloudwatch "lambda_<region>" {
-  source_uri = "https://github.com/last9/iox-registry/releases/download/v0.0.13/aws_lambda_cloudwatch.hcl"
-    vars = {
-      using  = "<region>"
-        inputs = file("${pwd}/lambda_<region>.json")
-    }
-}
-
 extends aws_ec2_cloudwatch "ec2_<region>" {
   source_uri = "https://github.com/last9/iox-registry/releases/download/v0.0.13/aws_ec2_cloudwatch.hcl"
     vars = {
@@ -130,14 +122,6 @@ extends aws_ec2_cloudwatch "ec2_<region>" {
 }
 
 extends aws_apigateway_cloudwatch "apigateway_<region>" {
-  source_uri = "https://github.com/last9/iox-registry/releases/download/v0.0.13/aws_apigateway_cloudwatch.hcl"
-    vars = {
-      using  = "<region>"
-        inputs = file("${pwd}/apigateway_<region>.json")
-    }
-}
-
-extends aws_apigateway_stage_cloudwatch "apigateway_stage_<region>" {
   source_uri = "https://github.com/last9/iox-registry/releases/download/v0.0.13/aws_apigateway_cloudwatch.hcl"
     vars = {
       using  = "<region>"
