@@ -218,15 +218,15 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
     }
   }
 
-  gauge "cpu_limit" {
-    unit       = "count"
+  gauge "node_cpu_utilization" {
+    unit       = "percent"
     aggregator = "AVG"
 
-    source cloudwatch "cluster_cpu_limit" {
+    source cloudwatch "cluster_node_cpu_utilization" {
       query {
         aggregator  = "Average"
         namespace   = "ContainerInsights"
-        metric_name = "node_cpu_limit"
+        metric_name = "node_cpu_utilization"
         dimensions = {
           "ClusterName" = "$input{ClusterName}"
         }
@@ -234,15 +234,15 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
     }
   }
 
-  gauge "memory_limit" {
-    unit       = "bytes"
+  gauge "node_memory_utilization" {
+    unit       = "percent"
     aggregator = "AVG"
 
-    source cloudwatch "cluster_memory_limit" {
+    source cloudwatch "cluster_node_memory_utilization" {
       query {
         aggregator  = "Average"
         namespace   = "ContainerInsights"
-        metric_name = "node_memory_limit"
+        metric_name = "node_memory_utilization"
         dimensions = {
           "ClusterName" = "$input{ClusterName}"
         }
