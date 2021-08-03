@@ -29,4 +29,5 @@
 |aws_rds_logical_cloudwatch                  |aws_rds_cloudwatch.hcl                  |
 |aws_rds_physical_cloudwatch                 |aws_rds_cloudwatch.hcl                  |
 |aws_sqs_cloudwatch                          |aws_sqs_cloudwatch.hcl                  |
+|aws_msk_cloudwatch                          |aws_msk_cloudwatch.hcl                  |
 
