@@ -218,7 +218,7 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
     }
   }
 
-  gauge "node_cpu_utilization" {
+  gauge "cpu_utilization" {
     unit       = "percent"
     aggregator = "AVG"
 
@@ -234,7 +234,7 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
     }
   }
 
-  gauge "node_memory_utilization" {
+  gauge "memory_utilization" {
     unit       = "percent"
     aggregator = "AVG"
 
