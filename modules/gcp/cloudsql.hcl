@@ -1,9 +1,14 @@
-ingester gcp_cloud_sql_logical module {
+ingester gcp_cloudsql_logical module {
   lookback   = 600
   frequency  = 60
   timeout    = 30
   resolution = 60
   lag        = 0
+
+  label {
+    type = "service"
+    name = "$input{service}"
+  }
 
   physical_component {
     type = "cloudsql_cluster"
@@ -88,13 +93,18 @@ ingester gcp_cloud_sql_logical module {
   }
 }
 
-ingester gcp_cloud_sql module {
+ingester gcp_cloudsql_physical module {
   lookback   = 600
   frequency  = 60
   timeout    = 30
   resolution = 60
   lag        = 0
 
+  label {
+    type = "service"
+    name = "$input{service}"
+  }
+  
   physical_component {
     type = "cloudsql_cluster"
     name = "$input{database_id}"
