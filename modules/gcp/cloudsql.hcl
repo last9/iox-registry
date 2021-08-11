@@ -104,7 +104,7 @@ ingester gcp_cloudsql_physical module {
     type = "service"
     name = "$input{service}"
   }
-  
+
   physical_component {
     type = "cloudsql_cluster"
     name = "$input{database_id}"
