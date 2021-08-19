@@ -1,7 +1,7 @@
 ingester prometheus_istio_workload module {
   frequency = 60
 
-  lookback   = 600
+  lookback   = 7200
   timeout    = 30
   resolution = 60
   lag        = 60
@@ -10,7 +10,7 @@ ingester prometheus_istio_workload module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{destination_service_name}"
   }
 
   label {
@@ -41,13 +41,14 @@ ingester prometheus_istio_workload module {
     unit = "count"
 
     source prometheus "throughput" {
-      query = "sum by (cluster, destination_workload, destination_workload_namespace, destination_version, pod_name) (rate(istio_requests_total{reporter='source'}[1m])*60)"
+      query = "sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace, destination_version, pod_name) (rate(istio_requests_total{reporter='source'}[1m])*60)"
 
       join_on = {
         "$output{cluster}"                        = "$input{cluster}"
         "$output{destination_version}"            = "$input{destination_version}"
         "$output{destination_workload}"           = "$input{destination_workload}"
         "$output{destination_workload_namespace}" = "$input{destination_workload_namespace}"
+        "$output{destination_service_name}"       = "$input{destination_service_name}"
       }
     }
   }
@@ -56,13 +57,14 @@ ingester prometheus_istio_workload module {
     unit = "count"
 
     source prometheus "status_2xx" {
-      query = "sum by (cluster, destination_workload, destination_workload_namespace, destination_version, pod_name) (rate(istio_requests_total{reporter='source', response_code=~'^2.*'}[1m])*60)"
+      query = "sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace, destination_version, pod_name) (rate(istio_requests_total{reporter='source', response_code=~'^2.*'}[1m])*60)"
 
       join_on = {
         "$output{cluster}"                        = "$input{cluster}"
         "$output{destination_version}"            = "$input{destination_version}"
         "$output{destination_workload}"           = "$input{destination_workload}"
         "$output{destination_workload_namespace}" = "$input{destination_workload_namespace}"
+        "$output{destination_service_name}"       = "$input{destination_service_name}"
       }
     }
   }
@@ -71,13 +73,14 @@ ingester prometheus_istio_workload module {
     unit = "count"
 
     source prometheus "status_3xx" {
-      query = "sum by (cluster, destination_workload, destination_workload_namespace, destination_version, pod_name) (rate(istio_requests_total{reporter='source', response_code=~'^3.*'}[1m])*60)"
+      query = "sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace, destination_version, pod_name) (rate(istio_requests_total{reporter='source', response_code=~'^3.*'}[1m])*60)"
 
       join_on = {
         "$output{cluster}"                        = "$input{cluster}"
         "$output{destination_version}"            = "$input{destination_version}"
         "$output{destination_workload}"           = "$input{destination_workload}"
         "$output{destination_workload_namespace}" = "$input{destination_workload_namespace}"
+        "$output{destination_service_name}"       = "$input{destination_service_name}"
       }
     }
   }
@@ -86,13 +89,14 @@ ingester prometheus_istio_workload module {
     unit = "count"
 
     source prometheus "status_4xx" {
-      query = "sum by (cluster, destination_workload, destination_workload_namespace, destination_version, pod_name) (rate(istio_requests_total{reporter='source', response_code=~'^4.*'}[1m])*60)"
+      query = "sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace, destination_version, pod_name) (rate(istio_requests_total{reporter='source', response_code=~'^4.*'}[1m])*60)"
 
       join_on = {
         "$output{cluster}"                        = "$input{cluster}"
         "$output{destination_version}"            = "$input{destination_version}"
         "$output{destination_workload}"           = "$input{destination_workload}"
         "$output{destination_workload_namespace}" = "$input{destination_workload_namespace}"
+        "$output{destination_service_name}"       = "$input{destination_service_name}"
       }
     }
   }
@@ -101,13 +105,14 @@ ingester prometheus_istio_workload module {
     unit = "count"
 
     source prometheus "status_5xx" {
-      query = "sum by (cluster, destination_workload, destination_workload_namespace, destination_version, pod_name) (rate(istio_requests_total{reporter='source', response_code=~'^5.*'}[1m])*60)"
+      query = "sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace, destination_version, pod_name) (rate(istio_requests_total{reporter='source', response_code=~'^5.*'}[1m])*60)"
 
       join_on = {
         "$output{cluster}"                        = "$input{cluster}"
         "$output{destination_version}"            = "$input{destination_version}"
         "$output{destination_workload}"           = "$input{destination_workload}"
         "$output{destination_workload_namespace}" = "$input{destination_workload_namespace}"
+        "$output{destination_service_name}"       = "$input{destination_service_name}"
       }
     }
   }
@@ -123,6 +128,7 @@ ingester prometheus_istio_workload module {
         "$output{destination_version}"            = "$input{destination_version}"
         "$output{destination_workload}"           = "$input{destination_workload}"
         "$output{destination_workload_namespace}" = "$input{destination_workload_namespace}"
+        "$output{destination_service_name}"       = "$input{destination_service_name}"
       }
     }
   }
@@ -138,6 +144,7 @@ ingester prometheus_istio_workload module {
         "$output{destination_version}"            = "$input{destination_version}"
         "$output{destination_workload}"           = "$input{destination_workload}"
         "$output{destination_workload_namespace}" = "$input{destination_workload_namespace}"
+        "$output{destination_service_name}"       = "$input{destination_service_name}"
       }
     }
   }
@@ -153,6 +160,7 @@ ingester prometheus_istio_workload module {
         "$output{destination_version}"            = "$input{destination_version}"
         "$output{destination_workload}"           = "$input{destination_workload}"
         "$output{destination_workload_namespace}" = "$input{destination_workload_namespace}"
+        "$output{destination_service_name}"       = "$input{destination_service_name}"
       }
     }
   }
@@ -161,13 +169,14 @@ ingester prometheus_istio_workload module {
     unit = "bytes"
 
     source prometheus "bytes_in" {
-      query = "sum by (cluster, destination_workload, destination_workload_namespace, destination_version, pod_name) (rate(istio_request_bytes_sum{reporter='source'}[1m])*60)"
+      query = "sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace, destination_version, pod_name) (rate(istio_request_bytes_sum{reporter='source'}[1m])*60)"
 
       join_on = {
         "$output{cluster}"                        = "$input{cluster}"
         "$output{destination_version}"            = "$input{destination_version}"
         "$output{destination_workload}"           = "$input{destination_workload}"
         "$output{destination_workload_namespace}" = "$input{destination_workload_namespace}"
+        "$output{destination_service_name}"       = "$input{destination_service_name}"
       }
     }
   }
@@ -176,13 +185,14 @@ ingester prometheus_istio_workload module {
     unit = "bytes"
 
     source prometheus "bytes_out" {
-      query = "sum by (cluster, destination_workload, destination_workload_namespace,  destination_version, pod_name) (rate(istio_response_bytes_sum{reporter='source'}[1m])*60)"
+      query = "sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace,  destination_version, pod_name) (rate(istio_response_bytes_sum{reporter='source'}[1m])*60)"
 
       join_on = {
         "$output{cluster}"                        = "$input{cluster}"
         "$output{destination_version}"            = "$input{destination_version}"
         "$output{destination_workload}"           = "$input{destination_workload}"
         "$output{destination_workload_namespace}" = "$input{destination_workload_namespace}"
+        "$output{destination_service_name}"       = "$input{destination_service_name}"
       }
     }
   }
@@ -199,7 +209,7 @@ ingester prometheus_istio_cluster module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{destination_service_name}"
   }
 
   label {
@@ -306,7 +316,7 @@ ingester prometheus_istio_cluster module {
   }
 }
 
-ingester prometheus_istio module {
+ingester prometheus_istio_k8s_pod module {
   frequency  = 60
   lookback   = 3600
   timeout    = 30
@@ -317,7 +327,7 @@ ingester prometheus_istio module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{destination_service_name}"
   }
 
   label {
