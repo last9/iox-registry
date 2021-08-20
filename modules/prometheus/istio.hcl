@@ -41,7 +41,7 @@ ingester prometheus_istio_workload module {
     unit = "count"
 
     source prometheus "throughput" {
-      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_requests_total{reporter='source', source_canonical_service!='unknown', destination_canonical_service!='PassthroughCluster'}[1m]))"
+      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_requests_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -53,7 +53,7 @@ ingester prometheus_istio_workload module {
     unit = "count"
 
     source prometheus "status_2xx" {
-      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_requests_total{reporter='source', source_canonical_service!='unknown', destination_service!='PassthroughCluster', response_code=~'^2.*', destination_canonical_service!='PassthroughCluster'}[1m]))"
+      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_requests_total{reporter='source', source_canonical_service!='unknown', response_code=~'^2.*', destination_service_name!='PassthroughCluster'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -65,7 +65,7 @@ ingester prometheus_istio_workload module {
     unit = "count"
 
     source prometheus "status_3xx" {
-      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_requests_total{reporter='source', source_canonical_service!='unknown', destination_service!='PassthroughCluster', response_code=~'^3.*'}[1m]))"
+      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_requests_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', response_code=~'^3.*'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -77,7 +77,7 @@ ingester prometheus_istio_workload module {
     unit = "count"
 
     source prometheus "status_4xx" {
-      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_requests_total{reporter='source', source_canonical_service!='unknown', destination_service!='PassthroughCluster', response_code=~'^4.*'}[1m]))"
+      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_requests_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster, response_code=~'^4.*'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -89,7 +89,7 @@ ingester prometheus_istio_workload module {
     unit = "count"
 
     source prometheus "status_5xx" {
-      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_requests_total{reporter='source', source_canonical_service!='unknown', destination_service!='PassthroughCluster', response_code=~'^5.*'}[1m]))"
+      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_requests_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster, response_code=~'^5.*'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -101,7 +101,7 @@ ingester prometheus_istio_workload module {
   //     unit = "milliseconds"
 
   //     source prometheus "latency" {
-  //       query = "increase(istio_request_duration_milliseconds_bucket{reporter='source', source_canonical_service!='unknown', destination_service!='PassthroughCluster'}[1m]) by (cluster, destination_version, destination_workload, destination_workload_namespace, pod_name)"
+  //       query = "increase(istio_request_duration_milliseconds_bucket{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster}[1m]) by (cluster, destination_version, destination_workload, destination_workload_namespace, pod_name)"
   //       join_on = {
   //         "$output{cluster}"                        = "$input{cluster}"
   //       }
@@ -112,7 +112,7 @@ ingester prometheus_istio_workload module {
   //     unit = "milliseconds"
 
   //     source prometheus "latency" {
-  //       query = "(histogram_quantile(0.90, sum(increase(istio_request_duration_milliseconds_bucket{reporter='source', source_canonical_service!='unknown', destination_service!='PassthroughCluster'}[1m])) by (le, cluster, destination_version, destination_workload, destination_workload_namespace, pod_name)))"
+  //       query = "(histogram_quantile(0.90, sum(increase(istio_request_duration_milliseconds_bucket{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster}[1m])) by (le, cluster, destination_version, destination_workload, destination_workload_namespace, pod_name)))"
 
   //       join_on = {
   //         "$output{cluster}"                        = "$input{cluster}"
@@ -124,7 +124,7 @@ ingester prometheus_istio_workload module {
   //     unit = "milliseconds"
 
   //     source prometheus "latency" {
-  //       query = "(histogram_quantile(0.99, sum(increase(istio_request_duration_milliseconds_bucket{reporter='source', source_canonical_service!='unknown', destination_service!='PassthroughCluster'}[1m])) by (le, cluster, destination_version, destination_workload, destination_workload_namespace, pod_name)))"
+  //       query = "(histogram_quantile(0.99, sum(increase(istio_request_duration_milliseconds_bucket{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster}[1m])) by (le, cluster, destination_version, destination_workload, destination_workload_namespace, pod_name)))"
 
   //       join_on = {
   //         "$output{cluster}"                        = "$input{cluster}"
@@ -136,7 +136,7 @@ ingester prometheus_istio_workload module {
     unit = "bytes"
 
     source prometheus "bytes_in" {
-      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_request_bytes_sum{reporter='source', source_canonical_service!='unknown', destination_service!='PassthroughCluster'}[1m]))"
+      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_request_bytes_sum{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -148,7 +148,7 @@ ingester prometheus_istio_workload module {
     unit = "bytes"
 
     source prometheus "bytes_out" {
-      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace,  destination_version, pod_name) (increase(istio_response_bytes_sum{reporter='source', source_canonical_service!='unknown', destination_service!='PassthroughCluster'}[1m]))"
+      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace,  destination_version, pod_name) (increase(istio_response_bytes_sum{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -169,12 +169,14 @@ ingester prometheus_istio_cluster module {
 
   label {
     type = "service"
-    name = "$input{destination_canonical_service}"
+    // TODO - Check on how to remove this hardcoding
+    name = "auth"
   }
 
   label {
     type = "namespace"
-    name = "$input{destination_workload_namespace}"
+    // TODO - Check on how to remove this hardcoding
+    name = "default"
   }
 
   physical_component {
@@ -318,7 +320,7 @@ ingester prometheus_istio_k8s_pod module {
     unit = "count"
 
     source prometheus "throughput" {
-      query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_requests_total{reporter='source', destination_service!='PassthroughCluster', source_canonical_service!='unknown'}[1m]))"
+      query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_requests_total{reporter='source', destination_service_name!='PassthroughCluster, source_canonical_service!='unknown'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -330,7 +332,7 @@ ingester prometheus_istio_k8s_pod module {
     unit = "count"
 
     source prometheus "status_2xx" {
-      query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_requests_total{reporter='source', destination_service!='PassthroughCluster', source_canonical_service!='unknown', response_code=~'^2.*'}[1m]))"
+      query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_requests_total{reporter='source', destination_service_name!='PassthroughCluster, source_canonical_service!='unknown', response_code=~'^2.*'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -342,7 +344,7 @@ ingester prometheus_istio_k8s_pod module {
     unit = "count"
 
     source prometheus "status_3xx" {
-      query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_requests_total{reporter='source', destination_service!='PassthroughCluster', source_canonical_service!='unknown', response_code=~'^3.*'}[1m]))"
+      query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_requests_total{reporter='source', destination_service_name!='PassthroughCluster, source_canonical_service!='unknown', response_code=~'^3.*'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -354,7 +356,7 @@ ingester prometheus_istio_k8s_pod module {
     unit = "count"
 
     source prometheus "status_4xx" {
-      query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_requests_total{reporter='source', destination_service!='PassthroughCluster', source_canonical_service!='unknown', response_code=~'^4.*'}[1m]))"
+      query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_requests_total{reporter='source', destination_service_name!='PassthroughCluster, source_canonical_service!='unknown', response_code=~'^4.*'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -366,7 +368,7 @@ ingester prometheus_istio_k8s_pod module {
     unit = "count"
 
     source prometheus "status_5xx" {
-      query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_requests_total{reporter='source', destination_service!='PassthroughCluster', source_canonical_service!='unknown', response_code=~'^5.*'}[1m]))"
+      query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_requests_total{reporter='source', destination_service_name!='PassthroughCluster, source_canonical_service!='unknown', response_code=~'^5.*'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -378,7 +380,7 @@ ingester prometheus_istio_k8s_pod module {
     unit = "bytes"
 
     source prometheus "bytes_in" {
-      query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_request_bytes_sum{reporter='source', destination_service!='PassthroughCluster', source_canonical_service!='unknown'}[1m]))"
+      query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_request_bytes_sum{reporter='source', destination_service_name!='PassthroughCluster, source_canonical_service!='unknown'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -390,7 +392,7 @@ ingester prometheus_istio_k8s_pod module {
     unit = "bytes"
 
     source prometheus "bytes_out" {
-      query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_response_bytes_sum{reporter='source', destination_service!='PassthroughCluster', source_canonical_service!='unknown'}[1m]))"
+      query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_response_bytes_sum{reporter='source', destination_service_name!='PassthroughCluster, source_canonical_service!='unknown'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -398,5 +400,3 @@ ingester prometheus_istio_k8s_pod module {
     }
   }
 }
-
-
