@@ -169,14 +169,12 @@ ingester prometheus_istio_cluster module {
 
   label {
     type = "service"
-    // TODO - Check on how to remove this hardcoding
-    name = "auth"
+    name = "$input{destination_canonical_service}"
   }
 
   label {
     type = "namespace"
-    // TODO - Check on how to remove this hardcoding
-    name = "default"
+    name = "$input{destination_workload_namespace}"
   }
 
   physical_component {
