@@ -97,7 +97,6 @@ ingester prometheus_istio_workload module {
     }
   }
 
-  // TODO - Piyush to check
   //   latency_histo "latency" {
   //     unit = "milliseconds"
 
