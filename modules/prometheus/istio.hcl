@@ -196,7 +196,7 @@ ingester prometheus_istio_cluster module {
     unit = "count"
 
     source prometheus "throughput" {
-      query = "sum by (cluster) (increase(istio_requests_total{reporter='source'}[1m]))"
+      query = "label_set(sum by (cluster) (increase(istio_requests_total{reporter='source'}[1m])), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
