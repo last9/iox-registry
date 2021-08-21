@@ -209,8 +209,8 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
         metric_name = "node_cpu_utilization"
         dimensions = {
           "ClusterName" = "$input{ClusterName}"
-          "NodeName"   = "$input{NodeName}"
-          "InstanceId"   = "$input{InstanceId}"
+          "NodeName"    = "$input{NodeName}"
+          "InstanceId"  = "$input{InstanceId}"
         }
       }
     }
@@ -227,8 +227,8 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
         metric_name = "node_filesystem_utilization"
         dimensions = {
           "ClusterName" = "$input{ClusterName}"
-          "NodeName"   = "$input{NodeName}"
-          "InstanceId"   = "$input{InstanceId}"
+          "NodeName"    = "$input{NodeName}"
+          "InstanceId"  = "$input{InstanceId}"
         }
       }
     }
@@ -245,8 +245,8 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
         metric_name = "node_cpu_utilization"
         dimensions = {
           "ClusterName" = "$input{ClusterName}"
-          "NodeName"   = "$input{NodeName}"
-          "InstanceId"   = "$input{InstanceId}"
+          "NodeName"    = "$input{NodeName}"
+          "InstanceId"  = "$input{InstanceId}"
         }
       }
     }
@@ -263,8 +263,8 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
         metric_name = "node_number_of_running_pods"
         dimensions = {
           "ClusterName" = "$input{ClusterName}"
-          "NodeName"   = "$input{NodeName}"
-          "InstanceId"   = "$input{InstanceId}"
+          "NodeName"    = "$input{NodeName}"
+          "InstanceId"  = "$input{InstanceId}"
         }
       }
     }
@@ -281,8 +281,8 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
         metric_name = "node_number_of_running_containers"
         dimensions = {
           "ClusterName" = "$input{ClusterName}"
-          "NodeName"   = "$input{NodeName}"
-          "InstanceId"   = "$input{InstanceId}"
+          "NodeName"    = "$input{NodeName}"
+          "InstanceId"  = "$input{InstanceId}"
         }
       }
     }
