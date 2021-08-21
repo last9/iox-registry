@@ -158,7 +158,7 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
   }
 }
 
-ingester aws_eks_containerinsights_node_cloudwatch nodule {
+ingester aws_eks_containerinsights_node_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
