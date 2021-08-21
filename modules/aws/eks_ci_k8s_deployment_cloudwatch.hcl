@@ -172,15 +172,14 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
   inputs = "$input{inputs}"
 
 
-
   label {
     type = "service"
-    name = "$input{Service}"
+    name = "k8s-deployments"
   }
 
   label {
     type = "namespace"
-    name = "$input{Namespace}"
+    name = "default"
   }
 
   physical_address {
