@@ -255,5 +255,4 @@ ingester prometheus_istio_tcp_k8s_pod module {
       }
     }
   }
-
 }
