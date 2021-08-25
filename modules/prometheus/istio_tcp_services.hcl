@@ -1,6 +1,6 @@
 ingester prometheus_istio_tcp_workload module {
   frequency  = 600
-  lookback   = 300
+  lookback   = 900
   timeout    = 180
   resolution = 60
   lag        = 60
@@ -89,7 +89,7 @@ ingester prometheus_istio_tcp_workload module {
 
 ingester prometheus_istio_tcp_cluster module {
   frequency  = 600
-  lookback   = 300
+  lookback   = 900
   timeout    = 180
   resolution = 60
   lag        = 60
@@ -172,7 +172,7 @@ ingester prometheus_istio_tcp_cluster module {
 
 ingester prometheus_istio_tcp_k8s_pod module {
   frequency  = 600
-  lookback   = 300
+  lookback   = 900
   timeout    = 180
   resolution = 60
   lag        = 60
