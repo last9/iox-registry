@@ -11,6 +11,9 @@ ingester aws_ec2_cloudwatch module {
 
   inputs = "$input{inputs}"
 
+  # TODO: Figure this out
+  # input_query = "label_set(ec2_instance{$input{tag_filter}}, 'service', '$input{service}')"
+
   label {
     type = "service"
     name = "$input{service}"

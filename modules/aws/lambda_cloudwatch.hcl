@@ -31,6 +31,14 @@ ingester aws_lambda_cloudwatch module {
 
   inputs = "$input{inputs}"
 
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        lambda_function{$input{tag_filter}}, 'id=FunctionName'
+      ), "Service", "$input{service}", "Namespace", "$input{namespace}"
+    )
+  EOF
+
   gauge "invocations" {
     unit       = "count"
     aggregator = "SUM"
