@@ -179,7 +179,7 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
 
   inputs = "$input{inputs}"
 
-  input_query = "label_replace(eks_cluster{$input{tag_filter}}, 'id=ClusterName')" 
+  input_query = "label_replace(eks_cluster{$input{tag_filter}}, 'id=ClusterName')"
 
   label {
     type = "service"
