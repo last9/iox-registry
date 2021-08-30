@@ -488,7 +488,6 @@ ingester aws_alb_internal_cloudwatch module {
 
   inputs = "$input{inputs}"
 
-  # TODO: Verify if this is correct
   input_query = <<-EOF
     label_set(
       label_replace(
@@ -741,7 +740,6 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
 
   inputs = "$input{inputs}"
 
-  # TODO: Verify if this is correct
   input_query = <<-EOF
     label_set(
       label_replace(
