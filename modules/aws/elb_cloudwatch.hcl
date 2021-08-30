@@ -7,6 +7,14 @@ ingester aws_elb_cloudwatch module {
 
   inputs = "$input{inputs}"
 
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        elasticloadbalancing_loadbalancer{id!~".*/.*",$input{tag_filter}}, 'id=LoadBalancerName'
+      ), "service", "$input{service}", "namespace", "$input{namespace}"
+    )
+  EOF
+
   label {
     type = "service"
     name = "$input{service}"
@@ -225,6 +233,14 @@ ingester aws_elb_internal_cloudwatch module {
   lag        = 60
 
   inputs = "$input{inputs}"
+
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        elasticloadbalancing_loadbalancer{id!~".*/.*",$input{tag_filter}}, 'id=LoadBalancerName'
+      ), "service", "$input{service}", "namespace", "$input{namespace}"
+    )
+  EOF
 
   label {
     type = "service"
@@ -469,6 +485,14 @@ ingester aws_elb_endpoint_cloudwatch module {
 
   inputs = "$input{inputs}"
 
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        elasticloadbalancing_loadbalancer{id!~".*/.*",$input{tag_filter}}, 'id=LoadBalancerName'
+      ), "service", "$input{service}", "namespace", "$input{namespace}"
+    )
+  EOF
+
   gauge "throughput" {
     unit       = "count"
     aggregator = "SUM"
@@ -676,6 +700,14 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
   }
 
   inputs = "$input{inputs}"
+
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        elasticloadbalancing_loadbalancer{id!~".*/.*",$input{tag_filter}}, 'id=LoadBalancerName'
+      ), "service", "$input{service}", "namespace", "$input{namespace}"
+    )
+  EOF
 
   gauge "throughput" {
     unit       = "count"

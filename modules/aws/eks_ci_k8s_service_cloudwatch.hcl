@@ -11,6 +11,8 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
 
   inputs = "$input{inputs}"
 
+  input_query = "label_replace(eks_cluster{$input{tag_filter}}, 'id=ClusterName')"
+
   label {
     type = "service"
     name = "$input{Service}"
@@ -171,6 +173,14 @@ ingester aws_eks_containerinsights_deployment_with_service_cloudwatch module {
   }
 
   inputs = "$input{inputs}"
+
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        eks_cluster{$input{tag_filter}}, 'id=ClusterName'
+      ), "Service", "$input{service}"
+    )
+  EOF
 
   label {
     type = "service"
@@ -338,6 +348,8 @@ ingester eks_containerinsights_eks_cluster_cloudwatch module {
   }
 
   inputs = "$input{inputs}"
+
+  input_query = "label_replace(eks_cluster{$input{tag_filter}}, 'id=ClusterName')"
 
   label {
     type = "service"

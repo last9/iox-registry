@@ -7,6 +7,14 @@ ingester aws_alb_cloudwatch module {
 
   inputs = "$input{inputs}"
 
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
+      ), "service", "$input{service}", "namespace", "$input{namespace}"
+    )
+  EOF
+
   label {
     type = "service"
     name = "$input{service}"
@@ -253,6 +261,14 @@ ingester aws_alb_endpoint_cloudwatch module {
 
   inputs = "$input{inputs}"
 
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
+      ), "service", "$input{service}", "namespace", "$input{namespace}"
+    )
+  EOF
+
   label {
     type = "service"
     name = "$input{service}"
@@ -471,6 +487,14 @@ ingester aws_alb_internal_cloudwatch module {
   lag        = 60
 
   inputs = "$input{inputs}"
+
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
+      ), "service", "$input{service}", "namespace", "$input{namespace}"
+    )
+  EOF
 
   label {
     type = "service"
@@ -715,6 +739,14 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   }
 
   inputs = "$input{inputs}"
+
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
+      ), "service", "$input{service}", "namespace", "$input{namespace}"
+    )
+  EOF
 
   label {
     type = "service"
