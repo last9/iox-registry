@@ -243,11 +243,11 @@ ingester aws_msk_partition_cloudwatch module {
     }
   }
 
-  gauge "time_tag" {
+  gauge "time_lag" {
     unit       = "seconds"
     aggregator = "MAX"
 
-    source cloudwatch "time_tag" {
+    source cloudwatch "time_lag" {
       query {
         aggregator  = "Maximum"
         namespace   = "AWS/Kafka"
