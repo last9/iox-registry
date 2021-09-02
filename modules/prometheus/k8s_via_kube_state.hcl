@@ -5,7 +5,6 @@ ingester prometheus_kube_cluster module {
   resolution = 60
   lag = 60
 
-
   inputs = "$input{inputs}"
 
   label {
@@ -29,7 +28,7 @@ ingester prometheus_kube_cluster module {
   }
 
   using = {
-    default = "victoriametrics"
+    "default" : "$input{using}"
   }
 
   gauge "total_unknown_nodes" {
@@ -142,7 +141,7 @@ ingester prometheus_kube_cluster_with_namespace module {
   }
 
   using = {
-    default = "victoriametrics"
+    "default" : "$input{using}"
   }
 
   gauge "total_memory_requested" {
@@ -233,7 +232,7 @@ ingester prometheus_kube_node module {
   }
 
   using = {
-    default = "victoriametrics"
+    "default" : "$input{using}"
   }
 
   gauge "total_cpu_for_scheduling" {
@@ -345,7 +344,7 @@ ingester prometheus_kube_pod module {
   ]
 
   using = {
-    default = "victoriametrics"
+    "default" : "$input{using}"
   }
 
   gauge "total_container_restarts" {
@@ -429,7 +428,7 @@ ingester prometheus_kube_container module {
   ]
 
   using = {
-    default = "victoriametrics"
+    "default" : "$input{using}"
   }
 
   gauge "total_container_restarts" {
@@ -530,7 +529,7 @@ ingester prometheus_kube_deployment module {
   ]
 
   using = {
-    default = "victoriametrics"
+    "default" : "$input{using}"
   }
 
   gauge "total_unavailable_replicas" {
@@ -564,5 +563,4 @@ ingester prometheus_kube_deployment module {
       }
     }
   }
-
 }
