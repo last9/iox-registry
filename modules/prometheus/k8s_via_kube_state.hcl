@@ -57,7 +57,7 @@ ingester prometheus_kube_cluster module {
   gauge "node_with_memory_pressure" {
     unit = "count"
 
-    source prometheus "node_with_disk_pressure" {
+    source prometheus "node_with_memory_pressure" {
       query = "sum by (cluster)(kube_node_status_condition{condition='MemoryPressure', status='true'})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -213,6 +213,11 @@ ingester prometheus_kube_node module {
   inputs = "$input{inputs}"
 
   label {
+    type = "service"
+    name = "K8s-Resources"
+  }
+
+  label {
     type = "namespace"
     name = "k8s Namespace"
   }
@@ -331,7 +336,7 @@ ingester prometheus_kube_pod module {
   logical_parent_nodes = [
     {
       type = "kube_virtual_cluster"
-      name = "$output{namespace}"
+      name = "$output{cluster}-$output{namespace}"
     },
     {
       type = "kube_pods"
@@ -411,7 +416,7 @@ ingester prometheus_kube_container module {
   logical_parent_nodes = [
     {
       type = "kube_virtual_cluster"
-      name = "$output{namespace}"
+      name = "$output{cluster}-$output{namespace}"
     },
     {
       type = "kube_pods"
@@ -552,7 +557,7 @@ ingester prometheus_kube_deployment module {
 
   gauge "desired_vs_available_replicas" {
     unit = "count"
-    source prometheus "total_container_restarts" {
+    source prometheus "desired_vs_available_replicas" {
       query = "sum by (cluster, namespace, deployment)(kube_deployment_status_replicas{}) - sum by (cluster, namespace, deployment) (kube_deployment_status_replicas_available{})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
