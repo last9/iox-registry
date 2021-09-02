@@ -11,17 +11,22 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
 
   inputs = "$input{inputs}"
 
-  input_query = <<-EOF
-    label_set(
-      label_replace(
-        eks_cluster{$input{tag_filter}}, 'id=ClusterName'
-      ), "Service", "$input{service}"
-    )
-  EOF
+  // TODO - Check with Piyush/Preeti
+  // input_query = <<-EOF
+  //   label_set(
+  //     label_replace(
+  //       eks_cluster{$input{tag_filter}}, 'id=ClusterName'
+  //     ), "Service", "$input{service}"
+  //   )
+  // EOF
+
+  input_query = "label_replace(eks_cluster{$input{tag_filter}}, 'id=ClusterName')"
 
   label {
     type = "service"
-    name = "$input{Service}"
+    // TODO - Check with Piyush/Preeti
+    // name = "$input{Service}"
+    name = "test"
   }
 
   label {
