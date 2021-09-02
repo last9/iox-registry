@@ -519,7 +519,7 @@ ingester prometheus_kube_deployment module {
 
   data_for_graph_node {
     type = "kube_deployment"
-    name = "$output{deployment}"
+    name = "$output{deployment}-$output{namespace}"
   }
 
   logical_parent_nodes = [
