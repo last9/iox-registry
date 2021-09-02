@@ -15,7 +15,6 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
 
   label {
     type = "service"
-    // TODO - Check with Piyush/Preeti
     name = "k8s-deployments"
   }
 
