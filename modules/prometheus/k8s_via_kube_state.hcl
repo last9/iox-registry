@@ -181,7 +181,7 @@ ingester prometheus_kube_cluster_with_namespace module {
     unit = "count"
 
     source prometheus "total_failed_and_unknown_pods" {
-      query = "sum by (cluster, namespace) (kube_pod_status_phase{phase=!'Failed|Unknown'})"
+      query = "sum by (cluster, namespace) (kube_pod_status_phase{phase=~'Failed|Unknown'})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -221,6 +221,11 @@ ingester prometheus_kube_node module {
     name = "k8s Namespace"
   }
 
+  physical_address {
+    type = "kube_node"
+    name = "$output{node}"
+  }
+
   physical_component {
     type = "kube_cluster"
     name = "$input{cluster}"
@@ -258,7 +263,7 @@ ingester prometheus_kube_node module {
   }
 
   gauge "out_of_pods" {
-    unit = "bytes"
+    unit = "count"
 
     source prometheus "out_of_pods" {
       query = "sum by (cluster, node) (kube_node_spec_unschedulable{})"
@@ -476,7 +481,7 @@ ingester prometheus_kube_container module {
   }
 
   gauge "container_memory_limit" {
-    unit = "count"
+    unit = "bytes"
 
     source prometheus "container_memory_limit" {
       query = "sum by (cluster, namespace, pod, container) (kube_pod_container_resource_limits{resource='memory', unit='byte'})"
