@@ -334,7 +334,7 @@ ingester prometheus_kube_pod module {
 
   data_for_graph_node {
     type = "kube_pod"
-    name = "$output{pod}-$output{namespace}"
+    name = "$output{pod}"
   }
 
   logical_parent_nodes = [
@@ -344,7 +344,7 @@ ingester prometheus_kube_pod module {
     },
     {
       type = "kube_pods"
-      name = "Pods"
+      name = "Pods in $output{namespace}"
     },
   ]
 
@@ -424,11 +424,11 @@ ingester prometheus_kube_container module {
     },
     {
       type = "kube_pods"
-      name = "Pods"
+      name = "Pods in $output{namespace}"
     },
     {
       type = "kube_pod"
-      name = "$output{pod}-$output{namespace}"
+      name = "$output{pod}"
     },
   ]
 
@@ -519,7 +519,7 @@ ingester prometheus_kube_deployment module {
 
   data_for_graph_node {
     type = "kube_deployment"
-    name = "$output{deployment}-$output{namespace}"
+    name = "$output{deployment}"
   }
 
   logical_parent_nodes = [
@@ -529,7 +529,7 @@ ingester prometheus_kube_deployment module {
     },
     {
       type = "kube_deployments"
-      name = "Deployments"
+      name = "Deployments in $output{namespace}"
     },
   ]
 
