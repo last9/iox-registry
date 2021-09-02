@@ -159,3 +159,120 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
     }
   }
 }
+
+
+ingester eks_containerinsights_eks_cluster_cloudwatch module {
+  frequency  = 60
+  lookback   = 600
+  timeout    = 30
+  resolution = 60
+  lag        = 60
+
+  using = {
+    default = "$input{using}"
+  }
+
+  inputs = "$input{inputs}"
+
+  input_query = "label_replace(eks_cluster{$input{tag_filter}}, 'id=ClusterName')"
+
+  label {
+    type = "service"
+    name = "k8s-deployments"
+  }
+
+  label {
+    type = "namespace"
+    name = "default"
+  }
+
+  physical_component {
+    type = "eks_cluster"
+    name = "$input{ClusterName}"
+  }
+
+  data_for_graph_node {
+    type = "eks_cluster"
+    name = "$input{ClusterName}"
+  }
+
+  gauge "total_nodes" {
+    unit       = "count"
+    aggregator = "MAX"
+
+    source cloudwatch "cluster_node_count" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "ContainerInsights"
+        metric_name = "cluster_node_count"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+        }
+      }
+    }
+  }
+
+  gauge "failed_nodes" {
+    unit       = "count"
+    aggregator = "MAX"
+
+    source cloudwatch "cluster_failed_node_count" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "ContainerInsights"
+        metric_name = "cluster_failed_node_count"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+        }
+      }
+    }
+  }
+
+  gauge "cpu_utilization" {
+    unit       = "percent"
+    aggregator = "AVG"
+
+    source cloudwatch "cluster_node_cpu_utilization" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "node_cpu_utilization"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+        }
+      }
+    }
+  }
+
+  gauge "memory_utilization" {
+    unit       = "percent"
+    aggregator = "AVG"
+
+    source cloudwatch "cluster_node_memory_utilization" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "node_memory_utilization"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+        }
+      }
+    }
+  }
+
+  gauge "disk_used" {
+    unit       = "percent"
+    aggregator = "AVG"
+
+    source cloudwatch "cluster_memory_limit" {
+      query {
+        aggregator  = "Average"
+        namespace   = "ContainerInsights"
+        metric_name = "node_filesystem_utilization"
+        dimensions = {
+          "ClusterName" = "$input{ClusterName}"
+        }
+      }
+    }
+  }
+}
