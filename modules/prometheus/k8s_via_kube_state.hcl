@@ -68,7 +68,7 @@ ingester prometheus_kube_cluster module {
     unit = "bytes"
 
     source prometheus "available_memory_capacity" {
-      query = "sum by (cluster)(kube_node_status_allocatable_memory_bytes{}) - sum(kube_pod_container_resource_requests_memory_bytes{})"
+      query = "sum by (cluster)(kube_node_status_allocatable{resource='memory', unit='byte'}) - sum(kube_pod_container_resource_requests{resource='memory', unit='byte'})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -79,7 +79,7 @@ ingester prometheus_kube_cluster module {
     unit = "count"
 
     source prometheus "available_cpu_capacity" {
-      query = "sum by (cluster)(kube_node_status_allocatable_cpu_cores{}) - sum(kube_pod_container_resource_requests_cpu_cores{})"
+      query = "sum by (cluster)(kube_node_status_allocatable{resource='cpu', unit='core'}) - sum(kube_pod_container_resource_requests{resource='cpu', unit='core'})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -148,7 +148,7 @@ ingester prometheus_kube_cluster_with_namespace module {
     unit = "bytes"
 
     source prometheus "total_memory_requested" {
-      query = "sum by (cluster, namespace)(kube_pod_container_resource_requests_memory_bytes{})"
+      query = "sum by (cluster, namespace)(kube_pod_container_resource_requests{resource='memory', unit='byte'})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -159,7 +159,7 @@ ingester prometheus_kube_cluster_with_namespace module {
     unit = "count"
 
     source prometheus "total_cpu_requested" {
-      query = "sum by (cluster, namespace) (kube_pod_container_resource_requests_cpu_cores{})"
+      query = "sum by (cluster, namespace) (kube_pod_container_resource_requests{resource='cpu', unit='core'})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
