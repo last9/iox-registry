@@ -334,7 +334,7 @@ ingester prometheus_kube_pod module {
 
   data_for_graph_node {
     type = "kube_pod"
-    name = "$output{pod}"
+    name = "$output{pod}-$output{namespace}"
   }
 
   logical_parent_nodes = [
@@ -428,7 +428,7 @@ ingester prometheus_kube_container module {
     },
     {
       type = "kube_pod"
-      name = "$output{pod}"
+      name = "$output{pod}-$output{namespace}"
     },
   ]
 
