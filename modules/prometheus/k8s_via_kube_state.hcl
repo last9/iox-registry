@@ -344,7 +344,7 @@ ingester prometheus_kube_pod module {
     },
     {
       type = "kube_pods"
-      name = "Pods in $output{namespace}"
+      name = "Pods in in $output{namespace} on $input{cluster}"
     },
   ]
 
@@ -424,7 +424,7 @@ ingester prometheus_kube_container module {
     },
     {
       type = "kube_pods"
-      name = "Pods in $output{namespace}"
+      name = "Pods in in $output{namespace} on $input{cluster}"
     },
     {
       type = "kube_pod"
@@ -529,7 +529,7 @@ ingester prometheus_kube_deployment module {
     },
     {
       type = "kube_deployments"
-      name = "Deployments in $output{namespace}"
+      name = "Deployments in $output{namespace} on $input{cluster}"
     },
   ]
 
