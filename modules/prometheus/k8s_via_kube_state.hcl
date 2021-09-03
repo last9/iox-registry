@@ -407,11 +407,6 @@ ingester prometheus_kube_container module {
     name = "$output{namespace}"
   }
 
-  physical_address {
-    type = "kube_pod"
-    name = "$output{pod}"
-  }
-
   physical_component {
     type = "kube_cluster"
     name = "$input{cluster}"
