@@ -414,7 +414,7 @@ ingester prometheus_kube_container module {
 
   data_for_graph_node {
     type = "kube_container"
-    name = "$output{container}"
+    name = "$output{container}-$output{pod}"
   }
 
   logical_parent_nodes = [
