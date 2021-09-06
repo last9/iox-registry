@@ -5,7 +5,6 @@ ingester prometheus_linkerd_workload module {
   resolution = 60
   lag        = 60
 
-
   inputs = "$input{inputs}"
 
   label {
@@ -42,6 +41,7 @@ ingester prometheus_linkerd_workload module {
 
     source prometheus "throughput" {
       query = "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_request_total{direction='inbound', dst=~'.*svc.cluster.local.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -52,7 +52,8 @@ ingester prometheus_linkerd_workload module {
     unit = "count"
 
     source prometheus "status_2xx" {
-      query =  "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^2.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+      query = "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^2.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -63,7 +64,8 @@ ingester prometheus_linkerd_workload module {
     unit = "count"
 
     source prometheus "status_3xx" {
-      query =  "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^3.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+      query = "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^3.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -74,7 +76,8 @@ ingester prometheus_linkerd_workload module {
     unit = "count"
 
     source prometheus "status_4xx" {
-      query =  "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^4.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+      query = "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^4.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -85,23 +88,24 @@ ingester prometheus_linkerd_workload module {
     unit = "count"
 
     source prometheus "status_5xx" {
-      query =  "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^5.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+      query = "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^5.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
   }
 
-//   gauge "latency" {
-//     unit = "milliseconds"
-//
-//     source prometheus "latency" {
-//       query = "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_latency_ms_bucket{direction='inbound', dst=~'.*svc.cluster.local.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
-//       join_on = {
-//         "$output{cluster}" = "$input{cluster}"
-//       }
-//     }
-//   }
+  //   gauge "latency" {
+  //     unit = "milliseconds"
+  //
+  //     source prometheus "latency" {
+  //       query = "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_latency_ms_bucket{direction='inbound', dst=~'.*svc.cluster.local.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+  //       join_on = {
+  //         "$output{cluster}" = "$input{cluster}"
+  //       }
+  //     }
+  //   }
 }
 
 ingester prometheus_linkerd_k8s_pod module {
@@ -147,6 +151,7 @@ ingester prometheus_linkerd_k8s_pod module {
 
     source prometheus "throughput" {
       query = "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_request_total{direction='inbound', dst=~'.*svc.cluster.local.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -157,7 +162,8 @@ ingester prometheus_linkerd_k8s_pod module {
     unit = "count"
 
     source prometheus "status_2xx" {
-      query =  "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^2.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+      query = "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^2.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -168,7 +174,8 @@ ingester prometheus_linkerd_k8s_pod module {
     unit = "count"
 
     source prometheus "status_3xx" {
-      query =  "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^3.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+      query = "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^3.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -179,7 +186,8 @@ ingester prometheus_linkerd_k8s_pod module {
     unit = "count"
 
     source prometheus "status_4xx" {
-      query =  "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^4.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+      query = "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^4.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -190,7 +198,8 @@ ingester prometheus_linkerd_k8s_pod module {
     unit = "count"
 
     source prometheus "status_5xx" {
-      query =  "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^5.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+      query = "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_response_total{direction='inbound', dst=~'.*svc.cluster.local.*', status_code=~'^5.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
+
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
