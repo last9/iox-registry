@@ -35,7 +35,7 @@ ingester prometheus_kube_cluster module {
     unit = "count"
 
     source prometheus "total_unknown_nodes" {
-      query = "sum by (cluster)(kube_node_status_condition{status='unknown'})"
+      query = "label_set(sum by (cluster)(kube_node_status_condition{status='unknown'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -46,7 +46,7 @@ ingester prometheus_kube_cluster module {
     unit = "count"
 
     source prometheus "node_with_disk_pressure" {
-      query = "sum by (cluster)(kube_node_status_condition{condition='DiskPressure', status='true'})"
+      query = "label_set(sum by (cluster)(kube_node_status_condition{condition='DiskPressure', status='true'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -57,7 +57,7 @@ ingester prometheus_kube_cluster module {
     unit = "count"
 
     source prometheus "node_with_memory_pressure" {
-      query = "sum by (cluster)(kube_node_status_condition{condition='MemoryPressure', status='true'})"
+      query = "label_set(sum by (cluster)(kube_node_status_condition{condition='MemoryPressure', status='true'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -68,7 +68,7 @@ ingester prometheus_kube_cluster module {
     unit = "bytes"
 
     source prometheus "available_memory_capacity" {
-      query = "sum by (cluster)(kube_node_status_allocatable{resource='memory', unit='byte'}) - sum(kube_pod_container_resource_requests{resource='memory', unit='byte'})"
+      query = "label_set(sum by (cluster)(kube_node_status_allocatable{resource='memory', unit='byte'}) - sum(kube_pod_container_resource_requests{resource='memory', unit='byte'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -79,7 +79,7 @@ ingester prometheus_kube_cluster module {
     unit = "count"
 
     source prometheus "available_cpu_capacity" {
-      query = "sum by (cluster)(kube_node_status_allocatable{resource='cpu', unit='core'}) - sum(kube_pod_container_resource_requests{resource='cpu', unit='core'})"
+      query = "label_set(sum by (cluster)(kube_node_status_allocatable{resource='cpu', unit='core'}) - sum(kube_pod_container_resource_requests{resource='cpu', unit='core'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -90,7 +90,7 @@ ingester prometheus_kube_cluster module {
     unit = "count"
 
     source prometheus "total_unscheduled_pods" {
-      query = "sum by (cluster)(kube_pod_status_unschedulable{})"
+      query = "label_set(sum by (cluster)(kube_pod_status_unschedulable{}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -101,7 +101,7 @@ ingester prometheus_kube_cluster module {
     unit = "count"
 
     source prometheus "total_failed_pods" {
-      query = "sum by (cluster)(kube_pod_status_phase{phase='Failed'})"
+      query = "label_set(sum by (cluster)(kube_pod_status_phase{phase='Failed'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -148,7 +148,7 @@ ingester prometheus_kube_cluster_with_namespace module {
     unit = "bytes"
 
     source prometheus "total_memory_requested" {
-      query = "sum by (cluster, namespace)(kube_pod_container_resource_requests{resource='memory', unit='byte'})"
+      query = "label_set(sum by (cluster, namespace)(kube_pod_container_resource_requests{resource='memory', unit='byte'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -159,7 +159,7 @@ ingester prometheus_kube_cluster_with_namespace module {
     unit = "count"
 
     source prometheus "total_cpu_requested" {
-      query = "sum by (cluster, namespace) (kube_pod_container_resource_requests{resource='cpu', unit='core'})"
+      query = "label_set(sum by (cluster, namespace) (kube_pod_container_resource_requests{resource='cpu', unit='core'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -170,7 +170,7 @@ ingester prometheus_kube_cluster_with_namespace module {
     unit = "count"
 
     source prometheus "total_unscheduled_pods" {
-      query = "sum by (cluster, namespace) (kube_pod_status_unschedulable{})"
+      query = "label_set(sum by (cluster, namespace) (kube_pod_status_unschedulable{}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -181,7 +181,7 @@ ingester prometheus_kube_cluster_with_namespace module {
     unit = "count"
 
     source prometheus "total_failed_and_unknown_pods" {
-      query = "sum by (cluster, namespace) (kube_pod_status_phase{phase=~'Failed|Unknown'})"
+      query = "label_set(sum by (cluster, namespace) (kube_pod_status_phase{phase=~'Failed|Unknown'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -192,7 +192,7 @@ ingester prometheus_kube_cluster_with_namespace module {
     unit = "count"
 
     source prometheus "total_container_restarts" {
-      query = "sum by (cluster, namespace) (kube_pod_container_status_restarts_total{})"
+      query = "label_set(sum by (cluster, namespace) (kube_pod_container_status_restarts_total{}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -244,7 +244,7 @@ ingester prometheus_kube_node module {
     unit = "count"
 
     source prometheus "total_cpu_for_scheduling" {
-      query = "sum by (cluster, node) (kube_node_status_allocatable{resource='cpu', unit='core'}) - sum by (cluster, node) (kube_pod_container_resource_limits{resource='cpu', unit='core'})"
+      query = "label_set(sum by (cluster, node) (kube_node_status_allocatable{resource='cpu', unit='core'}) - sum by (cluster, node) (kube_pod_container_resource_limits{resource='cpu', unit='core'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -255,7 +255,7 @@ ingester prometheus_kube_node module {
     unit = "bytes"
 
     source prometheus "total_memory_for_scheduling" {
-      query = "sum by (cluster, node) (kube_node_status_allocatable{resource='memory', unit='byte'}) - sum by (cluster, node) (kube_pod_container_resource_limits{resource='memory', unit='byte'})"
+      query = "label_set(sum by (cluster, node) (kube_node_status_allocatable{resource='memory', unit='byte'}) - sum by (cluster, node) (kube_pod_container_resource_limits{resource='memory', unit='byte'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -266,7 +266,7 @@ ingester prometheus_kube_node module {
     unit = "count"
 
     source prometheus "out_of_pods" {
-      query = "sum by (cluster, node) (kube_node_spec_unschedulable{})"
+      query = "label_set(sum by (cluster, node) (kube_node_spec_unschedulable{}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -277,7 +277,7 @@ ingester prometheus_kube_node module {
     unit = "count"
 
     source prometheus "high_disk_pressure" {
-      query = "sum by (cluster, node) (kube_node_status_condition{condition='DiskPressure', status='true'})"
+      query = "label_set(sum by (cluster, node) (kube_node_status_condition{condition='DiskPressure', status='true'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -288,7 +288,7 @@ ingester prometheus_kube_node module {
     unit = "count"
 
     source prometheus "high_memory_pressure" {
-      query = "sum by (cluster, node) (kube_node_status_condition{condition='MemoryPressure', status='true'})"
+      query = "label_set(sum by (cluster, node) (kube_node_status_condition{condition='MemoryPressure', status='true'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -299,7 +299,7 @@ ingester prometheus_kube_node module {
     unit = "count"
 
     source prometheus "high_pid_pressure" {
-      query = "sum by (cluster, node) (kube_node_status_condition{condition='PIDPressure', status='true'})"
+      query = "label_set(sum by (cluster, node) (kube_node_status_condition{condition='PIDPressure', status='true'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -356,7 +356,7 @@ ingester prometheus_kube_pod module {
     unit = "count"
 
     source prometheus "total_container_restarts" {
-      query = "sum by (cluster, namespace, pod) (kube_pod_container_status_restarts_total{})"
+      query = "label_set(sum by (cluster, namespace, pod) (kube_pod_container_status_restarts_total{}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -367,7 +367,7 @@ ingester prometheus_kube_pod module {
     unit = "count"
 
     source prometheus "total_containers_in_error" {
-      query = "sum by (cluster, namespace, pod) (kube_pod_container_status_terminated_reason{reason!='Completed'})"
+      query = "label_set(sum by (cluster, namespace, pod) (kube_pod_container_status_terminated_reason{reason!='Completed'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -378,7 +378,7 @@ ingester prometheus_kube_pod module {
     unit = "count"
 
     source prometheus "running_vs_waiting_containers" {
-      query = "sum by (cluster, namespace, pod) (kube_pod_container_status_running{}) - sum by (cluster, namespace, pod) (kube_pod_container_status_waiting{})"
+      query = "label_set(sum by (cluster, namespace, pod) (kube_pod_container_status_running{}) - sum by (cluster, namespace, pod) (kube_pod_container_status_waiting{}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -440,7 +440,7 @@ ingester prometheus_kube_container module {
     unit = "count"
 
     source prometheus "total_container_restarts" {
-      query = "sum by (cluster, namespace, pod, container) (kube_pod_container_status_restarts_total{})"
+      query = "label_set(sum by (cluster, namespace, pod, container) (kube_pod_container_status_restarts_total{}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -451,7 +451,7 @@ ingester prometheus_kube_container module {
     unit = "count"
 
     source prometheus "container_in_terminated" {
-      query = "sum by (cluster, namespace, pod, container) (kube_pod_container_status_terminated_reason{reason!='Completed'})"
+      query = "label_set(sum by (cluster, namespace, pod, container) (kube_pod_container_status_terminated_reason{reason!='Completed'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -462,7 +462,7 @@ ingester prometheus_kube_container module {
     unit = "count"
 
     source prometheus "container_in_waiting" {
-      query = "sum by (cluster, namespace, pod, container) (kube_pod_container_status_waiting_reason{reason!='ContainerCreating', reason!='PodInitializing'})"
+      query = "label_set(sum by (cluster, namespace, pod, container) (kube_pod_container_status_waiting_reason{reason!='ContainerCreating', reason!='PodInitializing'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -473,7 +473,7 @@ ingester prometheus_kube_container module {
     unit = "count"
 
     source prometheus "container_cpu_limit" {
-      query = "sum by (cluster, namespace, pod, container) (kube_pod_container_resource_limits{resource='cpu', unit='core'})"
+      query = "label_set(sum by (cluster, namespace, pod, container) (kube_pod_container_resource_limits{resource='cpu', unit='core'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -484,7 +484,7 @@ ingester prometheus_kube_container module {
     unit = "bytes"
 
     source prometheus "container_memory_limit" {
-      query = "sum by (cluster, namespace, pod, container) (kube_pod_container_resource_limits{resource='memory', unit='byte'})"
+      query = "label_set(sum by (cluster, namespace, pod, container) (kube_pod_container_resource_limits{resource='memory', unit='byte'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -541,7 +541,7 @@ ingester prometheus_kube_deployment module {
     unit = "count"
 
     source prometheus "total_unavailable_replicas" {
-      query = "sum by (cluster, namespace, deployment) (kube_deployment_status_replicas_unavailable{})"
+      query = "label_set(sum by (cluster, namespace, deployment) (kube_deployment_status_replicas_unavailable{}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -552,7 +552,7 @@ ingester prometheus_kube_deployment module {
     unit = "count"
 
     source prometheus "total_updated_replicas" {
-      query = "sum by (cluster, namespace, deployment) (kube_deployment_status_replicas_updated{})"
+      query = "label_set(sum by (cluster, namespace, deployment) (kube_deployment_status_replicas_updated{}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -562,7 +562,7 @@ ingester prometheus_kube_deployment module {
   gauge "desired_vs_available_replicas" {
     unit = "count"
     source prometheus "desired_vs_available_replicas" {
-      query = "sum by (cluster, namespace, deployment)(kube_deployment_status_replicas{}) - sum by (cluster, namespace, deployment) (kube_deployment_status_replicas_available{})"
+      query = "label_set(sum by (cluster, namespace, deployment)(kube_deployment_status_replicas{}) - sum by (cluster, namespace, deployment) (kube_deployment_status_replicas_available{}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
