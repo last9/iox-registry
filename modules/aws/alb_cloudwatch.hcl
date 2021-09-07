@@ -57,11 +57,11 @@ ingester aws_alb_cloudwatch module {
   gauge "new_connections" {
     unit       = "count"
     aggregator = "SUM"
-    source cloudwatch "new_connections" {
+    source cloudwatch "peak_bytes_per_second" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ApplicationELB"
-        metric_name = "NewConnectionCount"
+        metric_name = "PeakBytesPerSecond"
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}"
