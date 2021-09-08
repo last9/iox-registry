@@ -307,6 +307,93 @@ ingester prometheus_kube_node module {
   }
 }
 
+ingester prometheus_kube_pod_grp module {
+  frequency  = 600
+  lookback   = 900
+  timeout    = 180
+  resolution = 60
+  lag        = 60
+
+
+  inputs = "$input{inputs}"
+
+  label {
+    type = "service"
+    name = "K8s-Resources"
+  }
+
+  label {
+    type = "namespace"
+    name = "$output{namespace}"
+  }
+
+  physical_component {
+    type = "kube_cluster"
+    name = "$input{cluster}"
+  }
+
+  data_for_graph_node {
+    type = "kube_pod_grp"
+    name = <<EOT
+        format("%s%s on %s", "$output{pod_group}", "$output{namespace}", "$input{cluster}")
+       EOT
+  }
+
+  logical_parent_nodes = [
+    {
+      type = "kube_virtual_cluster"
+      name = "$output{cluster}-$output{namespace}"
+    },
+    {
+      type = "kube_pods"
+      name = "Pods in $output{namespace} on $input{cluster}"
+    }
+  ]
+
+  using = {
+    "default" : "$input{using}"
+  }
+
+  gauge "total_container_restarts" {
+    unit = "count"
+
+    source prometheus "total_container_restarts" {
+      query = <<EOT
+        "label_set(sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')), 'cluster', '$input{cluster}')"
+        EOT
+      join_on = {
+        "$output{cluster}" = "$input{cluster}"
+      }
+    }
+  }
+
+  gauge "total_containers_in_error" {
+    unit = "count"
+
+    source prometheus "total_containers_in_error" {
+      query = <<EOT
+        label_set(sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_terminated_reason{reason!='Completed'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')), 'cluster', '$input{cluster}')
+        EOT
+      join_on = {
+        "$output{cluster}" = "$input{cluster}"
+      }
+    }
+  }
+
+  gauge "running_vs_waiting_containers" {
+    unit = "count"
+
+    source prometheus "running_vs_waiting_containers" {
+      query = <<EOT
+        label_set(sum without (pod) (label_replace((sum by (cluster, namespace, pod) (kube_pod_container_status_running{}) - sum by (cluster, namespace, pod) (kube_pod_container_status_waiting{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')), 'cluster', '$input{cluster}')
+        EOT
+      join_on = {
+        "$output{cluster}" = "$input{cluster}"
+      }
+    }
+  }
+}
+
 ingester prometheus_kube_pod module {
   frequency  = 600
   lookback   = 900
@@ -344,7 +431,13 @@ ingester prometheus_kube_pod module {
     },
     {
       type = "kube_pods"
-      name = "Pods in in $output{namespace} on $input{cluster}"
+      name = "Pods in $output{namespace} on $input{cluster}"
+    },
+    {
+      type = "kube_pods_grp"
+      name = <<EOT
+        format("%s%s on %s", "$output{pod_group}", "$output{namespace}", "$input{cluster}")
+       EOT
     },
   ]
 
@@ -356,7 +449,9 @@ ingester prometheus_kube_pod module {
     unit = "count"
 
     source prometheus "total_container_restarts" {
-      query = "label_set(sum by (cluster, namespace, pod) (kube_pod_container_status_restarts_total{}), 'cluster', '$input{cluster}')"
+      query = <<EOT
+        label_set(label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}')
+        EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -367,7 +462,9 @@ ingester prometheus_kube_pod module {
     unit = "count"
 
     source prometheus "total_containers_in_error" {
-      query = "label_set(sum by (cluster, namespace, pod) (kube_pod_container_status_terminated_reason{reason!='Completed'}), 'cluster', '$input{cluster}')"
+      query = <<EOT
+        label_set(label_replace((sum by (cluster, namespace, pod) (kube_pod_container_status_terminated_reason{reason!='Completed'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}')
+        EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -378,7 +475,9 @@ ingester prometheus_kube_pod module {
     unit = "count"
 
     source prometheus "running_vs_waiting_containers" {
-      query = "label_set(sum by (cluster, namespace, pod) (kube_pod_container_status_running{}) - sum by (cluster, namespace, pod) (kube_pod_container_status_waiting{}), 'cluster', '$input{cluster}')"
+      query = <<EOT
+        label_set(label_replace((sum by (cluster, namespace, pod) (kube_pod_container_status_running{}) - sum by (cluster, namespace, pod) (kube_pod_container_status_waiting{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}')
+        EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -424,7 +523,13 @@ ingester prometheus_kube_container module {
     },
     {
       type = "kube_pods"
-      name = "Pods in in $output{namespace} on $input{cluster}"
+      name = "Pods in $output{namespace} on $input{cluster}"
+    },
+    {
+      type = "kube_pods_grp"
+      name = <<EOT
+        format("%s%s on %s", "$output{pod_group}", "$output{namespace}", "$input{cluster}")
+       EOT
     },
     {
       type = "kube_pod"
@@ -440,7 +545,9 @@ ingester prometheus_kube_container module {
     unit = "count"
 
     source prometheus "total_container_restarts" {
-      query = "label_set(sum by (cluster, namespace, pod, container) (kube_pod_container_status_restarts_total{}), 'cluster', '$input{cluster}')"
+      query = <<EOT
+          label_set(label_replace((sum by (cluster, namespace, pod, container) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}')
+        EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -451,7 +558,9 @@ ingester prometheus_kube_container module {
     unit = "count"
 
     source prometheus "container_in_terminated" {
-      query = "label_set(sum by (cluster, namespace, pod, container) (kube_pod_container_status_terminated_reason{reason!='Completed'}), 'cluster', '$input{cluster}')"
+      query = <<EOT
+          label_set(label_replace((sum by (cluster, namespace, pod, container) (kube_pod_container_status_terminated_reason{reason!='Completed'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}')
+        EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -462,7 +571,9 @@ ingester prometheus_kube_container module {
     unit = "count"
 
     source prometheus "container_in_waiting" {
-      query = "label_set(sum by (cluster, namespace, pod, container) (kube_pod_container_status_waiting_reason{reason!='ContainerCreating', reason!='PodInitializing'}), 'cluster', '$input{cluster}')"
+      query = <<EOT
+          label_set(label_replace((sum by (cluster, namespace, pod, container) (kube_pod_container_status_waiting_reason{reason!='ContainerCreating', reason!='PodInitializing'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}')
+        EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -473,7 +584,9 @@ ingester prometheus_kube_container module {
     unit = "count"
 
     source prometheus "container_cpu_limit" {
-      query = "label_set(sum by (cluster, namespace, pod, container) (kube_pod_container_resource_limits{resource='cpu', unit='core'}), 'cluster', '$input{cluster}')"
+      query = <<EOT
+          label_set(label_replace((sum by (cluster, namespace, pod, container) (kube_pod_container_resource_limits{resource='cpu', unit='core'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}')
+          EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -484,7 +597,9 @@ ingester prometheus_kube_container module {
     unit = "bytes"
 
     source prometheus "container_memory_limit" {
-      query = "label_set(sum by (cluster, namespace, pod, container) (kube_pod_container_resource_limits{resource='memory', unit='byte'}), 'cluster', '$input{cluster}')"
+      query = <<EOT
+        label_set(label_replace((sum by (cluster, namespace, pod, container) (kube_pod_container_resource_limits{resource='memory', unit='byte'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}')
+        EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
