@@ -434,7 +434,7 @@ ingester prometheus_kube_pod module {
       name = "Pods in $output{namespace} on $input{cluster}"
     },
     {
-      type = "kube_pods_grp"
+      type = "kube_pod_grp"
       name = <<EOT
         format("%s%s on %s", "$output{pod_group}", "$output{namespace}", "$input{cluster}")
        EOT
@@ -526,7 +526,7 @@ ingester prometheus_kube_container module {
       name = "Pods in $output{namespace} on $input{cluster}"
     },
     {
-      type = "kube_pods_grp"
+      type = "kube_pod_grp"
       name = <<EOT
         format("%s%s on %s", "$output{pod_group}", "$output{namespace}", "$input{cluster}")
        EOT
