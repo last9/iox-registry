@@ -29,7 +29,16 @@ ingester aws_elasticache_redis_cloudwatch module {
   using = {
     default = "$input{using}"
   }
+
   inputs = "$input{inputs}"
+
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        elasticache_cluster{$input{tag_filter}}, 'id=CacheClusterId'
+      ), "service", "$input{service}"
+    )
+  EOF
 
   gauge "curr_items" {
     unit       = "count"
@@ -166,7 +175,16 @@ ingester aws_elasticache_cluster_cloudwatch module {
   using = {
     default = "$input{using}"
   }
+
   inputs = "$input{inputs}"
+
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        elasticache_cluster{$input{tag_filter}}, 'id=CacheClusterId'
+      ), "service", "$input{service}"
+    )
+  EOF
 
   gauge "replication_lag" {
     unit       = "s"

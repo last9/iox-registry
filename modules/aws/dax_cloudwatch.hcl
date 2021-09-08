@@ -31,6 +31,14 @@ ingester aws_dax_cloudwatch module {
 
   inputs = "$input{inputs}"
 
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        dax_cache{$input{tag_filter}}, 'id=ClusterId'
+      ), "service", "$input{service}"
+    )
+  EOF
+
   gauge "throughput" {
     unit       = "count"
     aggregator = "SUM"

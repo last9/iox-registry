@@ -26,6 +26,14 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
 
   inputs = "$input{inputs}"
 
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        dynamodb_table{$input{tag_filter}}, 'id=TableName'
+      ), "service", "$input{service}"
+    )
+  EOF
+
   gauge "system_errors" {
     unit       = "count"
     aggregator = "SUM"
@@ -126,6 +134,14 @@ ingester aws_dynamodb_table_cloudwatch module {
   }
 
   inputs = "$input{inputs}"
+
+  input_query = <<-EOF
+    label_set(
+      label_replace(
+        dynamodb_table{$input{tag_filter}}, 'id=TableName'
+      ), "service", "$input{service}"
+    )
+  EOF
 
   gauge "rcu" {
     unit       = "count"
