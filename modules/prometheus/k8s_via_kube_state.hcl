@@ -334,9 +334,7 @@ ingester prometheus_kube_pod_grp module {
 
   data_for_graph_node {
     type = "kube_pod_grp"
-    name = <<EOT
-        format("%s%s on %s", "$output{pod_group}", "$output{namespace}", "$input{cluster}")
-       EOT
+    name = "$output{pod_group}$output{namespace} on $input{cluster}"
   }
 
   logical_parent_nodes = [
@@ -435,9 +433,7 @@ ingester prometheus_kube_pod module {
     },
     {
       type = "kube_pod_grp"
-      name = <<EOT
-        format("%s%s on %s", "$output{pod_group}", "$output{namespace}", "$input{cluster}")
-       EOT
+      name = "$output{pod_group}$output{namespace} on $input{cluster}"
     },
   ]
 
@@ -527,9 +523,7 @@ ingester prometheus_kube_container module {
     },
     {
       type = "kube_pod_grp"
-      name = <<EOT
-        format("%s%s on %s", "$output{pod_group}", "$output{namespace}", "$input{cluster}")
-       EOT
+      name = "$output{pod_group}$output{namespace} on $input{cluster}"
     },
     {
       type = "kube_pod"
