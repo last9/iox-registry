@@ -357,7 +357,7 @@ ingester prometheus_kube_pod_grp module {
 
     source prometheus "total_container_restarts" {
       query = <<EOT
-        "label_set(sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')), 'cluster', '$input{cluster}')"
+        label_set(sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')), 'cluster', '$input{cluster}')
         EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
