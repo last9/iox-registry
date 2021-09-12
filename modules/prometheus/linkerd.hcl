@@ -1,6 +1,6 @@
 ingester prometheus_linkerd_workload module {
   frequency  = 600
-  lookback   = 300
+  lookback   = 600
   timeout    = 180
   resolution = 60
   lag        = 60
@@ -110,7 +110,7 @@ ingester prometheus_linkerd_workload module {
 
 ingester prometheus_linkerd_k8s_pod module {
   frequency  = 600
-  lookback   = 300
+  lookback   = 600
   timeout    = 180
   resolution = 60
   lag        = 60
