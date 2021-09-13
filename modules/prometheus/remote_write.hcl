@@ -125,7 +125,7 @@ ingester prometheus_remote_write module {
     unit = "count"
 
     source prometheus "available_shards" {
-      query = "label_set(max by (pod) (max_over_time(prometheus_remote_storage_shards_max{}[1m])) - max by (pod) (max_over_time(prometheus_remote_storage_shards_desired{}[1m])), , 'pod', '$input{pod}')"
+      query = "label_set(max by (pod) (max_over_time(prometheus_remote_storage_shards_max{}[1m])) - max by (pod) (max_over_time(prometheus_remote_storage_shards_desired{}[1m])), 'pod', '$input{pod}')"
       join_on = {
         "$output{pod}" = "$input{pod}"
       }
