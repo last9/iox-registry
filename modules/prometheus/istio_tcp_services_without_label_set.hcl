@@ -30,7 +30,11 @@ ingester prometheus_istio_tcp_workload module {
 
   data_for_graph_node {
     type = "istio_tcp_deployment"
-    name = "$output{destination_workload}-coalesce($output{destination_version}, \"unknown\")"
+    // name = "$output{destination_workload}-${coalesce($output{destination_version}, \"unknown\")}"
+    // name = "$output{destination_workload}-unknown"
+    name =<<EOT
+    format("$output{destination_workload}-%s", coalesce($output{destination_version}, "unknown"))
+    EOT
   }
 
   using = {
@@ -41,7 +45,7 @@ ingester prometheus_istio_tcp_workload module {
     unit = "count"
 
     source prometheus "open_connections" {
-      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_tcp_connections_opened_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m]))"
+      query = "sum by (cluster, destination_canonical_service, destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_tcp_connections_opened_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~='.+'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -53,7 +57,7 @@ ingester prometheus_istio_tcp_workload module {
     unit = "count"
 
     source prometheus "closed_connections" {
-      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_tcp_connections_closed_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m]))"
+      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_tcp_connections_closed_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -65,7 +69,7 @@ ingester prometheus_istio_tcp_workload module {
     unit = "bytes"
 
     source prometheus "bytes_in" {
-      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_tcp_received_bytes_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m]))"
+      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_tcp_received_bytes_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -77,7 +81,7 @@ ingester prometheus_istio_tcp_workload module {
     unit = "bytes"
 
     source prometheus "bytes_out" {
-      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace,  destination_version, pod_name) (increase(istio_tcp_sent_bytes_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m]))"
+      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace,  destination_version, pod_name) (increase(istio_tcp_sent_bytes_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+'}[1m]))"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"

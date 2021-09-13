@@ -30,7 +30,11 @@ ingester prometheus_istio_workload module {
 
   data_for_graph_node {
     type = "istio_deployment"
-    name = "$output{destination_workload}-coalesce($output{destination_version}, \"unknown\")"
+    // name = "$output{destination_workload}-${coalesce($output{destination_version}, \"unknown\")}"
+    // name = "$output{destination_workload}-unknown"
+    name =<<EOT
+    format("$output{destination_workload}-%s", coalesce($output{destination_version}, "unknown"))
+    EOT
   }
 
   using = {
