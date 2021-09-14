@@ -39,7 +39,7 @@ ingester prometheus_istio_tcp_workload module {
   }
 
   using = {
-    default = "victoriametrics"
+    default = "$input{using}"
   }
 
   gauge "open_connections" {
@@ -123,7 +123,7 @@ ingester prometheus_istio_tcp_cluster module {
   }
 
   using = {
-    default = "victoriametrics"
+    default = "$input{using}"
   }
 
   gauge "open_connections" {
@@ -210,7 +210,7 @@ ingester prometheus_istio_tcp_k8s_pod module {
   }
 
   using = {
-    default = "victoriametrics"
+    default = "$input{using}"
   }
 
   gauge "open_connections" {

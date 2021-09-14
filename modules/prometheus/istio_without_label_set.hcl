@@ -39,7 +39,7 @@ ingester prometheus_istio_workload module {
   }
 
   using = {
-    default = "victoriametrics"
+    default = "$input{using}"
   }
 
   gauge "throughput" {
@@ -194,7 +194,7 @@ ingester prometheus_istio_cluster module {
   }
 
   using = {
-    default = "victoriametrics"
+    default = "$input{using}"
   }
 
   gauge "throughput" {
@@ -317,7 +317,7 @@ ingester prometheus_istio_k8s_pod module {
   }
 
   using = {
-    default = "victoriametrics"
+    default = "$input{using}"
   }
 
   gauge "throughput" {
