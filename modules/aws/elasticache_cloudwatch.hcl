@@ -18,7 +18,7 @@ ingester aws_elasticache_redis_cloudwatch module {
 
   physical_address {
     type = "elasticache_node"
-    name = "$input{CacheNodeId}"
+    name = "0001"
   }
 
   data_for_graph_node {
@@ -51,7 +51,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         metric_name = "CurrItems"
         dimensions = {
           CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "$input{CacheNodeId}"
+          CacheNodeId    = "0001"
         }
       }
     }
@@ -67,7 +67,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         metric_name = "CacheHitRate"
         dimensions = {
           CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "$input{CacheNodeId}"
+          CacheNodeId    = "0001"
         }
       }
     }
@@ -82,7 +82,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         metric_name = "Evictions"
         dimensions = {
           CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "$input{CacheNodeId}"
+          CacheNodeId    = "0001"
         }
       }
     }
@@ -99,7 +99,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         metric_name = "SetTypeCmds"
         dimensions = {
           CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "$input{CacheNodeId}"
+          CacheNodeId    = "0001"
         }
       }
     }
@@ -110,7 +110,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         metric_name = "SetTypeCmdsLatency"
         dimensions = {
           CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "$input{CacheNodeId}"
+          CacheNodeId    = "0001"
         }
       }
     }
@@ -121,7 +121,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         metric_name = "SetTypeCmdsLatency"
         dimensions = {
           CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "$input{CacheNodeId}"
+          CacheNodeId    = "0001"
         }
       }
     }
@@ -132,7 +132,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         metric_name = "SetTypeCmdsLatency"
         dimensions = {
           CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "$input{CacheNodeId}"
+          CacheNodeId    = "0001"
         }
       }
     }
@@ -143,7 +143,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         metric_name = "SetTypeCmdsLatency"
         dimensions = {
           CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "$input{CacheNodeId}"
+          CacheNodeId    = "0001"
         }
       }
     }
@@ -197,7 +197,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
         metric_name = "ReplicationLag"
         dimensions = {
           CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "$input{CacheNodeId}"
+          CacheNodeId    = "0001"
         }
       }
     }
@@ -213,7 +213,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
         metric_name = "NetworkBytesOut"
         dimensions = {
           CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "$input{CacheNodeId}"
+          CacheNodeId    = "0001"
         }
       }
     }
@@ -229,7 +229,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
         metric_name = "NetworkBytesIn"
         dimensions = {
           CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "$input{CacheNodeId}"
+          CacheNodeId    = "0001"
         }
       }
     }
@@ -245,7 +245,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
         metric_name = "EngineCPUUtilization"
         dimensions = {
           CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "$input{CacheNodeId}"
+          CacheNodeId    = "0001"
         }
       }
     }

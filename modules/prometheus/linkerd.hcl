@@ -33,7 +33,7 @@ ingester prometheus_linkerd_workload module {
   }
 
   using = {
-    default = "victoriametrics"
+    default = "$input{using}"
   }
 
   gauge "throughput" {
@@ -143,7 +143,7 @@ ingester prometheus_linkerd_k8s_pod module {
   }
 
   using = {
-    default = "victoriametrics"
+    default = "$input{using}"
   }
 
   gauge "throughput" {

@@ -29,7 +29,7 @@ ingester prometheus_remote_write module {
   inputs = "$input{inputs}"
 
   using = {
-    default = "victoriametrics"
+    default = "$input{using}"
   }
 
   gauge "pending" {
