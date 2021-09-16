@@ -190,7 +190,7 @@ ingester aws_apigateway_cloudwatch module {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ApiGateway"
-        metric_name = "4xxError"
+        metric_name = "4XXError"
         dimensions = {
           "ApiName" = "$input{ApiName}"
           "Stage"   = "$input{Stage}"
@@ -208,7 +208,7 @@ ingester aws_apigateway_cloudwatch module {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ApiGateway"
-        metric_name = "5xxError"
+        metric_name = "5XXError"
         dimensions = {
           "ApiName" = "$input{ApiName}"
           "Stage"   = "$input{Stage}"
