@@ -10,6 +10,11 @@ ingester aws_dax_cloudwatch module {
     name = "$input{service}"
   }
 
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
   physical_address {
     type = "dax_node"
     name = "$input{NodeId}"

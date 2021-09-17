@@ -10,6 +10,11 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
     name = "$input{service}"
   }
 
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
   physical_component {
     type = "dynamodb"
     name = "$input{TableName}"
@@ -117,6 +122,11 @@ ingester aws_dynamodb_table_cloudwatch module {
   label {
     type = "service"
     name = "$input{service}"
+  }
+
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
   }
 
   physical_component {

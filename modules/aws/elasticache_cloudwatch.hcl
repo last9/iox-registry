@@ -11,6 +11,11 @@ ingester aws_elasticache_redis_cloudwatch module {
     name = "$input{service}"
   }
 
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
   physical_component {
     type = "elasticache_cluster"
     name = "$input{CacheClusterId}"
@@ -160,6 +165,11 @@ ingester aws_elasticache_cluster_cloudwatch module {
   label {
     type = "service"
     name = "$input{service}"
+  }
+
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
   }
 
   physical_component {
