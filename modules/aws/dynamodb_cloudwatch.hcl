@@ -123,7 +123,7 @@ ingester aws_dynamodb_table_cloudwatch module {
     type = "service"
     name = "$input{service}"
   }
-  
+
   label {
     type = "namespace"
     name = "$input{namespace}"
