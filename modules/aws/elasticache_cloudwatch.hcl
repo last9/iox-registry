@@ -45,6 +45,74 @@ ingester aws_elasticache_redis_cloudwatch module {
     )
   EOF
 
+  gauge "engine_cpu_used" {
+    unit       = "percent"
+    aggregator = "AVG"
+
+    source cloudwatch "EngineCPUUtilization" {
+      query {
+        aggregator  = "Average"
+        namespace   = "AWS/ElastiCache"
+        metric_name = "EngineCPUUtilization"
+        dimensions = {
+          CacheClusterId = "$input{CacheClusterId}"
+          CacheNodeId    = "0001"
+        }
+      }
+    }
+  }
+
+  gauge "memory_used" {
+    unit       = "percent"
+    aggregator = "AVG"
+
+    source cloudwatch "DatabaseMemoryUsagePercentage" {
+      query {
+        aggregator  = "Average"
+        namespace   = "AWS/ElastiCache"
+        metric_name = "DatabaseMemoryUsagePercentage"
+        dimensions = {
+          CacheClusterId = "$input{CacheClusterId}"
+          CacheNodeId    = "0001"
+        }
+      }
+    }
+  }
+
+  gauge "curr_connections" {
+    unit       = "count"
+    aggregator = "MAX"
+
+    source cloudwatch "CurrConnections" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ElastiCache"
+        metric_name = "CurrConnections"
+        dimensions = {
+          CacheClusterId = "$input{CacheClusterId}"
+          CacheNodeId    = "0001"
+        }
+      }
+    }
+  }
+
+  gauge "new_connections" {
+    unit       = "count"
+    aggregator = "MAX"
+
+    source cloudwatch "NewConnections" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ElastiCache"
+        metric_name = "NewConnections"
+        dimensions = {
+          CacheClusterId = "$input{CacheClusterId}"
+          CacheNodeId    = "0001"
+        }
+      }
+    }
+  }
+
   gauge "curr_items" {
     unit       = "count"
     aggregator = "MAX"
@@ -61,6 +129,7 @@ ingester aws_elasticache_redis_cloudwatch module {
       }
     }
   }
+
   gauge "cache_hit_rate" {
     unit       = "percent"
     aggregator = "MIN"
@@ -77,6 +146,43 @@ ingester aws_elasticache_redis_cloudwatch module {
       }
     }
   }
+
+  gauge "cache_hits" {
+    unit       = "count"
+    aggregator = "MAX"
+
+    source cloudwatch "CacheHits" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ElastiCache"
+        metric_name = "CacheHits"
+        dimensions = {
+          CacheClusterId = "$input{CacheClusterId}"
+          CacheNodeId    = "0001"
+        }
+      }
+    }
+  }
+
+  gauge "cache_misses" {
+    unit       = "count"
+    aggregator = "MAX"
+
+    source cloudwatch "CacheMisses" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ElastiCache"
+        metric_name = "CacheMisses"
+        dimensions = {
+          CacheClusterId = "$input{CacheClusterId}"
+          CacheNodeId    = "0001"
+        }
+      }
+    }
+  }
+
+
+
   gauge "evictions" {
     unit       = "count"
     aggregator = "SUM"
