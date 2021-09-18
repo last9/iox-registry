@@ -38,46 +38,12 @@ ingester aws_elasticache_redis_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        elasticache_cluster{$input{tag_filter}}, 'id=CacheClusterId'
-      ), "service", "$input{service}"
-    )
+  label_set(
+    label_replace(
+      elasticache_cluster{$input{tag_filter}}, 'id=CacheClusterId'
+    ), "service", "$input{service}"
+  )
   EOF
-
-  gauge "engine_cpu_used" {
-    unit       = "percent"
-    aggregator = "AVG"
-
-    source cloudwatch "EngineCPUUtilization" {
-      query {
-        aggregator  = "Average"
-        namespace   = "AWS/ElastiCache"
-        metric_name = "EngineCPUUtilization"
-        dimensions = {
-          CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "0001"
-        }
-      }
-    }
-  }
-
-  gauge "memory_used" {
-    unit       = "percent"
-    aggregator = "AVG"
-
-    source cloudwatch "DatabaseMemoryUsagePercentage" {
-      query {
-        aggregator  = "Average"
-        namespace   = "AWS/ElastiCache"
-        metric_name = "DatabaseMemoryUsagePercentage"
-        dimensions = {
-          CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "0001"
-        }
-      }
-    }
-  }
 
   gauge "curr_connections" {
     unit       = "count"
@@ -181,8 +147,6 @@ ingester aws_elasticache_redis_cloudwatch module {
     }
   }
 
-
-
   gauge "evictions" {
     unit       = "count"
     aggregator = "SUM"
@@ -198,6 +162,7 @@ ingester aws_elasticache_redis_cloudwatch module {
       }
     }
   }
+
   latency "latency_histo" {
     error_margin = 0.05
     unit         = "ms"
@@ -214,6 +179,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         }
       }
     }
+
     source cloudwatch "p50" {
       query {
         aggregator  = "p50"
@@ -225,6 +191,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         }
       }
     }
+
     source cloudwatch "p75" {
       query {
         aggregator  = "p75"
@@ -236,6 +203,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         }
       }
     }
+
     source cloudwatch "p90" {
       query {
         aggregator  = "p90"
@@ -247,6 +215,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         }
       }
     }
+
     source cloudwatch "p99" {
       query {
         aggregator  = "p99"
@@ -295,11 +264,11 @@ ingester aws_elasticache_cluster_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        elasticache_cluster{$input{tag_filter}}, 'id=CacheClusterId'
-      ), "service", "$input{service}"
-    )
+  label_set(
+    label_replace(
+      elasticache_cluster{$input{tag_filter}}, 'id=CacheClusterId'
+    ), "service", "$input{service}"
+  )
   EOF
 
   gauge "replication_lag" {
@@ -318,6 +287,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
       }
     }
   }
+
   gauge "bytes_out" {
     unit       = "bytes"
     aggregator = "SUM"
@@ -334,6 +304,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
       }
     }
   }
+
   gauge "bytes_in" {
     unit       = "bytes"
     aggregator = "SUM"
@@ -350,6 +321,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
       }
     }
   }
+
   gauge "cpu_used" {
     unit       = "percent"
     aggregator = "AVG"
@@ -366,4 +338,23 @@ ingester aws_elasticache_cluster_cloudwatch module {
       }
     }
   }
+
+  gauge "memory_used" {
+    unit       = "percent"
+    aggregator = "AVG"
+
+    source cloudwatch "DatabaseMemoryUsagePercentage" {
+      query {
+        aggregator  = "Average"
+        namespace   = "AWS/ElastiCache"
+        metric_name = "DatabaseMemoryUsagePercentage"
+        dimensions = {
+          CacheClusterId = "$input{CacheClusterId}"
+          CacheNodeId    = "0001"
+        }
+      }
+    }
+  }
+
+
 }
