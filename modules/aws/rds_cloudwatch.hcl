@@ -10,6 +10,11 @@ ingester aws_rds_logical_cloudwatch module {
     name = "$input{service}"
   }
 
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
   physical_component {
     type = "rds"
     name = "$input{DBInstanceIdentifier}"
@@ -125,6 +130,11 @@ ingester aws_rds_physical_cloudwatch module {
   label {
     type = "service"
     name = "$input{service}"
+  }
+
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
   }
 
   physical_component {

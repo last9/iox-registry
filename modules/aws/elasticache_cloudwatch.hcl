@@ -11,6 +11,11 @@ ingester aws_elasticache_redis_cloudwatch module {
     name = "$input{service}"
   }
 
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
   physical_component {
     type = "elasticache_cluster"
     name = "$input{CacheClusterId}"
@@ -33,12 +38,46 @@ ingester aws_elasticache_redis_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        elasticache_cluster{$input{tag_filter}}, 'id=CacheClusterId'
-      ), "service", "$input{service}"
-    )
+  label_set(
+    label_replace(
+      elasticache_cluster{$input{tag_filter}}, 'id=CacheClusterId'
+    ), "service", "$input{service}"
+  )
   EOF
+
+  gauge "curr_connections" {
+    unit       = "count"
+    aggregator = "MAX"
+
+    source cloudwatch "CurrConnections" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ElastiCache"
+        metric_name = "CurrConnections"
+        dimensions = {
+          CacheClusterId = "$input{CacheClusterId}"
+          CacheNodeId    = "0001"
+        }
+      }
+    }
+  }
+
+  gauge "new_connections" {
+    unit       = "count"
+    aggregator = "MAX"
+
+    source cloudwatch "NewConnections" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ElastiCache"
+        metric_name = "NewConnections"
+        dimensions = {
+          CacheClusterId = "$input{CacheClusterId}"
+          CacheNodeId    = "0001"
+        }
+      }
+    }
+  }
 
   gauge "curr_items" {
     unit       = "count"
@@ -56,6 +95,7 @@ ingester aws_elasticache_redis_cloudwatch module {
       }
     }
   }
+
   gauge "cache_hit_rate" {
     unit       = "percent"
     aggregator = "MIN"
@@ -72,6 +112,41 @@ ingester aws_elasticache_redis_cloudwatch module {
       }
     }
   }
+
+  gauge "cache_hits" {
+    unit       = "count"
+    aggregator = "MAX"
+
+    source cloudwatch "CacheHits" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ElastiCache"
+        metric_name = "CacheHits"
+        dimensions = {
+          CacheClusterId = "$input{CacheClusterId}"
+          CacheNodeId    = "0001"
+        }
+      }
+    }
+  }
+
+  gauge "cache_misses" {
+    unit       = "count"
+    aggregator = "MAX"
+
+    source cloudwatch "CacheMisses" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ElastiCache"
+        metric_name = "CacheMisses"
+        dimensions = {
+          CacheClusterId = "$input{CacheClusterId}"
+          CacheNodeId    = "0001"
+        }
+      }
+    }
+  }
+
   gauge "evictions" {
     unit       = "count"
     aggregator = "SUM"
@@ -87,6 +162,7 @@ ingester aws_elasticache_redis_cloudwatch module {
       }
     }
   }
+
   latency "latency_histo" {
     error_margin = 0.05
     unit         = "ms"
@@ -103,6 +179,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         }
       }
     }
+
     source cloudwatch "p50" {
       query {
         aggregator  = "p50"
@@ -114,6 +191,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         }
       }
     }
+
     source cloudwatch "p75" {
       query {
         aggregator  = "p75"
@@ -125,6 +203,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         }
       }
     }
+
     source cloudwatch "p90" {
       query {
         aggregator  = "p90"
@@ -136,6 +215,7 @@ ingester aws_elasticache_redis_cloudwatch module {
         }
       }
     }
+
     source cloudwatch "p99" {
       query {
         aggregator  = "p99"
@@ -162,6 +242,11 @@ ingester aws_elasticache_cluster_cloudwatch module {
     name = "$input{service}"
   }
 
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
   physical_component {
     type = "elasticache_cluster"
     name = "$input{CacheClusterId}"
@@ -179,11 +264,11 @@ ingester aws_elasticache_cluster_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        elasticache_cluster{$input{tag_filter}}, 'id=CacheClusterId'
-      ), "service", "$input{service}"
-    )
+  label_set(
+    label_replace(
+      elasticache_cluster{$input{tag_filter}}, 'id=CacheClusterId'
+    ), "service", "$input{service}"
+  )
   EOF
 
   gauge "replication_lag" {
@@ -202,6 +287,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
       }
     }
   }
+
   gauge "bytes_out" {
     unit       = "bytes"
     aggregator = "SUM"
@@ -218,6 +304,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
       }
     }
   }
+
   gauge "bytes_in" {
     unit       = "bytes"
     aggregator = "SUM"
@@ -234,6 +321,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
       }
     }
   }
+
   gauge "cpu_used" {
     unit       = "percent"
     aggregator = "AVG"
@@ -250,4 +338,23 @@ ingester aws_elasticache_cluster_cloudwatch module {
       }
     }
   }
+
+  gauge "memory_used" {
+    unit       = "percent"
+    aggregator = "AVG"
+
+    source cloudwatch "DatabaseMemoryUsagePercentage" {
+      query {
+        aggregator  = "Average"
+        namespace   = "AWS/ElastiCache"
+        metric_name = "DatabaseMemoryUsagePercentage"
+        dimensions = {
+          CacheClusterId = "$input{CacheClusterId}"
+          CacheNodeId    = "0001"
+        }
+      }
+    }
+  }
+
+
 }

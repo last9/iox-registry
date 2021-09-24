@@ -1,6 +1,6 @@
 ingester prometheus_istio_workload module {
   frequency  = 600
-  lookback   = 600
+  lookback   = 1800
   timeout    = 180
   resolution = 60
   lag        = 60
