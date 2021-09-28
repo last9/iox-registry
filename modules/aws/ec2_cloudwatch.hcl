@@ -12,12 +12,18 @@ ingester aws_ec2_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        ec2_instance{$input{tag_filter}}, 'id=InstanceId'
-      ), "service", "$input{service}"
-    )
+  label_set(
+    label_replace(
+      ec2_instance{$input{tag_filter}}, 'id=InstanceId'
+    ), "service", "$input{service}"
+  )
   EOF
+
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
 
   label {
     type = "service"
