@@ -133,29 +133,30 @@ ingester prometheus_istio_workload module {
   //     }
   //   }
 
-  gauge "bytes_in" {
-    unit = "bytes"
+  // Commenting to release temporary modules where pod_name is not present in istio_request_bytes_sum, istio_response_bytes_sum
+  // gauge "bytes_in" {
+  //   unit = "bytes"
 
-    source prometheus "bytes_in" {
-      query = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_request_bytes_sum{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m])), 'cluster', '$input{cluster}')"
+  //   source prometheus "bytes_in" {
+  //     query = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_request_bytes_sum{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m])), 'cluster', '$input{cluster}')"
 
-      join_on = {
-        "$output{cluster}" = "$input{cluster}"
-      }
-    }
-  }
+  //     join_on = {
+  //       "$output{cluster}" = "$input{cluster}"
+  //     }
+  //   }
+  // }
 
-  gauge "bytes_out" {
-    unit = "bytes"
+  // gauge "bytes_out" {
+  //   unit = "bytes"
 
-    source prometheus "bytes_out" {
-      query = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace,  destination_version, pod_name) (increase(istio_response_bytes_sum{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m])), 'cluster', '$input{cluster}')"
+  //   source prometheus "bytes_out" {
+  //     query = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace,  destination_version, pod_name) (increase(istio_response_bytes_sum{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m])), 'cluster', '$input{cluster}')"
 
-      join_on = {
-        "$output{cluster}" = "$input{cluster}"
-      }
-    }
-  }
+  //     join_on = {
+  //       "$output{cluster}" = "$input{cluster}"
+  //     }
+  //   }
+  // }
 }
 
 ingester prometheus_istio_cluster module {
@@ -252,29 +253,30 @@ ingester prometheus_istio_cluster module {
     }
   }
 
-  gauge "bytes_in" {
-    unit = "bytes"
+  // Commenting to release temporary modules where pod_name is not present in istio_request_bytes_sum, istio_response_bytes_sum
+  //   gauge "bytes_in" {
+  //     unit = "bytes"
 
-    source prometheus "bytes_in" {
-      query = "label_set(sum by (cluster) (increase(istio_request_bytes_sum{reporter='source'}[1m])), 'cluster', '$input{cluster}')"
+  //     source prometheus "bytes_in" {
+  //       query = "label_set(sum by (cluster) (increase(istio_request_bytes_sum{reporter='source'}[1m])), 'cluster', '$input{cluster}')"
 
-      join_on = {
-        "$output{cluster}" = "$input{cluster}"
-      }
-    }
-  }
+  //       join_on = {
+  //         "$output{cluster}" = "$input{cluster}"
+  //       }
+  //     }
+  //   }
 
-  gauge "bytes_out" {
-    unit = "bytes"
+  //   gauge "bytes_out" {
+  //     unit = "bytes"
 
-    source prometheus "bytes_out" {
-      query = "label_set(sum by (cluster) (increase(istio_response_bytes_sum{reporter='source'}[1m])), 'cluster', '$input{cluster}')"
+  //     source prometheus "bytes_out" {
+  //       query = "label_set(sum by (cluster) (increase(istio_response_bytes_sum{reporter='source'}[1m])), 'cluster', '$input{cluster}')"
 
-      join_on = {
-        "$output{cluster}" = "$input{cluster}"
-      }
-    }
-  }
+  //       join_on = {
+  //         "$output{cluster}" = "$input{cluster}"
+  //       }
+  //     }
+  //   }
 }
 
 ingester prometheus_istio_k8s_pod module {
@@ -375,27 +377,28 @@ ingester prometheus_istio_k8s_pod module {
     }
   }
 
-  gauge "bytes_in" {
-    unit = "bytes"
+  // Commenting to release temporary modules where pod_name is not present in istio_request_bytes_sum, istio_response_bytes_sum
+  // gauge "bytes_in" {
+  //   unit = "bytes"
 
-    source prometheus "bytes_in" {
-      query = "label_set(sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_request_bytes_sum{reporter='source', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown'}[1m])), 'cluster', '$input{cluster}')"
+  //   source prometheus "bytes_in" {
+  //     query = "label_set(sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_request_bytes_sum{reporter='source', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown'}[1m])), 'cluster', '$input{cluster}')"
 
-      join_on = {
-        "$output{cluster}" = "$input{cluster}"
-      }
-    }
-  }
+  //     join_on = {
+  //       "$output{cluster}" = "$input{cluster}"
+  //     }
+  //   }
+  // }
 
-  gauge "bytes_out" {
-    unit = "bytes"
+  // gauge "bytes_out" {
+  //   unit = "bytes"
 
-    source prometheus "bytes_out" {
-      query = "label_set(sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_response_bytes_sum{reporter='source', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown'}[1m])), 'cluster', '$input{cluster}')"
+  //   source prometheus "bytes_out" {
+  //     query = "label_set(sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_response_bytes_sum{reporter='source', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown'}[1m])), 'cluster', '$input{cluster}')"
 
-      join_on = {
-        "$output{cluster}" = "$input{cluster}"
-      }
-    }
-  }
+  //     join_on = {
+  //       "$output{cluster}" = "$input{cluster}"
+  //     }
+  //   }
+  // }
 }
