@@ -133,29 +133,30 @@ ingester prometheus_istio_workload module {
   //     }
   //   }
 
-  gauge "bytes_in" {
-    unit = "bytes"
+  // Commenting this for creating a temporary module version for cases where customer is not passing pod_name in istio_request_bytes_sum, istio_response_bytes_sum
+  // gauge "bytes_in" {
+  //   unit = "bytes"
 
-    source prometheus "bytes_in" {
-      query = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_request_bytes_sum{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m])), 'cluster', '$input{cluster}')"
+  //   source prometheus "bytes_in" {
+  //     query = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_request_bytes_sum{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m])), 'cluster', '$input{cluster}')"
 
-      join_on = {
-        "$output{cluster}" = "$input{cluster}"
-      }
-    }
-  }
+  //     join_on = {
+  //       "$output{cluster}" = "$input{cluster}"
+  //     }
+  //   }
+  // }
 
-  gauge "bytes_out" {
-    unit = "bytes"
+  // gauge "bytes_out" {
+  //   unit = "bytes"
 
-    source prometheus "bytes_out" {
-      query = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace,  destination_version, pod_name) (increase(istio_response_bytes_sum{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m])), 'cluster', '$input{cluster}')"
+  //   source prometheus "bytes_out" {
+  //     query = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace,  destination_version, pod_name) (increase(istio_response_bytes_sum{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m])), 'cluster', '$input{cluster}')"
 
-      join_on = {
-        "$output{cluster}" = "$input{cluster}"
-      }
-    }
-  }
+  //     join_on = {
+  //       "$output{cluster}" = "$input{cluster}"
+  //     }
+  //   }
+  // }
 }
 
 ingester prometheus_istio_cluster module {
