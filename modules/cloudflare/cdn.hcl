@@ -1,4 +1,4 @@
-ingester cloudflare_cdn "cdn" {
+ingester cloudflare_cdn module {
   lookback = 600
 
   # Should be less than frequency
