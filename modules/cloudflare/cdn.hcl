@@ -29,7 +29,7 @@ ingester cloudflare_cdn module {
 
   data_for_graph_node {
     type = "cloudflare_endpoint"
-    name = "$input{path}"
+    name = "$output{host}$input{path}"
   }
 
   using = {
