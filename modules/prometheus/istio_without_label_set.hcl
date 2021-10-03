@@ -103,20 +103,19 @@ ingester prometheus_istio_workload module {
     }
   }
 
-     latency_histo "latency" {
-       unit = "ms"
+   latency_histo "latency" {
+     unit = "ms"
 
-       source prometheus "latency" {
-         query = <<EOT
+     source prometheus "latency" {
+       query = <<EOT
          sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name, le)
           (increase(istio_request_duration_milliseconds_bucket{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m]))
         EOT
-
-         join_on = {
-           "$output{cluster}"                        = "$input{cluster}"
-         }
+       join_on = {
+         "$output{cluster}" = "$input{cluster}"
        }
      }
+   }
 
   //   gauge "P90" {
   //     unit = "milliseconds"
