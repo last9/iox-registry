@@ -110,13 +110,13 @@ ingester prometheus_istio_workload module {
        query = <<EOT
          sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name, le)
           (increase(istio_request_duration_milliseconds_bucket{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m]))
-        EOT
+      EOT
        join_on = {
          "$output{cluster}" = "$input{cluster}"
        }
      }
    }
-  
+
   gauge "bytes_in" {
     unit = "bytes"
 
