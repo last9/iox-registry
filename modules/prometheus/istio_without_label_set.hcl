@@ -103,19 +103,19 @@ ingester prometheus_istio_workload module {
     }
   }
 
-   latency_histo "latency" {
-     unit = "ms"
+  latency_histo "latency" {
+    unit = "ms"
 
-     source prometheus "latency" {
-       query = <<EOT
+    source prometheus "latency" {
+      query = <<EOT
          sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name, le)
           (increase(istio_request_duration_milliseconds_bucket{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m]))
       EOT
-       join_on = {
-         "$output{cluster}" = "$input{cluster}"
-       }
-     }
-   }
+      join_on = {
+        "$output{cluster}" = "$input{cluster}"
+      }
+    }
+  }
 
   gauge "bytes_in" {
     unit = "bytes"
@@ -259,6 +259,21 @@ ingester prometheus_istio_cluster module {
       }
     }
   }
+
+  latency_histo "latency" {
+    unit = "ms"
+
+    source prometheus "latency" {
+      query = <<EOT
+         sum by (cluster, le)
+          (increase(istio_request_duration_milliseconds_bucket{reporter='source'}[1m]))
+      EOT
+
+      join_on = {
+        "$output{cluster}" = "$input{cluster}"
+      }
+    }
+  }
 }
 
 ingester prometheus_istio_k8s_pod module {
@@ -376,6 +391,21 @@ ingester prometheus_istio_k8s_pod module {
 
     source prometheus "bytes_out" {
       query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_response_bytes_sum{reporter='source', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown', destination_canonical_service=~'.+' }[1m]))"
+
+      join_on = {
+        "$output{cluster}" = "$input{cluster}"
+      }
+    }
+  }
+
+  latency_histo "latency" {
+    unit = "ms"
+
+    source prometheus "latency" {
+      query = <<EOT
+         sum by (cluster, destination_canonical_service, destination_workload_namespace, pod_name, le)
+          (increase(istio_request_duration_milliseconds_bucket{reporter='source', destination_canonical_service=~'.+', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m]))
+      EOT
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
