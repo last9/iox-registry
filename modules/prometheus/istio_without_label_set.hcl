@@ -116,31 +116,7 @@ ingester prometheus_istio_workload module {
        }
      }
    }
-
-  //   gauge "P90" {
-  //     unit = "milliseconds"
-
-  //     source prometheus "latency" {
-  //       query = "(histogram_quantile(0.90, sum(increase(istio_request_duration_milliseconds_bucket{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m])) by (le, cluster, destination_version, destination_workload, destination_workload_namespace, pod_name)))"
-
-  //       join_on = {
-  //         "$output{cluster}"                        = "$input{cluster}"
-  //       }
-  //     }
-  //   }
-
-  //   gauge "P99" {
-  //     unit = "milliseconds"
-
-  //     source prometheus "latency" {
-  //       query = "(histogram_quantile(0.99, sum(increase(istio_request_duration_milliseconds_bucket{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m])) by (le, cluster, destination_version, destination_workload, destination_workload_namespace, pod_name)))"
-
-  //       join_on = {
-  //         "$output{cluster}"                        = "$input{cluster}"
-  //       }
-  //     }
-  //   }
-
+  
   gauge "bytes_in" {
     unit = "bytes"
 
