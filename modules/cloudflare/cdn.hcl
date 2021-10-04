@@ -28,7 +28,7 @@ ingester cloudflare_cdn module {
   }
 
   data_for_graph_node {
-    type = "cloudflare_endpoint"
+    type = "cloudflare_cdn_endpoint"
     name = "$output{host}.cdn$input{path}"
   }
 
@@ -215,7 +215,7 @@ ingester cloudflare_waf module {
   }
 
   data_for_graph_node {
-    type = "cloudflare_endpoint"
+    type = "cloudflare_waf_endpoint"
     name = "$output{host}.waf$input{path}"
   }
 
