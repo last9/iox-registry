@@ -103,7 +103,7 @@ ingester prometheus_istio_workload module {
     }
   }
 
-  latency_histo "latency" {
+  latency_histo "latency_histo" {
     unit = "ms"
 
     source prometheus "latency" {
@@ -260,7 +260,7 @@ ingester prometheus_istio_cluster module {
     }
   }
 
-  latency_histo "latency" {
+  latency_histo "latency_histo" {
     unit = "ms"
 
     source prometheus "latency" {
@@ -398,7 +398,7 @@ ingester prometheus_istio_k8s_pod module {
     }
   }
 
-  latency_histo "latency" {
+  latency_histo "latency_histo" {
     unit = "ms"
 
     source prometheus "latency" {
