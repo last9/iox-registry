@@ -381,7 +381,7 @@ ingester prometheus_kube_pod_grp module {
 
     source prometheus "containers_desired" {
       query = <<EOT
-      sum without (pod) (label_replace((sum by (cluster, namespace, pod) (kube_pod_container_status_terminated_reason{}) + \
+      sum without (pod) (label_replace((sum by (cluster, namespace, pod) (kube_pod_container_status_terminated{}) + \
       sum by (cluster, namespace, pod) (kube_pod_container_status_running{}) + \
       sum by (cluster, namespace, pod) (kube_pod_container_status_waiting{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
       EOT
@@ -499,7 +499,7 @@ ingester prometheus_kube_pod module {
 
     source prometheus "containers_desired" {
       query = <<EOT
-      label_replace((sum by (cluster, namespace, pod) (kube_pod_container_status_terminated_reason{}) + \
+      label_replace((sum by (cluster, namespace, pod) (kube_pod_container_status_terminated{}) + \
       sum by (cluster, namespace, pod) (kube_pod_container_status_running{}) + \
       sum by (cluster, namespace, pod) (kube_pod_container_status_waiting{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
       EOT
