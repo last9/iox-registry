@@ -31,6 +31,14 @@ ingester aws_elasticsearch_cloudwatch module {
 
   inputs = "$input{inputs}"
 
+  input_query = <<-EOF
+  label_set(
+    label_replace(
+      es_domain{$input{tag_filter}}, 'id=DomainName'
+    ), "service", "$input{service}", "namespace", "$input{namespace}"
+  )
+  EOF
+
   gauge "nodes" {
     unit       = "count"
     aggregator = "MIN"
@@ -295,6 +303,14 @@ ingester aws_elasticsearch_master_cloudwatch module {
   }
 
   inputs = "$input{inputs}"
+
+  input_query = <<-EOF
+  label_set(
+    label_replace(
+      es_domain{$input{tag_filter}}, 'id=DomainName'
+    ), "service", "$input{service}", "namespace", "$input{namespace}"
+  )
+  EOF
 
 
   gauge "master_reachable" {
