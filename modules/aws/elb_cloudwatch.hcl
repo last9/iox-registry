@@ -126,7 +126,7 @@ ingester aws_elb_cloudwatch module {
     }
   }
 
-  status_histo lb_5xx {
+  gauge lb_5xx {
     source cloudwatch "lb_500" {
       query {
         aggregator  = "Sum"
@@ -139,7 +139,7 @@ ingester aws_elb_cloudwatch module {
       }
     }
   }
-  status_histo lb_4xx {
+  gauge lb_4xx {
     source cloudwatch "lb_400" {
       query {
         aggregator  = "Sum"
@@ -358,7 +358,7 @@ ingester aws_elb_internal_cloudwatch module {
     }
   }
 
-  status_histo lb_5xx {
+  gauge lb_5xx {
     source cloudwatch "lb_500" {
       query {
         aggregator  = "Sum"
@@ -371,7 +371,7 @@ ingester aws_elb_internal_cloudwatch module {
       }
     }
   }
-  status_histo lb_4xx {
+  gauge lb_4xx {
     source cloudwatch "lb_400" {
       query {
         aggregator  = "Sum"
