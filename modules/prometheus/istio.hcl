@@ -98,40 +98,43 @@ ingester prometheus_istio_workload module {
     }
   }
 
-  //   latency_histo "latency" {
-  //     unit = "milliseconds"
+  latency_histo "latency_histo" {
+    unit = "ms"
 
-  //     source prometheus "latency" {
-  //       query = "increase(istio_request_duration_milliseconds_bucket{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m]) by (cluster, destination_version, destination_workload, destination_workload_namespace, pod_name)"
-  //       join_on = {
-  //         "$output{cluster}"                        = "$input{cluster}"
-  //       }
-  //     }
-  //   }
+    source prometheus "latency" {
+      query = <<EOT
+      label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name, le)
+      (increase(istio_request_duration_milliseconds_bucket{reporter='destination', source_canonical_service!='unknown',  destination_service_name!='PassthroughCluster'}[1m])), 'cluster', '$input{cluster}')
+      EOT
+      join_on = {
+        "$output{cluster}" = "$input{cluster}"
+      }
+    }
+  }
 
-  //   gauge "P90" {
-  //     unit = "milliseconds"
+  gauge "bytes_in" {
+    unit = "bytes"
 
-  //     source prometheus "latency" {
-  //       query = "(histogram_quantile(0.90, sum(increase(istio_request_duration_milliseconds_bucket{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m])) by (le, cluster, destination_version, destination_workload, destination_workload_namespace, pod_name)))"
+    source prometheus "bytes_in" {
+      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_request_bytes_sum{ reporter='destination', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+'}[1m]))"
 
-  //       join_on = {
-  //         "$output{cluster}"                        = "$input{cluster}"
-  //       }
-  //     }
-  //   }
+      join_on = {
+        "$output{cluster}" = "$input{cluster}"
+      }
+    }
+  }
 
-  //   gauge "P99" {
-  //     unit = "milliseconds"
+  gauge "bytes_out" {
+    unit = "bytes"
 
-  //     source prometheus "latency" {
-  //       query = "(histogram_quantile(0.99, sum(increase(istio_request_duration_milliseconds_bucket{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m])) by (le, cluster, destination_version, destination_workload, destination_workload_namespace, pod_name)))"
+    source prometheus "bytes_out" {
+      query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace,  destination_version, pod_name) (increase(istio_response_bytes_sum{ reporter='destination', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+'}[1m]))"
 
-  //       join_on = {
-  //         "$output{cluster}"                        = "$input{cluster}"
-  //       }
-  //     }
-  //   }
+      join_on = {
+        "$output{cluster}" = "$input{cluster}"
+      }
+    }
+  }
 
   gauge "bytes_in" {
     unit = "bytes"
@@ -275,6 +278,22 @@ ingester prometheus_istio_cluster module {
       }
     }
   }
+
+  latency_histo "latency_histo" {
+    unit = "ms"
+
+    source prometheus "latency" {
+      query = <<EOT
+      label_set(sum by (cluster, le)
+      (increase(istio_request_duration_milliseconds_bucket{reporter='destination'}[1m])), 'cluster', '$input{cluster}')
+      EOT
+
+      join_on = {
+        "$output{cluster}" = "$input{cluster}"
+      }
+    }
+  }
+
 }
 
 ingester prometheus_istio_k8s_pod module {
@@ -398,4 +417,20 @@ ingester prometheus_istio_k8s_pod module {
       }
     }
   }
+
+  latency_histo "latency_histo" {
+    unit = "ms"
+
+    source prometheus "latency" {
+      query = <<EOT
+      label_set(sum by (cluster, destination_canonical_service, destination_workload_namespace, pod_name, le)
+      (increase(istio_request_duration_milliseconds_bucket{reporter='destination', destination_canonical_service=~'.+', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m])), 'cluster', '$input{cluster}')
+      EOT
+
+      join_on = {
+        "$output{cluster}" = "$input{cluster}"
+      }
+    }
+  }
+
 }
