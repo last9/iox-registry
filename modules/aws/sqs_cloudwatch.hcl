@@ -26,6 +26,14 @@ ingester aws_sqs_cloudwatch module {
 
   inputs = "$input{inputs}"
 
+  input_query = <<-EOF
+  label_set(
+    label_replace(
+      sqs{$input{tag_filter}}, 'id=QueueName'
+    ), "service", "$input{service}", "namespace", "$input{namespace}"
+  )
+  EOF
+
   gauge "sent" {
     unit       = "count"
     aggregator = "SUM"
