@@ -118,19 +118,8 @@ ingester aws_alb_cloudwatch module {
   status_histo status_5xx {
     unit       = "count"
     aggregator = "SUM"
+
     source cloudwatch "status_500" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/ApplicationELB"
-        metric_name = "HTTPCode_ELB_5XX_Count"
-
-        dimensions = {
-          "LoadBalancer" = "$input{LoadBalancer}"
-        }
-      }
-    }
-
-    source cloudwatch "status_501" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ApplicationELB"
@@ -145,23 +134,43 @@ ingester aws_alb_cloudwatch module {
   status_histo status_4xx {
     unit       = "count"
     aggregator = "SUM"
+
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ApplicationELB"
-        metric_name = "HTTPCode_ELB_4XX_Count"
+        metric_name = "HTTPCode_Target_4XX_Count"
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}"
         }
       }
     }
+  }
 
-    source cloudwatch "status_401" {
+  gauge lb_5xx {
+    unit       = "count"
+    aggregator = "SUM"
+    source cloudwatch "lb_500" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ApplicationELB"
-        metric_name = "HTTPCode_Target_4XX_Count"
+        metric_name = "HTTPCode_ELB_5XX_Count"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+  gauge lb_4xx {
+    unit       = "count"
+    aggregator = "SUM"
+    source cloudwatch "lb_400" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "HTTPCode_ELB_4XX_Count"
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}"
@@ -383,19 +392,8 @@ ingester aws_alb_endpoint_cloudwatch module {
   status_histo status_5xx {
     unit       = "count"
     aggregator = "SUM"
+
     source cloudwatch "status_500" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/ApplicationELB"
-        metric_name = "HTTPCode_ELB_5XX_Count"
-
-        dimensions = {
-          "LoadBalancer" = "$input{LoadBalancer}"
-        }
-      }
-    }
-
-    source cloudwatch "status_501" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ApplicationELB"
@@ -407,23 +405,11 @@ ingester aws_alb_endpoint_cloudwatch module {
       }
     }
   }
-
   status_histo status_4xx {
     unit       = "count"
     aggregator = "SUM"
+
     source cloudwatch "status_400" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/ApplicationELB"
-        metric_name = "HTTPCode_ELB_4XX_Count"
-
-        dimensions = {
-          "LoadBalancer" = "$input{LoadBalancer}"
-        }
-      }
-    }
-
-    source cloudwatch "status_401" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ApplicationELB"
@@ -598,19 +584,8 @@ ingester aws_alb_internal_cloudwatch module {
   status_histo status_5xx {
     unit       = "count"
     aggregator = "SUM"
+
     source cloudwatch "status_500" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/ApplicationELB"
-        metric_name = "HTTPCode_ELB_5XX_Count"
-
-        dimensions = {
-          "LoadBalancer" = "$input{LoadBalancer}"
-        }
-      }
-    }
-
-    source cloudwatch "status_501" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ApplicationELB"
@@ -625,23 +600,43 @@ ingester aws_alb_internal_cloudwatch module {
   status_histo status_4xx {
     unit       = "count"
     aggregator = "SUM"
+
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ApplicationELB"
-        metric_name = "HTTPCode_ELB_4XX_Count"
+        metric_name = "HTTPCode_Target_4XX_Count"
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}"
         }
       }
     }
+  }
 
-    source cloudwatch "status_401" {
+  gauge lb_5xx {
+    unit       = "count"
+    aggregator = "SUM"
+    source cloudwatch "lb_500" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ApplicationELB"
-        metric_name = "HTTPCode_Target_4XX_Count"
+        metric_name = "HTTPCode_ELB_5XX_Count"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+  gauge lb_4xx {
+    unit       = "count"
+    aggregator = "SUM"
+    source cloudwatch "lb_400" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "HTTPCode_ELB_4XX_Count"
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}"
@@ -862,19 +857,8 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   status_histo status_5xx {
     unit       = "count"
     aggregator = "SUM"
+
     source cloudwatch "status_500" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/ApplicationELB"
-        metric_name = "HTTPCode_ELB_5XX_Count"
-
-        dimensions = {
-          "LoadBalancer" = "$input{LoadBalancer}"
-        }
-      }
-    }
-
-    source cloudwatch "status_501" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ApplicationELB"
@@ -889,19 +873,8 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   status_histo status_4xx {
     unit       = "count"
     aggregator = "SUM"
+
     source cloudwatch "status_400" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/ApplicationELB"
-        metric_name = "HTTPCode_ELB_4XX_Count"
-
-        dimensions = {
-          "LoadBalancer" = "$input{LoadBalancer}"
-        }
-      }
-    }
-
-    source cloudwatch "status_401" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ApplicationELB"
@@ -913,6 +886,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
       }
     }
   }
+
   status_histo status_3xx {
     unit       = "count"
     aggregator = "SUM"
