@@ -55,7 +55,7 @@ ingester prometheus_istio_workload module {
 
     source prometheus "status_2xx" {
       histo_column = "response_code"
-      query = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name, response_code) (increase(istio_requests_total{reporter='destination', source_canonical_service!='unknown', response_code=~'^2.*', destination_service_name!='PassthroughCluster'}[1m])), 'cluster', '$input{cluster}')"
+      query        = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name, response_code) (increase(istio_requests_total{reporter='destination', source_canonical_service!='unknown', response_code=~'^2.*', destination_service_name!='PassthroughCluster'}[1m])), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -68,7 +68,7 @@ ingester prometheus_istio_workload module {
 
     source prometheus "status_3xx" {
       histo_column = "response_code"
-      query = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name, response_code) (increase(istio_requests_total{reporter='destination', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', response_code=~'^3.*'}[1m])), 'cluster', '$input{cluster}')"
+      query        = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name, response_code) (increase(istio_requests_total{reporter='destination', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', response_code=~'^3.*'}[1m])), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -81,7 +81,7 @@ ingester prometheus_istio_workload module {
 
     source prometheus "status_4xx" {
       histo_column = "response_code"
-      query = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name, response_code) (increase(istio_requests_total{reporter='destination', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', response_code=~'^4.*'}[1m])), 'cluster', '$input{cluster}')"
+      query        = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name, response_code) (increase(istio_requests_total{reporter='destination', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', response_code=~'^4.*'}[1m])), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -94,7 +94,7 @@ ingester prometheus_istio_workload module {
 
     source prometheus "status_5xx" {
       histo_column = "response_code"
-      query = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name, response_code) (increase(istio_requests_total{reporter='destination', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', response_code=~'^5.*'}[1m])), 'cluster', '$input{cluster}')"
+      query        = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name, response_code) (increase(istio_requests_total{reporter='destination', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', response_code=~'^5.*'}[1m])), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -194,7 +194,7 @@ ingester prometheus_istio_cluster module {
 
     source prometheus "status_2xx" {
       histo_column = "response_code"
-      query = "label_set(sum by (cluster, response_code) (increase(istio_requests_total{reporter='destination', response_code=~'^2.*'}[1m])), 'cluster', '$input{cluster}')"
+      query        = "label_set(sum by (cluster, response_code) (increase(istio_requests_total{reporter='destination', response_code=~'^2.*'}[1m])), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -207,7 +207,7 @@ ingester prometheus_istio_cluster module {
 
     source prometheus "status_3xx" {
       histo_column = "response_code"
-      query = "label_set(sum by (cluster, response_code) (increase(istio_requests_total{reporter='destination', response_code=~'^3.*'}[1m])), 'cluster', '$input{cluster}')"
+      query        = "label_set(sum by (cluster, response_code) (increase(istio_requests_total{reporter='destination', response_code=~'^3.*'}[1m])), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -220,7 +220,7 @@ ingester prometheus_istio_cluster module {
 
     source prometheus "status_4xx" {
       histo_column = "response_code"
-      query = "label_set(sum by (cluster, response_code) (increase(istio_requests_total{reporter='destination', response_code=~'^4.*'}[1m])), 'cluster', '$input{cluster}')"
+      query        = "label_set(sum by (cluster, response_code) (increase(istio_requests_total{reporter='destination', response_code=~'^4.*'}[1m])), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -233,7 +233,7 @@ ingester prometheus_istio_cluster module {
 
     source prometheus "status_5xx" {
       histo_column = "response_code"
-      query = "label_set(sum by (cluster, response_code) (increase(istio_requests_total{reporter='destination', response_code=~'^5.*'}[1m])), 'cluster', '$input{cluster}')"
+      query        = "label_set(sum by (cluster, response_code) (increase(istio_requests_total{reporter='destination', response_code=~'^5.*'}[1m])), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -337,7 +337,7 @@ ingester prometheus_istio_k8s_pod module {
 
     source prometheus "status_2xx" {
       histo_column = "response_code"
-      query = "label_set(sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace, response_code) (increase(istio_requests_total{reporter='destination', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown', response_code=~'^2.*'}[1m])), 'cluster', '$input{cluster}')"
+      query        = "label_set(sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace, response_code) (increase(istio_requests_total{reporter='destination', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown', response_code=~'^2.*'}[1m])), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -350,7 +350,7 @@ ingester prometheus_istio_k8s_pod module {
 
     source prometheus "status_3xx" {
       histo_column = "response_code"
-      query = "label_set(sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace, response_code) (increase(istio_requests_total{reporter='destination', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown', response_code=~'^3.*'}[1m])), 'cluster', '$input{cluster}')"
+      query        = "label_set(sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace, response_code) (increase(istio_requests_total{reporter='destination', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown', response_code=~'^3.*'}[1m])), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -363,7 +363,7 @@ ingester prometheus_istio_k8s_pod module {
 
     source prometheus "status_4xx" {
       histo_column = "response_code"
-      query = "label_set(sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace, response_code) (increase(istio_requests_total{reporter='destination', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown', response_code=~'^4.*'}[1m])), 'cluster', '$input{cluster}')"
+      query        = "label_set(sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace, response_code) (increase(istio_requests_total{reporter='destination', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown', response_code=~'^4.*'}[1m])), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -376,7 +376,7 @@ ingester prometheus_istio_k8s_pod module {
 
     source prometheus "status_5xx" {
       histo_column = "response_code"
-      query = "label_set(sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace, response_code) (increase(istio_requests_total{reporter='destination', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown', response_code=~'^5.*'}[1m])), 'cluster', '$input{cluster}')"
+      query        = "label_set(sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace, response_code) (increase(istio_requests_total{reporter='destination', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown', response_code=~'^5.*'}[1m])), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
