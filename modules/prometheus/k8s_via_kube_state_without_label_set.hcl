@@ -381,9 +381,7 @@ ingester prometheus_kube_pod_grp module {
 
     source prometheus "containers_desired" {
       query = <<EOT
-      sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_terminated{}) + \
-      sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{}) + \
-      sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_waiting{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
+      sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_terminated{}) +  sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{}) +  sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_waiting{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -396,8 +394,7 @@ ingester prometheus_kube_pod_grp module {
 
     source prometheus "containers_cold" {
       query = <<EOT
-      sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{}) - \
-      sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_ready{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
+      sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{}) - sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_ready{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -499,9 +496,7 @@ ingester prometheus_kube_pod module {
 
     source prometheus "containers_desired" {
       query = <<EOT
-      label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_terminated{}) + \
-      sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{}) + \
-      sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_waiting{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
+      label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_terminated{}) + sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{}) + sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_waiting{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -514,8 +509,7 @@ ingester prometheus_kube_pod module {
 
     source prometheus "containers_cold" {
       query = <<EOT
-      label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{}) - \
-      sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_ready{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
+      label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{}) - sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_ready{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
