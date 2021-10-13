@@ -1,7 +1,7 @@
 ingester prometheus_kube_cluster module {
-  frequency  = 600
+  frequency  = 120
   lookback   = 600
-  timeout    = 180
+  timeout    = 90
   resolution = 60
   lag        = 60
 
@@ -122,9 +122,9 @@ ingester prometheus_kube_cluster module {
 }
 
 ingester prometheus_kube_cluster_with_namespace module {
-  frequency  = 600
+  frequency  = 120
   lookback   = 600
-  timeout    = 180
+  timeout    = 90
   resolution = 60
   lag        = 60
 
@@ -201,9 +201,9 @@ ingester prometheus_kube_cluster_with_namespace module {
 }
 
 ingester prometheus_kube_node module {
-  frequency  = 600
+  frequency  = 120
   lookback   = 600
-  timeout    = 180
+  timeout    = 90
   resolution = 60
   lag        = 60
 
@@ -294,9 +294,9 @@ ingester prometheus_kube_node module {
 }
 
 ingester prometheus_kube_pod_grp module {
-  frequency  = 600
+  frequency  = 120
   lookback   = 600
-  timeout    = 180
+  timeout    = 90
   resolution = 60
   lag        = 60
 
@@ -405,9 +405,9 @@ ingester prometheus_kube_pod_grp module {
 }
 
 ingester prometheus_kube_pod module {
-  frequency  = 600
+  frequency  = 120
   lookback   = 600
-  timeout    = 180
+  timeout    = 90
   resolution = 60
   lag        = 60
 
@@ -520,9 +520,9 @@ ingester prometheus_kube_pod module {
 }
 
 ingester prometheus_kube_container module {
-  frequency  = 600
+  frequency  = 120
   lookback   = 600
-  timeout    = 180
+  timeout    = 90
   resolution = 60
   lag        = 60
 
@@ -639,9 +639,9 @@ ingester prometheus_kube_container module {
 }
 
 ingester prometheus_kube_deployment module {
-  frequency  = 600
+  frequency  = 120
   lookback   = 600
-  timeout    = 180
+  timeout    = 90
   resolution = 60
   lag        = 60
 

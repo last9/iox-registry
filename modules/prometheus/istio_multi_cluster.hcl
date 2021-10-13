@@ -1,7 +1,7 @@
 ingester prometheus_istio_workload module {
-  frequency  = 600
+  frequency  = 120
   lookback   = 300
-  timeout    = 180
+  timeout    = 90
   resolution = 60
   lag        = 60
 
@@ -148,9 +148,9 @@ ingester prometheus_istio_workload module {
 }
 
 ingester prometheus_istio_cluster module {
-  frequency  = 600
+  frequency  = 120
   lookback   = 600
-  timeout    = 180
+  timeout    = 90
   resolution = 60
   lag        = 60
 
@@ -286,9 +286,9 @@ ingester prometheus_istio_cluster module {
 }
 
 ingester prometheus_istio_k8s_pod module {
-  frequency  = 600
+  frequency  = 120
   lookback   = 600
-  timeout    = 180
+  timeout    = 90
   resolution = 60
   lag        = 60
 
