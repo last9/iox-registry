@@ -257,38 +257,6 @@ ingester aws_rds_physical_cloudwatch module {
     }
   }
 
-  gauge "ebs_byte_balance" {
-    unit       = "percent"
-    aggregator = "AVG"
-    source cloudwatch "ebs_byte_balance" {
-      query {
-        aggregator  = "Average"
-        namespace   = "AWS/RDS"
-        metric_name = "EBSByteBalance"
-
-        dimensions = {
-          "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-        }
-      }
-    }
-  }
-
-  gauge "ebs_io_balance" {
-    unit       = "percent"
-    aggregator = "AVG"
-    source cloudwatch "ebs_io_balance" {
-      query {
-        aggregator  = "Average"
-        namespace   = "AWS/RDS"
-        metric_name = "EBSIOBalance"
-
-        dimensions = {
-          "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-        }
-      }
-    }
-  }
-
   gauge "burst_balance" {
     unit       = "percent"
     aggregator = "AVG"
