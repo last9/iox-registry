@@ -23,7 +23,7 @@ ingester prometheus_linkerd_path module {
   }
 
   data_for_graph_node {
-    type = "linkerd_endpoint"
+    type = "linkerd_path"
     name = "$output{rt_route}"
   }
 
