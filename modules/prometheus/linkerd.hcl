@@ -105,8 +105,8 @@ ingester prometheus_linkerd_workload module {
 
     source prometheus "latency" {
       query = <<EOT
-         label_set(sum by (cluster, workload_ns, deployment, dst, pod, le)
-          (increase(route_response_latency_ms_bucket{direction='inbound', dst=~'.*svc.cluster.local.*'}[1m])), 'cluster', '$input{cluster}')
+      label_set(label_replace(sum by (cluster, workload_ns, deployment, dst, pod, le)
+      (increase(route_response_latency_ms_bucket{direction='inbound', dst=~'.*svc.cluster.local.*'}[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')
       EOT
 
       join_on = {
@@ -223,8 +223,8 @@ ingester prometheus_linkerd_k8s_pod module {
 
     source prometheus "latency" {
       query = <<EOT
-         label_set(sum by (cluster, workload_ns, deployment, dst, pod, le)
-          (increase(route_response_latency_ms_bucket{direction='inbound', dst=~'.*svc.cluster.local.*'}[1m])), 'cluster', '$input{cluster}')
+      label_set(label_replace(sum by (cluster, workload_ns, deployment, dst, pod, le)
+      (increase(route_response_latency_ms_bucket{direction='inbound', dst=~'.*svc.cluster.local.*'}[1m])), 'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')
       EOT
 
       join_on = {

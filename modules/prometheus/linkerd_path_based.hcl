@@ -100,8 +100,8 @@ ingester prometheus_linkerd_path module {
 
     source prometheus "latency" {
       query = <<EOT
-         label_set(sum by (cluster, workload_ns, dst, rt_route, le)
-          (increase(route_response_latency_ms_bucket{direction='outbound', dst=~'.*svc.cluster.local.*', rt_route!=''}[1m])), 'cluster', '$input{cluster}')
+      label_set(label_replace(sum by (cluster, workload_ns, dst, rt_route, le)
+      (increase(route_response_latency_ms_bucket{direction='outbound', dst=~'.*svc.cluster.local.*', rt_route!=''}[1m])),'service', '$1', 'dst', '([a-zA-Z-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')
       EOT
 
       join_on = {
