@@ -87,7 +87,7 @@ ingester aws_nlb_cloudwatch module {
     }
   }
 
-  gauge "consumed_lcsu" {
+  gauge "consumed_lcus" {
     unit       = "count"
     aggregator = "SUM"
     source cloudwatch "consumed_lcus" {
