@@ -26,7 +26,7 @@ ingester aws_nlb_cloudwatch module {
   }
 
   physical_component {
-    type = "alb"
+    type = "nlb"
     name = "$input{LoadBalancer}"
   }
 
