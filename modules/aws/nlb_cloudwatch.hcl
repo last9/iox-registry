@@ -41,12 +41,12 @@ ingester aws_nlb_cloudwatch module {
 
   gauge "throughput" {
     unit       = "count"
-    aggregator = "SUM"
+    aggregator = "MAX"
     source cloudwatch "throughput" {
       query {
-        aggregator  = "Sum"
+        aggregator  = "Maximum"
         namespace   = "AWS/NetworkELB"
-        metric_name = "ActiveFlowCount"
+        metric_name = "PeakBytesPerSecond"
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}"
@@ -70,6 +70,23 @@ ingester aws_nlb_cloudwatch module {
       }
     }
   }
+
+  gauge "concurrent_connections" {
+    unit       = "count"
+    aggregator = "MAX"
+    source cloudwatch "concurrent_connections" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/NetworkELB"
+        metric_name = "ActiveFlowCount"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+
 
   gauge "processed_bytes" {
     unit       = "count"
