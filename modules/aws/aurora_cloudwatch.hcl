@@ -87,7 +87,7 @@ ingester aws_aurora_instance_logical_cloudwatch module {
       query {
         aggregator  = "Average"
         namespace   = "AWS/RDS"
-        metric_name = "ReadThroughput"
+        metric_name = "WriteThroughput"
 
         dimensions = {
           "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
@@ -211,12 +211,12 @@ ingester aws_aurora_instance_physical_cloudwatch module {
   }
 
   physical_component {
-    type = "rds"
+    type = "aurora_instance"
     name = "$input{DBInstanceIdentifier}"
   }
 
   data_for_graph_node {
-    type = "rds"
+    type = "aurora_instance"
     name = "$input{DBInstanceIdentifier}"
   }
 
