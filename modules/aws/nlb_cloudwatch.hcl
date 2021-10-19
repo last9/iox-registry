@@ -55,10 +55,10 @@ ingester aws_nlb_cloudwatch module {
     }
   }
 
-  gauge "NewFlowCount" {
+  gauge "new_connections" {
     unit       = "count"
     aggregator = "SUM"
-    source cloudwatch "NewFlowCount" {
+    source cloudwatch "new_connections" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/NetworkELB"
@@ -87,10 +87,10 @@ ingester aws_nlb_cloudwatch module {
     }
   }
 
-  gauge "ConsumedLCUs" {
+  gauge "consumed_lcsu" {
     unit       = "count"
     aggregator = "SUM"
-    source cloudwatch "ConsumedLCUs" {
+    source cloudwatch "consumed_lcus" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/NetworkELB"
@@ -102,4 +102,70 @@ ingester aws_nlb_cloudwatch module {
       }
     }
   }
+
+  gauge "tcp_client_reset_count" {
+    unit       = "count"
+    aggregator = "SUM"
+    source cloudwatch "tcp_client_reset_count" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/NetworkELB"
+        metric_name = "TCP_Client_Reset_Count"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+
+  gauge "tcp_elb_reset_count" {
+    unit       = "count"
+    aggregator = "SUM"
+    source cloudwatch "tcp_elb_reset_count" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/NetworkELB"
+        metric_name = "TCP_ELB_Reset_Count"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+
+  gauge "tcp_target_reset_count" {
+    unit       = "count"
+    aggregator = "SUM"
+    source cloudwatch "tcp_target_reset_count" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/NetworkELB"
+        metric_name = "TCP_Target_Reset_Count"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+
+  gauge "target_tls_error" {
+    unit       = "count"
+    aggregator = "SUM"
+    source cloudwatch "target_tls_error" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/NetworkELB"
+        metric_name = "TargetTLSNegotiationErrorCount"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+
+
 }
