@@ -8,11 +8,11 @@ ingester aws_nlb_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        elasticloadbalancing_loadbalancer{id=~"^net/.*",$input{tag_filter}}, 'id=LoadBalancer'
-      ), "service", "$input{service}", "namespace", "$input{namespace}"
-    )
+  label_set(
+    label_replace(
+      elasticloadbalancing_loadbalancer{id=~"^net/.*",$input{tag_filter}}, 'id=LoadBalancer'
+    ), "service", "$input{service}", "namespace", "$input{namespace}"
+  )
   EOF
 
   label {
@@ -95,38 +95,6 @@ ingester aws_nlb_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/NetworkELB"
         metric_name = "ConsumedLCUs"
-
-        dimensions = {
-          "LoadBalancer" = "$input{LoadBalancer}"
-        }
-      }
-    }
-  }
-
-  gauge "HealthyHostCount" {
-    unit       = "count"
-    aggregator = "MAX"
-    source cloudwatch "HealthyHostCount" {
-      query {
-        aggregator  = "Maximum"
-        namespace   = "AWS/NetworkELB"
-        metric_name = "HealthyHostCount"
-
-        dimensions = {
-          "LoadBalancer" = "$input{LoadBalancer}"
-        }
-      }
-    }
-  }
-
-  gauge "UnHealthyHostCount" {
-    unit       = "count"
-    aggregator = "SUM"
-    source cloudwatch "UnHealthyHostCount" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/NetworkELB"
-        metric_name = "UnHealthyHostCount"
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}"
