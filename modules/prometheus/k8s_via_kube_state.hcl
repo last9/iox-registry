@@ -636,6 +636,19 @@ ingester prometheus_kube_container module {
       }
     }
   }
+
+  gauge "container_cpu_used" {
+    unit = "count"
+
+    source prometheus "container_cpu_used" {
+      query = <<EOT
+      (sum(kube_pod_container_resource_requests_cpu_cores) - sum(kube_pod_container_resource_limits_cpu_cores))/sum(kube_node_status_allocatable_cpu_cores) * 100
+      EOT
+      join_on = {
+        "$output{cluster}" = "$input{cluster}"
+      }
+    }
+  }
 }
 
 ingester prometheus_kube_deployment module {
