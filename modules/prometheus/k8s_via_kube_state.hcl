@@ -642,7 +642,7 @@ ingester prometheus_kube_container module {
 
     source prometheus "container_cpu_used" {
       query = <<EOT
-      (sum(kube_pod_container_resource_requests_cpu_cores) - sum(kube_pod_container_resource_limits_cpu_cores))/sum(kube_node_status_allocatable_cpu_cores) * 100
+      label_set((sum by (cluster, container, pod, namespace) (kube_pod_container_resource_limits_cpu_cores) - sum by (cluster, container, pod, namespace) (kube_pod_container_resource_requests_cpu_cores)), 'cluster', '$input{cluster}')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
