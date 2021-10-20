@@ -118,6 +118,72 @@ ingester aws_rds_logical_cloudwatch module {
       }
     }
   }
+
+  gauge "ebs_bytes_balance" {
+    unit       = "percent"
+    aggregator = "AVG"
+    source cloudwatch "ebs_bytes_balance" {
+      query {
+        aggregator  = "Average"
+        namespace   = "AWS/RDS"
+        # Removed the % for iox to run successfully. Although it does not error but neither does it return any metrics
+        metric_name = "EBSByteBalance"
+
+        dimensions = {
+          "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
+        }
+      }
+    }
+  }
+
+  gauge "ebs_io_balance" {
+    unit       = "percent"
+    aggregator = "AVG"
+    source cloudwatch "ebs_io_balance" {
+      query {
+        aggregator  = "Average"
+        namespace   = "AWS/RDS"
+        # Removed the % for iox to run successfully. Although it does not error but neither does it return any metrics
+        metric_name = "EBSIOBalance"
+
+        dimensions = {
+          "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
+        }
+      }
+    }
+  }
+
+  gauge "burst_balance" {
+    unit       = "percent"
+    aggregator = "AVG"
+    source cloudwatch "burst_balance" {
+      query {
+        aggregator  = "Average"
+        namespace   = "AWS/RDS"
+        metric_name = "BurstBalance"
+
+        dimensions = {
+          "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
+        }
+      }
+    }
+  }
+
+  gauge "cpu_credit_balance" {
+    unit       = "count"
+    aggregator = "SUM"
+    source cloudwatch "cpu_credit_balance" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/RDS"
+        metric_name = "CPUCreditBalance"
+
+        dimensions = {
+          "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
+        }
+      }
+    }
+  }
 }
 
 ingester aws_rds_physical_cloudwatch module {
