@@ -1,4 +1,3 @@
-// test-commit
 ingester aws_rds_logical_cloudwatch module {
   frequency  = 60
   lookback   = 600
