@@ -522,7 +522,7 @@ ingester aws_alb_tg_cloudwatch module {
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}",
-          "TargetGroup" = "$input{TargetGroup}"
+          "TargetGroup"  = "$input{TargetGroup}"
         }
       }
     }
@@ -539,7 +539,7 @@ ingester aws_alb_tg_cloudwatch module {
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}"
-          "TargetGroup" = "$input{TargetGroup}"
+          "TargetGroup"  = "$input{TargetGroup}"
         }
       }
     }
@@ -552,7 +552,7 @@ ingester aws_alb_tg_cloudwatch module {
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}",
-          "TargetGroup" = "$input{TargetGroup}"
+          "TargetGroup"  = "$input{TargetGroup}"
         }
       }
     }
@@ -565,7 +565,7 @@ ingester aws_alb_tg_cloudwatch module {
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}",
-          "TargetGroup" = "$input{TargetGroup}"
+          "TargetGroup"  = "$input{TargetGroup}"
         }
       }
     }
@@ -578,7 +578,7 @@ ingester aws_alb_tg_cloudwatch module {
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}",
-          "TargetGroup" = "$input{TargetGroup}"
+          "TargetGroup"  = "$input{TargetGroup}"
         }
       }
     }
@@ -591,7 +591,7 @@ ingester aws_alb_tg_cloudwatch module {
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}",
-          "TargetGroup" = "$input{TargetGroup}"
+          "TargetGroup"  = "$input{TargetGroup}"
         }
       }
     }
@@ -604,7 +604,7 @@ ingester aws_alb_tg_cloudwatch module {
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}",
-          "TargetGroup" = "$input{TargetGroup}"
+          "TargetGroup"  = "$input{TargetGroup}"
         }
       }
     }
@@ -621,7 +621,7 @@ ingester aws_alb_tg_cloudwatch module {
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}",
-          "TargetGroup" = "$input{TargetGroup}"
+          "TargetGroup"  = "$input{TargetGroup}"
         }
       }
     }
@@ -638,7 +638,7 @@ ingester aws_alb_tg_cloudwatch module {
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}",
-          "TargetGroup" = "$input{TargetGroup}"
+          "TargetGroup"  = "$input{TargetGroup}"
         }
       }
     }
@@ -655,7 +655,7 @@ ingester aws_alb_tg_cloudwatch module {
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}",
-          "TargetGroup" = "$input{TargetGroup}"
+          "TargetGroup"  = "$input{TargetGroup}"
         }
       }
     }
@@ -671,7 +671,7 @@ ingester aws_alb_tg_cloudwatch module {
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}",
-          "TargetGroup" = "$input{TargetGroup}"
+          "TargetGroup"  = "$input{TargetGroup}"
         }
       }
     }
