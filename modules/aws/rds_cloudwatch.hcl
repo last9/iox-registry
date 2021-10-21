@@ -1,3 +1,4 @@
+// test commit
 ingester aws_rds_logical_cloudwatch module {
   frequency  = 60
   lookback   = 600
@@ -32,11 +33,11 @@ ingester aws_rds_logical_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        rds_db{$input{tag_filter}}, 'id=DBInstanceIdentifier'
-      ), "Service", "$input{service}"
-    )
+  label_set(
+    label_replace(
+      rds_db{$input{tag_filter}}, 'id=DBInstanceIdentifier'
+    ), "Service", "$input{service}"
+  )
   EOF
 
   gauge "connections" {
@@ -154,11 +155,11 @@ ingester aws_rds_physical_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        rds_db{$input{tag_filter}}, 'id=DBInstanceIdentifier'
-      ), "Service", "$input{service}"
-    )
+  label_set(
+    label_replace(
+      rds_db{$input{tag_filter}}, 'id=DBInstanceIdentifier'
+    ), "Service", "$input{service}"
+  )
   EOF
 
   gauge "network_in" {
