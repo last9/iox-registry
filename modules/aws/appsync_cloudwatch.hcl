@@ -37,6 +37,18 @@ ingester aws_appsync_cloudwatch module {
     error_margin = 0.05
     multiplier   = 1
 
+    source cloudwatch "throughput" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/AppSync"
+        metric_name = "Count"
+
+        dimensions = {
+          "GraphQLAPIId" = "$input{GraphQLAPIId}"
+        }
+      }
+    }
+
     source cloudwatch "latency" {
       query {
         aggregator  = "Average"
