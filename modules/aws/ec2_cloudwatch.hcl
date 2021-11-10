@@ -41,8 +41,10 @@ ingester aws_ec2_cloudwatch module {
   }
 
   gauge "cpu" {
-    unit       = "percent"
-    aggregator = "AVG"
+    index       = 1
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
 
     source cloudwatch "cpu" {
       query {
@@ -58,8 +60,10 @@ ingester aws_ec2_cloudwatch module {
   }
 
   gauge "disk_read_ops" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "tps"
+    aggregator  = "SUM"
 
     source cloudwatch "disk_read_ops" {
       query {
@@ -75,8 +79,10 @@ ingester aws_ec2_cloudwatch module {
   }
 
   gauge "disk_write_ops" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "tps"
+    aggregator  = "SUM"
 
     source cloudwatch "disk_write_ops" {
       query {
@@ -92,8 +98,10 @@ ingester aws_ec2_cloudwatch module {
   }
 
   gauge "network_in" {
-    unit       = "bytes"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "bytes"
+    output_unit = "Bps"
+    aggregator  = "SUM"
 
     source cloudwatch "network_in" {
       query {
@@ -109,8 +117,10 @@ ingester aws_ec2_cloudwatch module {
   }
 
   gauge "network_out" {
-    unit       = "bytes"
-    aggregator = "SUM"
+    index       = 6
+    input_unit  = "bytes"
+    output_unit = "Bps"
+    aggregator  = "SUM"
 
     source cloudwatch "network_out" {
       query {
@@ -126,8 +136,10 @@ ingester aws_ec2_cloudwatch module {
   }
 
   gauge "status_check_failed" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 7
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
 
     source cloudwatch "status_check_failed" {
       query {
@@ -143,8 +155,10 @@ ingester aws_ec2_cloudwatch module {
   }
 
   gauge "cpu_balance" {
-    unit       = "count"
-    aggregator = "MIN"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MIN"
 
     source cloudwatch "cpu_balance" {
       query {

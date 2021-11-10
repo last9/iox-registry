@@ -32,8 +32,10 @@ ingester aws_apigateway_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "throughput" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "througput" {
       query {
         aggregator  = "Sum"
@@ -49,7 +51,9 @@ ingester aws_apigateway_cloudwatch module {
   }
 
   latency "latency_histo" {
-    unit         = "ms"
+    index        = 6
+    input_unit   = "ms"
+    output_unit  = "ms"
     aggregator   = "PERCENTILE"
     error_margin = 0.05
     multiplier   = 1
@@ -146,8 +150,10 @@ ingester aws_apigateway_cloudwatch module {
   }
 
   gauge "integration_latency" {
-    unit       = "ms"
-    aggregator = "AVG"
+    index       = 3
+    input_unit  = "ms"
+    output_unit = "ms"
+    aggregator  = "AVG"
     source cloudwatch "integration_latency" {
       query {
         aggregator  = "Average"
@@ -165,8 +171,10 @@ ingester aws_apigateway_cloudwatch module {
   // The Average statistic represents the cache hit rate, namely, the total count of the cache hits divided by
   // the total number of requests during the period
   gauge "cache_miss" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 7
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "cache_miss" {
       query {
         aggregator  = "Sum"
@@ -184,8 +192,10 @@ ingester aws_apigateway_cloudwatch module {
   // The Average statistic represents the 4XXError error rate, namely, the total count of the 4XXError errors divided by
   // the total number of requests during the period.
   status_histo "status_4xx" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "status_400" {
       query {
         aggregator  = "Sum"
@@ -202,8 +212,10 @@ ingester aws_apigateway_cloudwatch module {
   // The Average statistic represents the 5XXError error rate, namely, the total count of the 5XXError errors divided by
   // the total number of requests during the period.
   status_histo "status_5xx" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"

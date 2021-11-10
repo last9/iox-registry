@@ -40,8 +40,10 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
   EOF
 
   gauge "system_errors" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
 
     source cloudwatch "system_errors" {
       query {
@@ -58,8 +60,10 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
   }
 
   gauge "returned_items" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source cloudwatch "returned_items" {
       query {
@@ -76,8 +80,10 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
   }
 
   gauge "throttled" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
 
     source cloudwatch "latency_update" {
       query {
@@ -94,8 +100,10 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
   }
 
   gauge "latency" {
-    unit       = "ms"
-    aggregator = "AVG"
+    index       = 4
+    input_unit  = "ms"
+    output_unit = "ms"
+    aggregator  = "AVG"
 
     source cloudwatch "latency" {
       query {
@@ -154,8 +162,10 @@ ingester aws_dynamodb_table_cloudwatch module {
   EOF
 
   gauge "rcu" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
 
     source cloudwatch "rcu" {
       query {
@@ -171,8 +181,10 @@ ingester aws_dynamodb_table_cloudwatch module {
   }
 
   gauge "wcu" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
 
     source cloudwatch "wcu" {
       query {
@@ -188,8 +200,10 @@ ingester aws_dynamodb_table_cloudwatch module {
   }
 
   gauge "read_throttled" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
 
     source cloudwatch "read_throttled" {
       query {
@@ -205,8 +219,10 @@ ingester aws_dynamodb_table_cloudwatch module {
   }
 
   gauge "write_throttled" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
 
     source cloudwatch "write_throttled" {
       query {
