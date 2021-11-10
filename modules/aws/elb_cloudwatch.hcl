@@ -40,7 +40,7 @@ ingester aws_elb_cloudwatch module {
   }
 
   gauge "throughput" {
-    index = 1
+    index       = 1
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -57,7 +57,7 @@ ingester aws_elb_cloudwatch module {
     }
   }
   gauge "surge_queue_length" {
-    index = 2
+    index       = 2
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "MAX"
@@ -74,7 +74,7 @@ ingester aws_elb_cloudwatch module {
     }
   }
   gauge "connection_errors" {
-    index = 3
+    index       = 3
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -91,7 +91,7 @@ ingester aws_elb_cloudwatch module {
     }
   }
   gauge "unhealthy_hosts" {
-    index = 4
+    index       = 4
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -108,7 +108,7 @@ ingester aws_elb_cloudwatch module {
     }
   }
   status_histo status_5xx {
-    index = 5
+    index       = 5
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -125,7 +125,7 @@ ingester aws_elb_cloudwatch module {
     }
   }
   status_histo status_4xx {
-    index = 4
+    index       = 4
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -143,7 +143,7 @@ ingester aws_elb_cloudwatch module {
   }
 
   gauge lb_5xx {
-    index = 8
+    index       = 8
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -160,7 +160,7 @@ ingester aws_elb_cloudwatch module {
     }
   }
   gauge lb_4xx {
-    index = 7
+    index       = 7
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -177,7 +177,7 @@ ingester aws_elb_cloudwatch module {
     }
   }
   latency "latency_histo" {
-    index = 6
+    index        = 6
     input_unit   = "ms"
     output_unit  = "ms"
     aggregator   = "percentile"
@@ -298,7 +298,7 @@ ingester aws_elb_internal_cloudwatch module {
   }
 
   gauge "throughput" {
-    index = 1
+    index       = 1
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -315,7 +315,7 @@ ingester aws_elb_internal_cloudwatch module {
     }
   }
   gauge "surge_queue_length" {
-    index = 2
+    index       = 2
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -332,7 +332,7 @@ ingester aws_elb_internal_cloudwatch module {
     }
   }
   gauge "connection_errors" {
-    index = 3
+    index       = 3
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -349,7 +349,7 @@ ingester aws_elb_internal_cloudwatch module {
     }
   }
   gauge "unhealthy_hosts" {
-    index = 4
+    index       = 4
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -366,7 +366,7 @@ ingester aws_elb_internal_cloudwatch module {
     }
   }
   status_histo status_5xx {
-    index = 5
+    index       = 5
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -383,7 +383,7 @@ ingester aws_elb_internal_cloudwatch module {
     }
   }
   status_histo status_4xx {
-    index = 4
+    index       = 4
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -401,7 +401,7 @@ ingester aws_elb_internal_cloudwatch module {
   }
 
   gauge lb_5xx {
-    index = 8
+    index       = 8
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -418,7 +418,7 @@ ingester aws_elb_internal_cloudwatch module {
     }
   }
   gauge lb_4xx {
-    index = 7
+    index       = 7
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -435,7 +435,7 @@ ingester aws_elb_internal_cloudwatch module {
     }
   }
   latency "latency_histo" {
-    index = 6
+    index        = 6
     input_unit   = "ms"
     output_unit  = "ms"
     aggregator   = "percentile"
@@ -556,7 +556,7 @@ ingester aws_elb_endpoint_cloudwatch module {
   EOF
 
   gauge "throughput" {
-    index = 1
+    index       = 1
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -573,7 +573,7 @@ ingester aws_elb_endpoint_cloudwatch module {
     }
   }
   latency "latency_histo" {
-    index = 6
+    index        = 6
     input_unit   = "ms"
     output_unit  = "ms"
     aggregator   = "percentile"
@@ -651,7 +651,7 @@ ingester aws_elb_endpoint_cloudwatch module {
     }
   }
   status_histo status_5xx {
-    index = 5
+    index       = 5
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -668,7 +668,7 @@ ingester aws_elb_endpoint_cloudwatch module {
     }
   }
   status_histo status_4xx {
-    index = 4
+    index       = 4
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -685,7 +685,7 @@ ingester aws_elb_endpoint_cloudwatch module {
     }
   }
   status_histo status_3xx {
-    index = 3
+    index       = 3
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -702,7 +702,7 @@ ingester aws_elb_endpoint_cloudwatch module {
     }
   }
   status_histo status_2xx {
-    index = 2
+    index       = 2
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -762,7 +762,7 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
   EOF
 
   gauge "throughput" {
-    index = 1
+    index       = 1
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -779,7 +779,7 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
     }
   }
   latency "latency_histo" {
-    index = 6
+    index        = 6
     input_unit   = "ms"
     output_unit  = "ms"
     aggregator   = "percentile"
@@ -857,7 +857,7 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_5xx {
-    index = 5
+    index       = 5
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -874,7 +874,7 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_4xx {
-    index = 4
+    index       = 4
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -891,7 +891,7 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_3xx {
-    index = 3
+    index       = 3
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -908,7 +908,7 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_2xx {
-    index = 2
+    index       = 2
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
