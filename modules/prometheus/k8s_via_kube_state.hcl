@@ -177,6 +177,18 @@ ingester prometheus_kube_cluster_with_namespace module {
     }
   }
 
+  gauge "pending_pods" {
+    unit = "count"
+
+    source prometheus "pending_pods" {
+      query = "label_set(sum by (cluster, namespace) (kube_pod_status_phase{phase=~'Pending'}), 'cluster', '$input{cluster}')"
+      join_on = {
+        "$output{cluster}" = "$input{cluster}"
+      }
+    }
+  }
+
+
   gauge "failed_and_unknown_pods" {
     unit = "count"
 
