@@ -180,7 +180,7 @@ ingester prometheus_kube_cluster_with_namespace module {
   gauge "running_pods" {
     unit = "count"
 
-    source prometheus "pending_pods" {
+    source prometheus "running_pods" {
       query = "sum by (cluster, namespace) (kube_pod_status_phase{phase=~'Running'})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
