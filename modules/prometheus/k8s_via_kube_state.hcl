@@ -181,7 +181,7 @@ ingester prometheus_kube_cluster_with_namespace module {
     unit = "count"
 
     source prometheus "running_pods" {
-      query = "sum by (cluster, namespace) (kube_pod_status_phase{phase=~'Running'})"
+      query = "label_set(sum by (cluster, namespace) (kube_pod_status_phase{phase=~'Running'}), 'cluster', '$input{cluster}')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
