@@ -32,7 +32,10 @@ ingester prometheus_kube_cluster module {
   }
 
   gauge "available_nodes" {
-    unit = "count"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MIN"
 
     source prometheus "available_nodes" {
       query = <<EOF
@@ -46,7 +49,10 @@ ingester prometheus_kube_cluster module {
   }
 
   gauge "disk_pressure_nodes" {
-    unit = "count"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "disk_pressure_nodes" {
       query = <<EOF
@@ -60,7 +66,10 @@ ingester prometheus_kube_cluster module {
   }
 
   gauge "pid_pressure_nodes" {
-    unit = "count"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "pid_pressure_nodes" {
       query = <<EOF
@@ -74,7 +83,10 @@ ingester prometheus_kube_cluster module {
   }
 
   gauge "memory_pressure_nodes" {
-    unit = "count"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "memory_pressure_nodes" {
       query = <<EOF
@@ -88,7 +100,10 @@ ingester prometheus_kube_cluster module {
   }
 
   gauge "requested_memory" {
-    unit = "bytes"
+    index       = 5
+    input_unit  = "bytes"
+    output_unit = "bytes"
+    aggregator  = "MAX"
 
     source prometheus "requested_memory" {
       query = "label_set(sum(kube_pod_container_resource_requests{resource='memory', unit='byte'})/sum by (cluster)(kube_node_status_allocatable{resource='memory', unit='byte'}), 'cluster', '$input{cluster}')"
@@ -99,7 +114,10 @@ ingester prometheus_kube_cluster module {
   }
 
   gauge "requested_cpu" {
-    unit = "count"
+    index       = 6
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "requested_cpu" {
       query = "label_set(sum(kube_pod_container_resource_requests{resource='cpu', unit='core'})/sum by (cluster)(kube_node_status_allocatable{resource='cpu', unit='core'}), 'cluster', '$input{cluster}')"
@@ -110,7 +128,10 @@ ingester prometheus_kube_cluster module {
   }
 
   gauge "saturated_nodes" {
-    unit = "count"
+    index       = 7
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "saturated_nodes" {
       query = "label_set(sum by (cluster) (kube_node_spec_unschedulable{}), 'cluster', '$input{cluster}')"
@@ -156,7 +177,10 @@ ingester prometheus_kube_cluster_with_namespace module {
   }
 
   gauge "unscheduled_pods" {
-    unit = "count"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "unscheduled_pods" {
       query = "label_set(sum by (cluster, namespace) (increase(kube_pod_status_unschedulable{}[1m])), 'cluster', '$input{cluster}')"
@@ -167,7 +191,10 @@ ingester prometheus_kube_cluster_with_namespace module {
   }
 
   gauge "desired_pods" {
-    unit = "count"
+    index       = 6
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "desired_pods" {
       query = "label_set(sum by (cluster, namespace) (increase(kube_pod_status_phase{}[1m])), 'cluster', '$input{cluster}')"
@@ -178,7 +205,10 @@ ingester prometheus_kube_cluster_with_namespace module {
   }
 
   gauge "running_pods" {
-    unit = "count"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "running_pods" {
       query = "label_set(sum by (cluster, namespace) (kube_pod_status_phase{phase=~'Running'}), 'cluster', '$input{cluster}')"
@@ -189,7 +219,10 @@ ingester prometheus_kube_cluster_with_namespace module {
   }
 
   gauge "pending_pods" {
-    unit = "count"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "pending_pods" {
       query = "label_set(sum by (cluster, namespace) (kube_pod_status_phase{phase=~'Pending'}), 'cluster', '$input{cluster}')"
@@ -200,7 +233,10 @@ ingester prometheus_kube_cluster_with_namespace module {
   }
 
   gauge "failed_and_unknown_pods" {
-    unit = "count"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "failed_and_unknown_pods" {
       query = "label_set(sum by (cluster, namespace) (kube_pod_status_phase{phase=~'Failed|Unknown'}), 'cluster', '$input{cluster}')"
@@ -211,7 +247,10 @@ ingester prometheus_kube_cluster_with_namespace module {
   }
 
   gauge "container_restarts" {
-    unit = "count"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
 
     source prometheus "container_restarts" {
       query = "label_set(sum by (cluster, namespace) (kube_pod_container_status_restarts_total{}), 'cluster', '$input{cluster}')"
@@ -262,7 +301,10 @@ ingester prometheus_kube_node module {
   }
 
   gauge "disk_pressure" {
-    unit = "count"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "disk_pressure" {
       query = <<EOF
@@ -276,7 +318,10 @@ ingester prometheus_kube_node module {
   }
 
   gauge "pid_pressure" {
-    unit = "count"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "pid_pressure" {
       query = <<EOF
@@ -290,7 +335,10 @@ ingester prometheus_kube_node module {
   }
 
   gauge "memory_pressure" {
-    unit = "count"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "memory_pressure" {
       query = <<EOF
@@ -304,7 +352,10 @@ ingester prometheus_kube_node module {
   }
 
   gauge "saturated" {
-    unit = "count"
+    index       = 7
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "saturated" {
       query = "label_set(sum by (cluster, node) (kube_node_spec_unschedulable{}), 'cluster', '$input{cluster}')"
@@ -361,7 +412,10 @@ ingester prometheus_kube_pod_grp module {
   }
 
   gauge "container_restarted" {
-    unit = "count"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
 
     source prometheus "container_restarted" {
       query = <<EOT
@@ -374,7 +428,10 @@ ingester prometheus_kube_pod_grp module {
   }
 
   gauge "containers_failed" {
-    unit = "count"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
 
     source prometheus "containers_failed" {
       query = <<EOT
@@ -387,7 +444,10 @@ ingester prometheus_kube_pod_grp module {
   }
 
   gauge "containers_running" {
-    unit = "count"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
 
     source prometheus "containers_running" {
       query = <<EOT
@@ -400,7 +460,10 @@ ingester prometheus_kube_pod_grp module {
   }
 
   gauge "containers_desired" {
-    unit = "count"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
 
     source prometheus "containers_desired" {
       query = <<EOT
@@ -413,7 +476,10 @@ ingester prometheus_kube_pod_grp module {
   }
 
   gauge "containers_cold" {
-    unit = "count"
+    index       = 6
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
 
     source prometheus "containers_cold" {
       query = <<EOT
@@ -476,7 +542,10 @@ ingester prometheus_kube_pod module {
   }
 
   gauge "container_restarted" {
-    unit = "count"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
 
     source prometheus "container_restarted" {
       query = <<EOT
@@ -489,7 +558,10 @@ ingester prometheus_kube_pod module {
   }
 
   gauge "containers_failed" {
-    unit = "count"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
 
     source prometheus "containers_failed" {
       query = <<EOT
@@ -502,7 +574,10 @@ ingester prometheus_kube_pod module {
   }
 
   gauge "containers_running" {
-    unit = "count"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
 
     source prometheus "containers_running" {
       query = <<EOT
@@ -515,7 +590,10 @@ ingester prometheus_kube_pod module {
   }
 
   gauge "containers_desired" {
-    unit = "count"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
 
     source prometheus "containers_desired" {
       query = <<EOT
@@ -528,7 +606,10 @@ ingester prometheus_kube_pod module {
   }
 
   gauge "containers_cold" {
-    unit = "count"
+    index       = 6
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
 
     source prometheus "containers_cold" {
       query = <<EOT
@@ -595,7 +676,10 @@ ingester prometheus_kube_container module {
   }
 
   gauge "total_container_restarts" {
-    unit = "count"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
 
     source prometheus "total_container_restarts" {
       query = <<EOT
@@ -608,7 +692,10 @@ ingester prometheus_kube_container module {
   }
 
   gauge "container_in_terminated" {
-    unit = "count"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
 
     source prometheus "container_in_terminated" {
       query = <<EOT
@@ -621,7 +708,10 @@ ingester prometheus_kube_container module {
   }
 
   gauge "container_in_waiting" {
-    unit = "count"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
 
     source prometheus "container_in_waiting" {
       query = <<EOT
@@ -634,7 +724,10 @@ ingester prometheus_kube_container module {
   }
 
   gauge "container_cpu_limit" {
-    unit = "count"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
 
     source prometheus "container_cpu_limit" {
       query = <<EOT
@@ -647,7 +740,10 @@ ingester prometheus_kube_container module {
   }
 
   gauge "container_memory_limit" {
-    unit = "bytes"
+    index       = 5
+    input_unit  = "bytes"
+    output_unit = "bytes"
+    aggregator  = "AVG"
 
     source prometheus "container_memory_limit" {
       query = <<EOT
@@ -706,7 +802,10 @@ ingester prometheus_kube_deployment module {
   }
 
   gauge "unavailable_replicas" {
-    unit = "count"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "unavailable_replicas" {
       query = "label_set(sum by (cluster, namespace, deployment) (kube_deployment_status_replicas_unavailable{}), 'cluster', '$input{cluster}')"
@@ -717,7 +816,10 @@ ingester prometheus_kube_deployment module {
   }
 
   gauge "desired_replicas" {
-    unit = "count"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source prometheus "desired_replicas" {
       query = "label_set(sum by (cluster, namespace, deployment) (kube_deployment_spec_replicas{}), 'cluster', '$input{cluster}')"
@@ -729,7 +831,10 @@ ingester prometheus_kube_deployment module {
 
 
   gauge "cold_replicas" {
-    unit = "count"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
     source prometheus "cold_replicas" {
       query = "label_set(sum by (cluster, namespace, deployment) (kube_deployment_status_replicas{}) - sum by (cluster, namespace, deployment)(kube_deployment_status_replicas_available{}), 'cluster', '$input{cluster}')"
       join_on = {

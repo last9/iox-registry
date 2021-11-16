@@ -43,7 +43,10 @@ ingester prometheus_istio_workload module {
   }
 
   gauge "throughput" {
-    unit = "count"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "throughput" {
       //query = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, pod_name) (increase(istio_requests_total{ reporter='destination', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m]))"
@@ -56,7 +59,10 @@ ingester prometheus_istio_workload module {
   }
 
   status_histo "status_2xx" {
-    unit = "count"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_2xx" {
       histo_column = "response_code"
@@ -69,7 +75,10 @@ ingester prometheus_istio_workload module {
   }
 
   status_histo "status_3xx" {
-    unit = "count"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_3xx" {
       histo_column = "response_code"
@@ -82,7 +91,10 @@ ingester prometheus_istio_workload module {
   }
 
   status_histo "status_4xx" {
-    unit = "count"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_4xx" {
       histo_column = "response_code"
@@ -95,7 +107,10 @@ ingester prometheus_istio_workload module {
   }
 
   status_histo "status_5xx" {
-    unit = "count"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_5xx" {
       histo_column = "response_code"
@@ -108,7 +123,10 @@ ingester prometheus_istio_workload module {
   }
 
   latency_histo "latency_histo" {
-    unit = "ms"
+    index       = 6
+    input_unit  = "ms"
+    output_unit = "ms"
+    aggregator  = "PERCENTILE"
 
     source prometheus "latency" {
       histo_column = "le"
@@ -123,7 +141,10 @@ ingester prometheus_istio_workload module {
   }
 
   gauge "bytes_in" {
-    unit = "bytes"
+    index       = 1
+    input_unit  = "Bps"
+    output_unit = "Bps"
+    aggregator  = "SUM"
 
     source prometheus "bytes_in" {
       query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_request_bytes_sum{  reporter='destination', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+'}[1m]))"
@@ -135,7 +156,10 @@ ingester prometheus_istio_workload module {
   }
 
   gauge "bytes_out" {
-    unit = "bytes"
+    index       = 2
+    input_unit  = "Bps"
+    output_unit = "Bps"
+    aggregator  = "SUM"
 
     source prometheus "bytes_out" {
       query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace,  destination_version, pod_name) (increase(istio_response_bytes_sum{  reporter='destination', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+'}[1m]))"
@@ -182,7 +206,10 @@ ingester prometheus_istio_cluster module {
   }
 
   gauge "throughput" {
-    unit = "count"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "throughput" {
       query = "sum by (cluster) (increase(istio_requests_total{ reporter='destination'}[1m]))"
@@ -194,7 +221,10 @@ ingester prometheus_istio_cluster module {
   }
 
   status_histo "status_2xx" {
-    unit = "count"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_2xx" {
       histo_column = "response_code"
@@ -207,7 +237,10 @@ ingester prometheus_istio_cluster module {
   }
 
   status_histo "status_3xx" {
-    unit = "count"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_3xx" {
       histo_column = "response_code"
@@ -220,7 +253,10 @@ ingester prometheus_istio_cluster module {
   }
 
   status_histo "status_4xx" {
-    unit = "count"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_4xx" {
       histo_column = "response_code"
@@ -233,7 +269,10 @@ ingester prometheus_istio_cluster module {
   }
 
   status_histo "status_5xx" {
-    unit = "count"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_5xx" {
       histo_column = "response_code"
@@ -246,7 +285,10 @@ ingester prometheus_istio_cluster module {
   }
 
   gauge "bytes_in" {
-    unit = "bytes"
+    index       = 1
+    input_unit  = "Bps"
+    output_unit = "Bps"
+    aggregator  = "SUM"
 
     source prometheus "bytes_in" {
       query = "sum by (cluster) (increase(istio_request_bytes_sum{ reporter='destination'}[1m]))"
@@ -258,7 +300,10 @@ ingester prometheus_istio_cluster module {
   }
 
   gauge "bytes_out" {
-    unit = "bytes"
+    index       = 2
+    input_unit  = "Bps"
+    output_unit = "Bps"
+    aggregator  = "SUM"
 
     source prometheus "bytes_out" {
       query = "sum by (cluster) (increase(istio_response_bytes_sum{ reporter='destination'}[1m]))"
@@ -270,7 +315,10 @@ ingester prometheus_istio_cluster module {
   }
 
   latency_histo "latency_histo" {
-    unit = "ms"
+    index       = 6
+    input_unit  = "ms"
+    output_unit = "ms"
+    aggregator  = "PERCENTILE"
 
     source prometheus "latency" {
       query = <<EOT
@@ -324,7 +372,10 @@ ingester prometheus_istio_k8s_pod module {
   }
 
   gauge "throughput" {
-    unit = "count"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "throughput" {
       query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_requests_total{ reporter='destination', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown', destination_canonical_service=~'.+'}[1m]))"
@@ -336,7 +387,10 @@ ingester prometheus_istio_k8s_pod module {
   }
 
   status_histo "status_2xx" {
-    unit = "count"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_2xx" {
       histo_column = "response_code"
@@ -349,7 +403,10 @@ ingester prometheus_istio_k8s_pod module {
   }
 
   status_histo "status_3xx" {
-    unit = "count"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_3xx" {
       histo_column = "response_code"
@@ -362,7 +419,10 @@ ingester prometheus_istio_k8s_pod module {
   }
 
   status_histo "status_4xx" {
-    unit = "count"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_4xx" {
       histo_column = "response_code"
@@ -375,7 +435,10 @@ ingester prometheus_istio_k8s_pod module {
   }
 
   status_histo "status_5xx" {
-    unit = "count"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_5xx" {
       histo_column = "response_code"
@@ -388,7 +451,10 @@ ingester prometheus_istio_k8s_pod module {
   }
 
   gauge "bytes_in" {
-    unit = "bytes"
+    index       = 1
+    input_unit  = "Bps"
+    output_unit = "Bps"
+    aggregator  = "SUM"
 
     source prometheus "bytes_in" {
       query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_request_bytes_sum{ reporter='destination', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown', destination_canonical_service=~'.+'}[1m]))"
@@ -400,7 +466,10 @@ ingester prometheus_istio_k8s_pod module {
   }
 
   gauge "bytes_out" {
-    unit = "bytes"
+    index       = 2
+    input_unit  = "Bps"
+    output_unit = "Bps"
+    aggregator  = "SUM"
 
     source prometheus "bytes_out" {
       query = "sum by (cluster, pod_name, destination_canonical_service, destination_workload_namespace) (increase(istio_response_bytes_sum{ reporter='destination', destination_service_name!='PassthroughCluster', source_canonical_service!='unknown', destination_canonical_service=~'.+' }[1m]))"
@@ -412,7 +481,10 @@ ingester prometheus_istio_k8s_pod module {
   }
 
   latency_histo "latency_histo" {
-    unit = "ms"
+    index       = 6
+    input_unit  = "ms"
+    output_unit = "ms"
+    aggregator  = "PERCENTILE"
 
     source prometheus "latency" {
       query = <<EOT

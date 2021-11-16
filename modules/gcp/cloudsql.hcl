@@ -27,8 +27,10 @@ ingester gcp_cloudsql_logical module {
   inputs = "$input{inputs}"
 
   gauge "connections" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source stackdriver "connections" {
       query {
@@ -49,8 +51,10 @@ ingester gcp_cloudsql_logical module {
   }
 
   gauge "write_iops" {
-    unit       = "iops"
-    aggregator = "AVG"
+    index       = 2
+    input_unit  = "iops"
+    output_unit = "iops"
+    aggregator  = "AVG"
 
     source stackdriver "write_iops" {
       query {
@@ -71,8 +75,10 @@ ingester gcp_cloudsql_logical module {
   }
 
   gauge "read_iops" {
-    unit       = "iops"
-    aggregator = "AVG"
+    index       = 3
+    input_unit  = "iops"
+    output_unit = "iops"
+    aggregator  = "AVG"
 
     source stackdriver "read_iops" {
       query {
@@ -122,8 +128,10 @@ ingester gcp_cloudsql_physical module {
   inputs = "$input{inputs}"
 
   gauge "cpu" {
-    unit       = "percent"
-    aggregator = "AVG"
+    index       = 3
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
 
     source stackdriver "cpu" {
       query {
@@ -140,8 +148,10 @@ ingester gcp_cloudsql_physical module {
   }
 
   gauge "network_in" {
-    unit       = "bps"
-    aggregator = "AVG"
+    index       = 1
+    input_unit  = "bps"
+    output_unit = "bps"
+    aggregator  = "AVG"
 
     source stackdriver "network_in" {
       query {
@@ -158,8 +168,10 @@ ingester gcp_cloudsql_physical module {
   }
 
   gauge "network_out" {
-    unit       = "bps"
-    aggregator = "AVG"
+    index       = 2
+    input_unit  = "bps"
+    output_unit = "bps"
+    aggregator  = "AVG"
 
     source stackdriver "network_out" {
       query {
@@ -176,8 +188,10 @@ ingester gcp_cloudsql_physical module {
   }
 
   gauge "replica_lag" {
-    unit       = "s"
-    aggregator = "AVG"
+    index       = 5
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "AVG"
 
     source stackdriver "replica_lag" {
       query {
@@ -194,7 +208,9 @@ ingester gcp_cloudsql_physical module {
   }
 
   # gauge "memory_utilization" {
-  #   unit       = "percent"
+  #   index = 1
+  #   input_unit       = "percent"
+  #   output_unit       = "percent"
   #   aggregator = "AVG"
   #
   #   source stackdriver "memory_utilization" {
@@ -216,7 +232,9 @@ ingester gcp_cloudsql_physical module {
   # }
   #
   # gauge "disk_utilization" {
-  #   unit       = "percent"
+  #   index = 1
+  #   input_unit       = "percent"
+  #   output_unit       = "percent"
   #   aggregator = "AVG"
   #
   #   source stackdriver "disk_utilization" {

@@ -39,7 +39,10 @@ ingester cloudflare_cdn module {
   inputs = "$input{inputs}"
 
   gauge "throughput" {
-    unit = "rpm"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudflare "throughput" {
       query = <<-EOH
 {
@@ -65,7 +68,10 @@ EOH
   }
 
   gauge "status_2xx" {
-    unit = "rpm"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudflare "2xx" {
       query = <<-EOH
 {
@@ -95,7 +101,10 @@ EOH
   }
 
   gauge "status_3xx" {
-    unit = "rpm"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudflare "3xx" {
       query = <<-EOH
 {
@@ -125,7 +134,10 @@ EOH
   }
 
   gauge "status_4xx" {
-    unit = "rpm"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudflare "4xx" {
       query = <<-EOH
 {
@@ -155,7 +167,10 @@ EOH
   }
 
   gauge "status_5xx" {
-    unit = "rpm"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudflare "5xx" {
       query = <<-EOH
 {
@@ -226,7 +241,10 @@ ingester cloudflare_waf module {
   inputs = "$input{inputs}"
 
   gauge "throughput" {
-    unit = "rpm"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudflare "throughput" {
       query = <<-EOH
 {
@@ -252,7 +270,10 @@ EOH
   }
 
   gauge "connection_close" {
-    unit = "rpm"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudflare "connection_close" {
       query = <<-EOH
   {
@@ -279,7 +300,10 @@ EOH
   }
 
   gauge "bypass" {
-    unit = "rpm"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudflare "bypass" {
       query = <<-EOH
   {
@@ -306,7 +330,10 @@ EOH
   }
 
   gauge "jschallenge" {
-    unit = "rpm"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudflare "jschallenge" {
       query = <<-EOH
   {
@@ -333,7 +360,10 @@ EOH
   }
 
   gauge "log" {
-    unit = "rpm"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudflare "log" {
       query = <<-EOH
   {
@@ -360,7 +390,10 @@ EOH
   }
 
   gauge "block" {
-    unit = "rpm"
+    index       = 6
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudflare "block" {
       query = <<-EOH
   {
@@ -387,7 +420,10 @@ EOH
   }
 
   gauge "status_2xx" {
-    unit = "rpm"
+    index       = 7
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudflare "2xx" {
       query = <<-EOH
   {
@@ -417,7 +453,10 @@ EOH
   }
 
   gauge "status_4xx" {
-    unit = "rpm"
+    index       = 8
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudflare "4xx" {
       query = <<-EOH
   {
@@ -447,7 +486,10 @@ EOH
   }
 
   gauge "status_5xx" {
-    unit = "rpm"
+    index       = 9
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudflare "5xx" {
       query = <<-EOH
   {

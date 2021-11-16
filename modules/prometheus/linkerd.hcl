@@ -37,7 +37,10 @@ ingester prometheus_linkerd_workload module {
   }
 
   gauge "throughput" {
-    unit = "count"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "throughput" {
       query = "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_request_total{direction='inbound', dst=~'.*svc.cluster.local.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
@@ -49,7 +52,10 @@ ingester prometheus_linkerd_workload module {
   }
 
   status_histo "status_2xx" {
-    unit = "count"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_2xx" {
       histo_column = "status_code"
@@ -62,7 +68,10 @@ ingester prometheus_linkerd_workload module {
   }
 
   status_histo "status_3xx" {
-    unit = "count"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_3xx" {
       histo_column = "status_code"
@@ -75,7 +84,10 @@ ingester prometheus_linkerd_workload module {
   }
 
   status_histo "status_4xx" {
-    unit = "count"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_4xx" {
       histo_column = "status_code"
@@ -88,7 +100,10 @@ ingester prometheus_linkerd_workload module {
   }
 
   status_histo "status_5xx" {
-    unit = "count"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_5xx" {
       histo_column = "status_code"
@@ -101,7 +116,10 @@ ingester prometheus_linkerd_workload module {
   }
 
   latency_histo "latency_histo" {
-    unit = "ms"
+    index       = 6
+    input_unit  = "ms"
+    output_unit = "ms"
+    aggregator  = "PERCENTILE"
 
     source prometheus "latency" {
       query = <<EOT
@@ -155,7 +173,10 @@ ingester prometheus_linkerd_k8s_pod module {
   }
 
   gauge "throughput" {
-    unit = "count"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "throughput" {
       query = "label_set(label_replace((sum by (cluster, workload_ns, deployment, dst, pod) (increase(route_request_total{direction='inbound', dst=~'.*svc.cluster.local.*'})[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
@@ -167,7 +188,10 @@ ingester prometheus_linkerd_k8s_pod module {
   }
 
   status_histo "status_2xx" {
-    unit = "count"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_2xx" {
       histo_column = "status_code"
@@ -180,7 +204,10 @@ ingester prometheus_linkerd_k8s_pod module {
   }
 
   status_histo "status_3xx" {
-    unit = "count"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_3xx" {
       histo_column = "status_code"
@@ -193,7 +220,10 @@ ingester prometheus_linkerd_k8s_pod module {
   }
 
   status_histo "status_4xx" {
-    unit = "count"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_4xx" {
       histo_column = "status_code"
@@ -206,7 +236,10 @@ ingester prometheus_linkerd_k8s_pod module {
   }
 
   status_histo "status_5xx" {
-    unit = "count"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source prometheus "status_5xx" {
       histo_column = "status_code"
@@ -219,7 +252,10 @@ ingester prometheus_linkerd_k8s_pod module {
   }
 
   latency_histo "latency_histo" {
-    unit = "ms"
+    index       = 6
+    input_unit  = "ms"
+    output_unit = "ms"
+    aggregator  = "PERCENTILE"
 
     source prometheus "latency" {
       query = <<EOT
