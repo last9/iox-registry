@@ -216,7 +216,7 @@ ingester aws_elasticsearch_cloudwatch module {
     index       = 12
     input_unit  = "percent"
     output_unit = "percent"
-    aggregator  = "MAX"
+    aggregator  = "AVG"
     source cloudwatch "jvm_memory_pressure" {
       query {
         aggregator  = "Maximum"

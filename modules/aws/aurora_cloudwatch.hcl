@@ -52,7 +52,7 @@ ingester aws_aurora_instance_logical_cloudwatch module {
   gauge "read_throughput" {
     index       = 2
     input_unit  = "count"
-    output_unit = "bps"
+    output_unit = "rpm"
     aggregator  = "AVG"
     source cloudwatch "read_throughput" {
       query {
@@ -125,7 +125,7 @@ ingester aws_aurora_instance_logical_cloudwatch module {
   gauge "update_throughput" {
     index       = 6
     input_unit  = "count"
-    output_unit = "bps"
+    output_unit = "rpm"
     aggregator  = "AVG"
     source cloudwatch "update_throughput" {
       query {

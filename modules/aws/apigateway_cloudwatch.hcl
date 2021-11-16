@@ -34,7 +34,7 @@ ingester aws_apigateway_cloudwatch module {
   gauge "throughput" {
     index       = 1
     input_unit  = "count"
-    output_unit = "count"
+    output_unit = "rpm"
     aggregator  = "SUM"
     source cloudwatch "througput" {
       query {

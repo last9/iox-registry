@@ -703,7 +703,7 @@ ingester aws_alb_tg_cloudwatch module {
     }
   }
   status_histo status_2xx {
-    index       = 3
+    index       = 2
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -1201,7 +1201,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_2xx {
-    index       = 3
+    index       = 2
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"

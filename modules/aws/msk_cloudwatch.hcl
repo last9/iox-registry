@@ -133,7 +133,7 @@ ingester aws_msk_topic_per_broker_cloudwatch module {
     }
   }
   gauge "produce_msg_conversions" {
-    index       = 1
+    index       = 2
     input_unit  = "tps"
     output_unit = "tps"
     aggregator  = "AVG"
