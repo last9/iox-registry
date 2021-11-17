@@ -180,7 +180,7 @@ ingester aws_elb_cloudwatch module {
     index        = 6
     input_unit   = "ms"
     output_unit  = "ms"
-    aggregator   = "percentile"
+    aggregator   = "PERCENTILE"
     error_margin = 0.05
     source cloudwatch "throughput" {
       query {
@@ -438,7 +438,7 @@ ingester aws_elb_internal_cloudwatch module {
     index        = 6
     input_unit   = "ms"
     output_unit  = "ms"
-    aggregator   = "percentile"
+    aggregator   = "PERCENTILE"
     error_margin = 0.05
     source cloudwatch "throughput" {
       query {
@@ -576,7 +576,7 @@ ingester aws_elb_endpoint_cloudwatch module {
     index        = 6
     input_unit   = "ms"
     output_unit  = "ms"
-    aggregator   = "percentile"
+    aggregator   = "PERCENTILE"
     error_margin = 0.05
     source cloudwatch "throughput" {
       query {
@@ -782,7 +782,7 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
     index        = 6
     input_unit   = "ms"
     output_unit  = "ms"
-    aggregator   = "percentile"
+    aggregator   = "PERCENTILE"
     error_margin = 0.05
     source cloudwatch "throughput" {
       query {
