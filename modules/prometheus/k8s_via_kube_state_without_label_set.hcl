@@ -708,7 +708,7 @@ ingester prometheus_kube_container module {
   }
 
   gauge "container_in_waiting" {
-    index       = 2
+    index       = 3
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
