@@ -40,8 +40,10 @@ ingester aws_elasticsearch_cloudwatch module {
   EOF
 
   gauge "nodes" {
-    unit       = "count"
-    aggregator = "MIN"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MIN"
     source cloudwatch "nodes" {
       query {
         aggregator  = "Minimum"
@@ -57,8 +59,10 @@ ingester aws_elasticsearch_cloudwatch module {
   }
 
   gauge "kibana_healthy_nodes" {
-    unit       = "count"
-    aggregator = "MIN"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MIN"
     source cloudwatch "kibana_healthy_nodes" {
       query {
         aggregator  = "Minimum"
@@ -74,8 +78,10 @@ ingester aws_elasticsearch_cloudwatch module {
   }
 
   gauge "cluster_yellow" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
     source cloudwatch "cluster_yellow" {
       query {
         aggregator  = "Maximum"
@@ -91,8 +97,10 @@ ingester aws_elasticsearch_cloudwatch module {
   }
 
   gauge "cluster_red" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
     source cloudwatch "cluster_red" {
       query {
         aggregator  = "Maximum"
@@ -108,8 +116,10 @@ ingester aws_elasticsearch_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -125,8 +135,10 @@ ingester aws_elasticsearch_cloudwatch module {
   }
 
   gauge "status_4xx" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 6
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "status_4xx" {
       query {
         aggregator  = "Sum"
@@ -143,8 +155,10 @@ ingester aws_elasticsearch_cloudwatch module {
 
 
   gauge "status_5xx" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 7
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "5xx" {
       query {
         aggregator  = "Sum"
@@ -160,8 +174,10 @@ ingester aws_elasticsearch_cloudwatch module {
   }
 
   gauge "cpu" {
-    unit       = "percent"
-    aggregator = "AVG"
+    index       = 8
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
     source cloudwatch "cpu" {
       query {
         aggregator  = "Average"
@@ -178,8 +194,10 @@ ingester aws_elasticsearch_cloudwatch module {
 
 
   gauge "free_space" {
-    unit       = "bytes"
-    aggregator = "MIN"
+    index       = 11
+    input_unit  = "bytes"
+    output_unit = "bytes"
+    aggregator  = "MIN"
     source cloudwatch "free_space" {
       query {
         aggregator  = "Sum"
@@ -195,8 +213,10 @@ ingester aws_elasticsearch_cloudwatch module {
   }
 
   gauge "jvm_memory_pressure" {
-    unit       = "percent"
-    aggregator = "MAX"
+    index       = 12
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
     source cloudwatch "jvm_memory_pressure" {
       query {
         aggregator  = "Maximum"
@@ -212,8 +232,10 @@ ingester aws_elasticsearch_cloudwatch module {
   }
 
   gauge "writes_blocked" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 13
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
     source cloudwatch "writes_blocked" {
       query {
         aggregator  = "Maximum"
@@ -229,8 +251,10 @@ ingester aws_elasticsearch_cloudwatch module {
   }
 
   gauge "snapshot_failure" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 14
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
     source cloudwatch "snapshot_failure" {
       query {
         aggregator  = "Maximum"
@@ -246,8 +270,10 @@ ingester aws_elasticsearch_cloudwatch module {
   }
 
   gauge "master_reachable" {
-    unit       = "count"
-    aggregator = "MIN"
+    index       = 15
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MIN"
     source cloudwatch "master_reachable" {
       query {
         aggregator  = "Minimum"
@@ -314,8 +340,10 @@ ingester aws_elasticsearch_master_cloudwatch module {
 
 
   gauge "master_reachable" {
-    unit       = "count"
-    aggregator = "MIN"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MIN"
     source cloudwatch "master_reachable" {
       query {
         aggregator  = "Minimum"
@@ -331,8 +359,10 @@ ingester aws_elasticsearch_master_cloudwatch module {
   }
 
   gauge "cpu" {
-    unit       = "percent"
-    aggregator = "AVG"
+    index       = 2
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
     source cloudwatch "cpu" {
       query {
         aggregator  = "Average"
@@ -348,8 +378,10 @@ ingester aws_elasticsearch_master_cloudwatch module {
   }
 
   gauge "jvm_memory_pressure" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 5
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
     source cloudwatch "jvm_memory_pressure" {
       query {
         aggregator  = "Maximum"

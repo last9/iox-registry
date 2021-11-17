@@ -32,8 +32,10 @@ ingester aws_aurora_instance_logical_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "connections" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "MAX"
     source cloudwatch "connections" {
       query {
         aggregator  = "Maximum"
@@ -48,8 +50,10 @@ ingester aws_aurora_instance_logical_cloudwatch module {
   }
 
   gauge "read_throughput" {
-    unit       = "bps"
-    aggregator = "AVG"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "AVG"
     source cloudwatch "read_throughput" {
       query {
         aggregator  = "Average"
@@ -65,8 +69,10 @@ ingester aws_aurora_instance_logical_cloudwatch module {
 
 
   gauge "read_latency" {
-    unit       = "ms"
-    aggregator = "AVG"
+    index       = 3
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "MAX"
     source cloudwatch "read_latency" {
       query {
         aggregator  = "Average"
@@ -81,8 +87,10 @@ ingester aws_aurora_instance_logical_cloudwatch module {
   }
 
   gauge "write_throughput" {
-    unit       = "bps"
-    aggregator = "AVG"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "AVG"
     source cloudwatch "write_throughput" {
       query {
         aggregator  = "Average"
@@ -97,8 +105,10 @@ ingester aws_aurora_instance_logical_cloudwatch module {
   }
 
   gauge "write_latency" {
-    unit       = "ms"
-    aggregator = "AVG"
+    index       = 5
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "MAX"
     source cloudwatch "write_latency" {
       query {
         aggregator  = "Average"
@@ -113,8 +123,10 @@ ingester aws_aurora_instance_logical_cloudwatch module {
   }
 
   gauge "update_throughput" {
-    unit       = "bps"
-    aggregator = "AVG"
+    index       = 6
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "AVG"
     source cloudwatch "update_throughput" {
       query {
         aggregator  = "Average"
@@ -129,8 +141,10 @@ ingester aws_aurora_instance_logical_cloudwatch module {
   }
 
   gauge "update_latency" {
-    unit       = "ms"
-    aggregator = "AVG"
+    index       = 7
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "MAX"
     source cloudwatch "update_latency" {
       query {
         aggregator  = "Average"
@@ -145,8 +159,10 @@ ingester aws_aurora_instance_logical_cloudwatch module {
   }
 
   gauge "delete_throughput" {
-    unit       = "bps"
-    aggregator = "AVG"
+    index       = 8
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "AVG"
     source cloudwatch "delete_throughput" {
       query {
         aggregator  = "Average"
@@ -161,8 +177,10 @@ ingester aws_aurora_instance_logical_cloudwatch module {
   }
 
   gauge "delete_latency" {
-    unit       = "ms"
-    aggregator = "AVG"
+    index       = 9
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "MAX"
     source cloudwatch "delete_latency" {
       query {
         aggregator  = "Average"
@@ -177,8 +195,10 @@ ingester aws_aurora_instance_logical_cloudwatch module {
   }
 
   gauge "deadlocks" {
-    unit       = "tps"
-    aggregator = "MAX"
+    index       = 11
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
     source cloudwatch "deadlocks" {
       query {
         aggregator  = "Maximum"
@@ -227,8 +247,10 @@ ingester aws_aurora_instance_physical_cloudwatch module {
   inputs = "$input{inputs}"
 
   gauge "network_in" {
-    unit       = "bps"
-    aggregator = "AVG"
+    index       = 1
+    input_unit  = "bps"
+    output_unit = "bps"
+    aggregator  = "AVG"
     source cloudwatch "network_in" {
       query {
         aggregator  = "Average"
@@ -243,8 +265,10 @@ ingester aws_aurora_instance_physical_cloudwatch module {
   }
 
   gauge "network_out" {
-    unit       = "bps"
-    aggregator = "AVG"
+    index       = 2
+    input_unit  = "bps"
+    output_unit = "bps"
+    aggregator  = "AVG"
     source cloudwatch "network_out" {
       query {
         aggregator  = "Average"
@@ -259,8 +283,10 @@ ingester aws_aurora_instance_physical_cloudwatch module {
   }
 
   gauge "cpu" {
-    unit       = "percent"
-    aggregator = "AVG"
+    index       = 3
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
     source cloudwatch "cpu" {
       query {
         aggregator  = "Average"
@@ -275,8 +301,10 @@ ingester aws_aurora_instance_physical_cloudwatch module {
   }
 
   gauge "free_space" {
-    unit       = "bytes"
-    aggregator = "MIN"
+    index       = 4
+    input_unit  = "bytes"
+    output_unit = "bytes"
+    aggregator  = "MIN"
     source cloudwatch "free_space" {
       query {
         aggregator  = "Minimum"
@@ -291,8 +319,10 @@ ingester aws_aurora_instance_physical_cloudwatch module {
   }
 
   gauge "replica_lag" {
-    unit       = "s"
-    aggregator = "MAX"
+    index       = 5
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "MAX"
     source cloudwatch "replica_lag" {
       query {
         aggregator  = "Maximum"
@@ -307,8 +337,10 @@ ingester aws_aurora_instance_physical_cloudwatch module {
   }
 
   gauge "queue_depth" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 6
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
     source cloudwatch "queue_depth" {
       query {
         aggregator  = "Maximum"

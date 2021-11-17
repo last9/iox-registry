@@ -34,8 +34,10 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
   }
 
   gauge "cpu" {
-    unit       = "percent"
-    aggregator = "AVG"
+    index       = 2
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
 
     source cloudwatch "cpu" {
       query {
@@ -52,8 +54,10 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
   }
 
   gauge "memory" {
-    unit       = "percent"
-    aggregator = "AVG"
+    index       = 3
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
 
     source cloudwatch "memory" {
       query {
@@ -70,8 +74,10 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
   }
 
   gauge "cpu_overlimit" {
-    unit       = "percent"
-    aggregator = "AVG"
+    index       = 6
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
 
     source cloudwatch "cpu_overlimit" {
       query {
@@ -88,8 +94,10 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
   }
 
   gauge "memory_overlimit" {
-    unit       = "percent"
-    aggregator = "AVG"
+    index       = 7
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
 
     source cloudwatch "memory_overlimit" {
       query {
@@ -106,8 +114,10 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
   }
 
   gauge "bytes_in" {
-    unit       = "bps"
-    aggregator = "AVG"
+    index       = 4
+    input_unit  = "bps"
+    output_unit = "bps"
+    aggregator  = "AVG"
 
     source cloudwatch "bytes_in" {
       query {
@@ -124,8 +134,10 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
   }
 
   gauge "bytes_out" {
-    unit       = "bps"
-    aggregator = "AVG"
+    index       = 5
+    input_unit  = "bps"
+    output_unit = "bps"
+    aggregator  = "AVG"
 
     source cloudwatch "bytes_out" {
       query {
@@ -142,8 +154,10 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
   }
 
   gauge "container_restarts" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 8
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
 
     source cloudwatch "pod_number_of_container_restarts" {
       query {
@@ -201,8 +215,10 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
   }
 
   gauge "cpu_used" {
-    unit       = "percent"
-    aggregator = "AVG"
+    index       = 1
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
 
     source cloudwatch "cpu_used" {
       query {
@@ -219,8 +235,10 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
   }
 
   gauge "filesystem_used" {
-    unit       = "percent"
-    aggregator = "AVG"
+    index       = 2
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
 
     source cloudwatch "filesystem_used" {
       query {
@@ -237,8 +255,10 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
   }
 
   gauge "memory_overlimit" {
-    unit       = "percent"
-    aggregator = "AVG"
+    index       = 3
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
 
     source cloudwatch "memory_overlimit" {
       query {
@@ -255,8 +275,10 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
   }
 
   gauge "running_pods" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
 
     source cloudwatch "running_pods" {
       query {
@@ -273,8 +295,10 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
   }
 
   gauge "running_containers" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
 
     source cloudwatch "running_containers" {
       query {

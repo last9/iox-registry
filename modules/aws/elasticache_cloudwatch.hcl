@@ -46,8 +46,10 @@ ingester aws_elasticache_redis_cloudwatch module {
   EOF
 
   gauge "curr_connections" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
 
     source cloudwatch "CurrConnections" {
       query {
@@ -63,8 +65,10 @@ ingester aws_elasticache_redis_cloudwatch module {
   }
 
   gauge "new_connections" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
 
     source cloudwatch "NewConnections" {
       query {
@@ -80,8 +84,10 @@ ingester aws_elasticache_redis_cloudwatch module {
   }
 
   gauge "curr_items" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source cloudwatch "CurrItems" {
       query {
@@ -97,8 +103,10 @@ ingester aws_elasticache_redis_cloudwatch module {
   }
 
   gauge "cache_hit_rate" {
-    unit       = "percent"
-    aggregator = "MIN"
+    index       = 4
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "MIN"
 
     source cloudwatch "CacheHitRate" {
       query {
@@ -114,8 +122,10 @@ ingester aws_elasticache_redis_cloudwatch module {
   }
 
   gauge "cache_hits" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 6
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source cloudwatch "CacheHits" {
       query {
@@ -131,8 +141,10 @@ ingester aws_elasticache_redis_cloudwatch module {
   }
 
   gauge "cache_misses" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 7
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source cloudwatch "CacheMisses" {
       query {
@@ -148,8 +160,10 @@ ingester aws_elasticache_redis_cloudwatch module {
   }
 
   gauge "evictions" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "Evictions" {
       query {
         aggregator  = "Sum"
@@ -165,7 +179,9 @@ ingester aws_elasticache_redis_cloudwatch module {
 
   latency "latency_histo" {
     error_margin = 0.05
-    unit         = "ms"
+    index        = 6
+    input_unit   = "ms"
+    output_unit  = "ms"
     aggregator   = "PERCENTILE"
     multiplier   = 0.001
     source cloudwatch "throughput" {
@@ -272,8 +288,10 @@ ingester aws_elasticache_cluster_cloudwatch module {
   EOF
 
   gauge "replication_lag" {
-    unit       = "s"
-    aggregator = "MAX"
+    index       = 4
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "MAX"
 
     source cloudwatch "ReplicationLag" {
       query {
@@ -289,8 +307,10 @@ ingester aws_elasticache_cluster_cloudwatch module {
   }
 
   gauge "bytes_out" {
-    unit       = "bytes"
-    aggregator = "SUM"
+    index       = 2
+    input_unit  = "bytes"
+    output_unit = "bps"
+    aggregator  = "SUM"
 
     source cloudwatch "NetworkBytesOut" {
       query {
@@ -306,8 +326,10 @@ ingester aws_elasticache_cluster_cloudwatch module {
   }
 
   gauge "bytes_in" {
-    unit       = "bytes"
-    aggregator = "SUM"
+    index       = 3
+    input_unit  = "bytes"
+    output_unit = "bps"
+    aggregator  = "SUM"
 
     source cloudwatch "NetworkBytesIn" {
       query {
@@ -323,8 +345,10 @@ ingester aws_elasticache_cluster_cloudwatch module {
   }
 
   gauge "cpu_used" {
-    unit       = "percent"
-    aggregator = "AVG"
+    index       = 1
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
 
     source cloudwatch "EngineCPUUtilization" {
       query {
@@ -340,8 +364,10 @@ ingester aws_elasticache_cluster_cloudwatch module {
   }
 
   gauge "memory_used" {
-    unit       = "percent"
-    aggregator = "AVG"
+    index       = 5
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
 
     source cloudwatch "DatabaseMemoryUsagePercentage" {
       query {

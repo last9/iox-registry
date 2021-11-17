@@ -40,8 +40,10 @@ ingester aws_alb_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -55,8 +57,10 @@ ingester aws_alb_cloudwatch module {
     }
   }
   gauge "new_connections" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "new_connections" {
       query {
         aggregator  = "Sum"
@@ -70,8 +74,10 @@ ingester aws_alb_cloudwatch module {
     }
   }
   gauge "rejected_connections" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "rejected_connections" {
       query {
         aggregator  = "Sum"
@@ -85,8 +91,10 @@ ingester aws_alb_cloudwatch module {
     }
   }
   gauge "processed_bytes" {
-    unit       = "bytes"
-    aggregator = "SUM"
+    index       = 6
+    input_unit  = "bytes"
+    output_unit = "bytes"
+    aggregator  = "SUM"
     source cloudwatch "processed_bytes" {
       query {
         aggregator  = "Sum"
@@ -100,8 +108,10 @@ ingester aws_alb_cloudwatch module {
     }
   }
   gauge "lcu" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "lcu" {
       query {
         aggregator  = "Sum"
@@ -116,8 +126,10 @@ ingester aws_alb_cloudwatch module {
   }
 
   status_histo status_5xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source cloudwatch "status_500" {
       query {
@@ -132,8 +144,10 @@ ingester aws_alb_cloudwatch module {
     }
   }
   status_histo status_4xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source cloudwatch "status_400" {
       query {
@@ -149,8 +163,10 @@ ingester aws_alb_cloudwatch module {
   }
 
   gauge lb_5xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 8
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "lb_500" {
       query {
         aggregator  = "Sum"
@@ -164,8 +180,10 @@ ingester aws_alb_cloudwatch module {
     }
   }
   gauge lb_4xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 7
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "lb_400" {
       query {
         aggregator  = "Sum"
@@ -180,7 +198,9 @@ ingester aws_alb_cloudwatch module {
   }
 
   latency "latency_histo" {
-    unit         = "s"
+    index        = 6
+    input_unit   = "ms"
+    output_unit  = "ms"
     aggregator   = "PERCENTILE"
     error_margin = 0.05
     source cloudwatch "throughput" {
@@ -299,8 +319,10 @@ ingester aws_alb_endpoint_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -314,7 +336,9 @@ ingester aws_alb_endpoint_cloudwatch module {
     }
   }
   latency "latency_histo" {
-    unit         = "s"
+    index        = 6
+    input_unit   = "ms"
+    output_unit  = "ms"
     aggregator   = "PERCENTILE"
     error_margin = 0.05
     source cloudwatch "throughput" {
@@ -390,8 +414,10 @@ ingester aws_alb_endpoint_cloudwatch module {
     }
   }
   status_histo status_5xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source cloudwatch "status_500" {
       query {
@@ -406,8 +432,10 @@ ingester aws_alb_endpoint_cloudwatch module {
     }
   }
   status_histo status_4xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source cloudwatch "status_400" {
       query {
@@ -423,8 +451,10 @@ ingester aws_alb_endpoint_cloudwatch module {
   }
 
   status_histo status_3xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "status_300" {
       query {
         aggregator  = "Sum"
@@ -449,8 +479,10 @@ ingester aws_alb_endpoint_cloudwatch module {
     }
   }
   status_histo status_2xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "status_200" {
       query {
         aggregator  = "Sum"
@@ -512,8 +544,10 @@ ingester aws_alb_tg_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -528,7 +562,9 @@ ingester aws_alb_tg_cloudwatch module {
     }
   }
   latency "latency_histo" {
-    unit         = "s"
+    index        = 6
+    input_unit   = "ms"
+    output_unit  = "ms"
     aggregator   = "PERCENTILE"
     error_margin = 0.05
     source cloudwatch "throughput" {
@@ -610,8 +646,10 @@ ingester aws_alb_tg_cloudwatch module {
     }
   }
   status_histo status_5xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source cloudwatch "status_500" {
       query {
@@ -627,8 +665,10 @@ ingester aws_alb_tg_cloudwatch module {
     }
   }
   status_histo status_4xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source cloudwatch "status_400" {
       query {
@@ -645,8 +685,10 @@ ingester aws_alb_tg_cloudwatch module {
   }
 
   status_histo status_3xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "status_300" {
       query {
         aggregator  = "Sum"
@@ -661,8 +703,10 @@ ingester aws_alb_tg_cloudwatch module {
     }
   }
   status_histo status_2xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "status_200" {
       query {
         aggregator  = "Sum"
@@ -720,8 +764,10 @@ ingester aws_alb_internal_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -735,8 +781,10 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   gauge "new_connections" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "new_connections" {
       query {
         aggregator  = "Sum"
@@ -750,8 +798,10 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   gauge "rejected_connections" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "rejected_connections" {
       query {
         aggregator  = "Sum"
@@ -765,8 +815,10 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   gauge "processed_bytes" {
-    unit       = "bytes"
-    aggregator = "SUM"
+    index       = 6
+    input_unit  = "bytes"
+    output_unit = "bytes"
+    aggregator  = "SUM"
     source cloudwatch "processed_bytes" {
       query {
         aggregator  = "Sum"
@@ -780,8 +832,10 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   gauge "lcu" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "lcu" {
       query {
         aggregator  = "Sum"
@@ -795,8 +849,10 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   status_histo status_5xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source cloudwatch "status_500" {
       query {
@@ -811,8 +867,10 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   status_histo status_4xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source cloudwatch "status_400" {
       query {
@@ -828,8 +886,10 @@ ingester aws_alb_internal_cloudwatch module {
   }
 
   gauge lb_5xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 8
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "lb_500" {
       query {
         aggregator  = "Sum"
@@ -843,8 +903,10 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   gauge lb_4xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 7
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "lb_400" {
       query {
         aggregator  = "Sum"
@@ -858,7 +920,9 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
   latency "latency_histo" {
-    unit         = "s"
+    index        = 6
+    input_unit   = "ms"
+    output_unit  = "ms"
     aggregator   = "PERCENTILE"
     error_margin = 0.05
     source cloudwatch "throughput" {
@@ -977,8 +1041,10 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -993,7 +1059,9 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   }
   latency "latency_histo" {
     error_margin = 0.05
-    unit         = "ms"
+    index        = 6
+    input_unit   = "ms"
+    output_unit  = "ms"
     aggregator   = "PERCENTILE"
     source cloudwatch "throughput" {
       query {
@@ -1068,8 +1136,10 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_5xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source cloudwatch "status_500" {
       query {
@@ -1084,8 +1154,10 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_4xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
     source cloudwatch "status_400" {
       query {
@@ -1101,8 +1173,10 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   }
 
   status_histo status_3xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "status_300" {
       query {
         aggregator  = "Sum"
@@ -1127,8 +1201,10 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
     }
   }
   status_histo status_2xx {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "status_200" {
       query {
         aggregator  = "Sum"

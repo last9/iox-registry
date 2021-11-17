@@ -35,8 +35,10 @@ ingester aws_sqs_cloudwatch module {
   EOF
 
   gauge "sent" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "sent" {
       query {
         aggregator  = "Sum"
@@ -51,8 +53,10 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "received" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "received" {
       query {
         aggregator  = "Sum"
@@ -67,8 +71,10 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "visible" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "visible" {
       query {
         aggregator  = "Sum"
@@ -83,8 +89,10 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "empty_receives" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "empty_receives" {
       query {
         aggregator  = "Sum"
@@ -99,8 +107,10 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "deleted" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "deleted" {
       query {
         aggregator  = "Sum"
@@ -115,8 +125,10 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "delayed" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 6
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "delayed" {
       query {
         aggregator  = "Sum"
@@ -131,8 +143,10 @@ ingester aws_sqs_cloudwatch module {
   }
 
   gauge "oldest" {
-    unit       = "s"
-    aggregator = "MAX"
+    index       = 7
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "MAX"
     source cloudwatch "oldest" {
       query {
         aggregator  = "Maximum"

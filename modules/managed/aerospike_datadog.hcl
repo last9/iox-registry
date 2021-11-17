@@ -43,8 +43,10 @@ ingester managed_aerospike_namespace_ops_read_datadog module {
   }
 
   gauge "client_success" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source datadog "client_success" {
       query = "sum:aerospike.namespace.client_read_success{*} by {namespace,host}.rollup(sum, 60)"
 
@@ -55,8 +57,10 @@ ingester managed_aerospike_namespace_ops_read_datadog module {
   }
 
   gauge "client_error" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source datadog "client_error" {
       query = "sum:aerospike.namespace.client_read_error{*} by {namespace,host}.rollup(sum, 60)"
 
@@ -67,8 +71,10 @@ ingester managed_aerospike_namespace_ops_read_datadog module {
   }
 
   gauge "client_timeout" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source datadog "client_timeout" {
       query = "sum:aerospike.namespace.client_read_timeout{*} by {namespace,host}.rollup(sum, 60)"
 
@@ -124,8 +130,10 @@ ingester managed_aerospike_namespace_sets_datadog module {
   }
 
   gauge "memory" {
-    unit       = "bytes"
-    aggregator = "AVG"
+    index       = 4
+    input_unit  = "bytes"
+    output_unit = "bytes"
+    aggregator  = "AVG"
     source datadog "memory" {
       query = "avg:aerospike.set.memory_data_bytes{*} by {set,namespace,host}.rollup(avg, 60)"
 
@@ -136,8 +144,10 @@ ingester managed_aerospike_namespace_sets_datadog module {
   }
 
   gauge "objects" {
-    unit       = "count"
-    aggregator = "AVG"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
     source datadog "objects" {
       query = "avg:aerospike.set.objects{*} by {set,namespace,host}.rollup(avg, 60)"
 
@@ -148,8 +158,10 @@ ingester managed_aerospike_namespace_sets_datadog module {
   }
 
   gauge "stop_write" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 6
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source datadog "client_timeout" {
       query = "sum:aerospike.set.stop_writes_count{*} by {set,namespace,host}.rollup(sum, 60)"
 
@@ -201,8 +213,10 @@ ingester managed_aerospike_namespace_datadog module {
   }
 
   gauge "query" {
-    unit       = "tps"
-    aggregator = "AVG"
+    index       = 1
+    input_unit  = "tps"
+    output_unit = "tps"
+    aggregator  = "AVG"
     source datadog "query" {
       query = "avg:aerospike.namespace.tps.query{*} by {namespace,host}.rollup(avg, 60)"
 
@@ -213,8 +227,10 @@ ingester managed_aerospike_namespace_datadog module {
   }
 
   gauge "read" {
-    unit       = "tps"
-    aggregator = "AVG"
+    index       = 2
+    input_unit  = "tps"
+    output_unit = "tps"
+    aggregator  = "AVG"
     source datadog "read" {
       query = "avg:aerospike.namespace.tps.read{*} by {namespace,host}.rollup(avg, 60)"
 
@@ -225,8 +241,10 @@ ingester managed_aerospike_namespace_datadog module {
   }
 
   gauge "write" {
-    unit       = "tps"
-    aggregator = "AVG"
+    index       = 3
+    input_unit  = "tps"
+    output_unit = "tps"
+    aggregator  = "AVG"
     source datadog "write" {
       query = "avg:aerospike.namespace.tps.write{*} by {namespace,host}.rollup(avg, 60)"
 

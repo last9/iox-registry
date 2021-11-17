@@ -40,8 +40,10 @@ ingester aws_lambda_cloudwatch module {
   EOF
 
   gauge "invocations" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "invocations" {
       query {
         aggregator  = "Sum"
@@ -56,7 +58,9 @@ ingester aws_lambda_cloudwatch module {
   }
 
   latency "latency_histo" {
-    unit         = "ms"
+    index        = 6
+    input_unit   = "ms"
+    output_unit  = "ms"
     aggregator   = "PERCENTILE"
     error_margin = "0.05"
     multiplier   = 1
@@ -135,8 +139,10 @@ ingester aws_lambda_cloudwatch module {
   }
 
   gauge "concurrent_executions" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "concurrent_executions" {
       query {
         aggregator  = "Maximum"
@@ -151,8 +157,10 @@ ingester aws_lambda_cloudwatch module {
   }
 
   gauge "concurrency_spillover" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "concurrency_spillover" {
       query {
         aggregator  = "Sum"
@@ -167,8 +175,10 @@ ingester aws_lambda_cloudwatch module {
   }
 
   gauge "throttles" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "throttles" {
       query {
         aggregator  = "Sum"
@@ -183,8 +193,10 @@ ingester aws_lambda_cloudwatch module {
   }
 
   gauge "errors" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 6
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
     source cloudwatch "errors" {
       query {
         aggregator  = "Sum"

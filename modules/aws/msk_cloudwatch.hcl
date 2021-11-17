@@ -53,8 +53,10 @@ ingester aws_msk_topic_per_broker_cloudwatch module {
   }
 
   gauge "bytes_in" {
-    unit       = "bps"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "Bps"
+    output_unit = "Bps"
+    aggregator  = "SUM"
     source cloudwatch "data_in" {
       query {
         aggregator  = "Sum"
@@ -71,8 +73,10 @@ ingester aws_msk_topic_per_broker_cloudwatch module {
     }
   }
   gauge "bytes_out" {
-    unit       = "bps"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "Bps"
+    output_unit = "Bps"
+    aggregator  = "SUM"
     source cloudwatch "data_out" {
       query {
         aggregator  = "Sum"
@@ -89,8 +93,10 @@ ingester aws_msk_topic_per_broker_cloudwatch module {
     }
   }
   gauge "messages_in" {
-    unit       = "tps"
-    aggregator = "AVG"
+    index       = 1
+    input_unit  = "tps"
+    output_unit = "tps"
+    aggregator  = "AVG"
     source cloudwatch "messages_in" {
       query {
         aggregator  = "Average"
@@ -107,8 +113,10 @@ ingester aws_msk_topic_per_broker_cloudwatch module {
     }
   }
   gauge "fetch_msg_conversions" {
-    unit       = "tps"
-    aggregator = "AVG"
+    index       = 3
+    input_unit  = "tps"
+    output_unit = "tps"
+    aggregator  = "AVG"
     source cloudwatch "fetch_msg_conversions" {
       query {
         aggregator  = "Average"
@@ -125,8 +133,10 @@ ingester aws_msk_topic_per_broker_cloudwatch module {
     }
   }
   gauge "produce_msg_conversions" {
-    unit       = "tps"
-    aggregator = "AVG"
+    index       = 2
+    input_unit  = "tps"
+    output_unit = "tps"
+    aggregator  = "AVG"
     source cloudwatch "produce_msg_conversions" {
       query {
         aggregator  = "Average"
@@ -191,8 +201,10 @@ ingester aws_msk_topic_per_consumer_grp_cloudwatch module {
   }
 
   gauge "offset_lag" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source cloudwatch "offset_lag" {
       query {
@@ -268,8 +280,10 @@ ingester aws_msk_partition_cloudwatch module {
   }
 
   gauge "offset_lag" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source cloudwatch "offset_lag" {
       query {
@@ -288,8 +302,10 @@ ingester aws_msk_partition_cloudwatch module {
   }
 
   gauge "time_lag" {
-    unit       = "seconds"
-    aggregator = "MAX"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source cloudwatch "time_lag" {
       query {
@@ -356,8 +372,10 @@ ingester aws_msk_cluster_cloudwatch module {
   }
 
   gauge "active_controller_count" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source cloudwatch "active_controller_count" {
       query {
@@ -375,8 +393,10 @@ ingester aws_msk_cluster_cloudwatch module {
   }
 
   gauge "offline_partition_count" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
     source cloudwatch "offline_partition_count" {
       query {
@@ -447,8 +467,10 @@ ingester aws_msk_broker_cloudwatch module {
   }
 
   gauge "mem_free" {
-    unit       = "bytes"
-    aggregator = "MIN"
+    index       = 12
+    input_unit  = "bytes"
+    output_unit = "bytes"
+    aggregator  = "MIN"
     source cloudwatch "mem_free" {
       query {
         aggregator  = "Minimum"
@@ -465,8 +487,10 @@ ingester aws_msk_broker_cloudwatch module {
   }
 
   gauge "messages_in" {
-    unit       = "tps"
-    aggregator = "AVG"
+    index       = 1
+    input_unit  = "tps"
+    output_unit = "tps"
+    aggregator  = "AVG"
     source cloudwatch "messages_in" {
       query {
         aggregator  = "Average"
@@ -483,8 +507,10 @@ ingester aws_msk_broker_cloudwatch module {
   }
 
   gauge "partition_count" {
-    unit       = "count"
-    aggregator = "MIN"
+    index       = 8
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MIN"
     source cloudwatch "partition_count" {
       query {
         aggregator  = "Minimum"
@@ -501,8 +527,10 @@ ingester aws_msk_broker_cloudwatch module {
   }
 
   gauge "produce_time_ms_mean" {
-    unit       = "milliseconds"
-    aggregator = "AVG"
+    index       = 2
+    input_unit  = "ms"
+    output_unit = "ms"
+    aggregator  = "AVG"
     source cloudwatch "produce_time_ms_mean" {
       query {
         aggregator  = "Average"
@@ -519,8 +547,10 @@ ingester aws_msk_broker_cloudwatch module {
   }
 
   gauge "request_bytes_mean" {
-    unit       = "bytes"
-    aggregator = "SUM"
+    index       = 7
+    input_unit  = "Bps"
+    output_unit = "Bps"
+    aggregator  = "SUM"
     source cloudwatch "request_bytes_mean" {
       query {
         aggregator  = "Sum"
@@ -537,8 +567,10 @@ ingester aws_msk_broker_cloudwatch module {
   }
 
   gauge "request_time" {
-    unit       = "milliseconds"
-    aggregator = "AVG"
+    index       = 6
+    input_unit  = "ms"
+    output_unit = "ms"
+    aggregator  = "AVG"
     source cloudwatch "request_time" {
       query {
         aggregator  = "Average"
@@ -555,8 +587,10 @@ ingester aws_msk_broker_cloudwatch module {
   }
 
   gauge "produce_msg_conversions" {
-    unit       = "tps"
-    aggregator = "AVG"
+    index       = 4
+    input_unit  = "tps"
+    output_unit = "tps"
+    aggregator  = "AVG"
     source cloudwatch "produce_msg_conversions" {
       query {
         aggregator  = "Average"
@@ -573,8 +607,10 @@ ingester aws_msk_broker_cloudwatch module {
   }
 
   gauge "fetch_msg_conversions" {
-    unit       = "tps"
-    aggregator = "AVG"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "tps"
+    aggregator  = "AVG"
     source cloudwatch "fetch_msg_conversions" {
       query {
         aggregator  = "Average"
@@ -591,8 +627,10 @@ ingester aws_msk_broker_cloudwatch module {
   }
 
   gauge "fetch_time_ms_mean" {
-    unit       = "milliseconds"
-    aggregator = "AVG"
+    index       = 3
+    input_unit  = "ms"
+    output_unit = "ms"
+    aggregator  = "AVG"
     source cloudwatch "fetch_time_ms_mean" {
       query {
         aggregator  = "Average"
@@ -609,8 +647,10 @@ ingester aws_msk_broker_cloudwatch module {
   }
 
   gauge "root_disk_used" {
-    unit       = "percentage"
-    aggregator = "MAX"
+    index       = 11
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "MAX"
     source cloudwatch "root_disk_used" {
       query {
         aggregator  = "Maximum"

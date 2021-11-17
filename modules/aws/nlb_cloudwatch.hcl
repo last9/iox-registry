@@ -40,8 +40,10 @@ ingester aws_nlb_cloudwatch module {
   }
 
   gauge "throughput" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 1
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "MAX"
     source cloudwatch "throughput" {
       query {
         aggregator  = "Maximum"
@@ -56,8 +58,10 @@ ingester aws_nlb_cloudwatch module {
   }
 
   gauge "new_connections" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 2
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "new_connections" {
       query {
         aggregator  = "Sum"
@@ -72,8 +76,10 @@ ingester aws_nlb_cloudwatch module {
   }
 
   gauge "concurrent_connections" {
-    unit       = "count"
-    aggregator = "MAX"
+    index       = 9
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "MAX"
     source cloudwatch "concurrent_connections" {
       query {
         aggregator  = "Maximum"
@@ -89,8 +95,10 @@ ingester aws_nlb_cloudwatch module {
 
 
   gauge "processed_bytes" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 3
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "ProcessedBytes" {
       query {
         aggregator  = "Sum"
@@ -105,8 +113,10 @@ ingester aws_nlb_cloudwatch module {
   }
 
   gauge "consumed_lcus" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 4
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "consumed_lcus" {
       query {
         aggregator  = "Sum"
@@ -121,8 +131,10 @@ ingester aws_nlb_cloudwatch module {
   }
 
   gauge "tcp_client_reset_count" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 5
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "tcp_client_reset_count" {
       query {
         aggregator  = "Sum"
@@ -137,8 +149,10 @@ ingester aws_nlb_cloudwatch module {
   }
 
   gauge "tcp_elb_reset_count" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 6
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "tcp_elb_reset_count" {
       query {
         aggregator  = "Sum"
@@ -153,8 +167,10 @@ ingester aws_nlb_cloudwatch module {
   }
 
   gauge "tcp_target_reset_count" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 7
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "tcp_target_reset_count" {
       query {
         aggregator  = "Sum"
@@ -169,8 +185,10 @@ ingester aws_nlb_cloudwatch module {
   }
 
   gauge "target_tls_error" {
-    unit       = "count"
-    aggregator = "SUM"
+    index       = 8
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
     source cloudwatch "target_tls_error" {
       query {
         aggregator  = "Sum"
