@@ -1,3 +1,7 @@
+// NOTE: When using tag based search in the MSK modules, the ClusterName extracted from the ARN (resource_id) has some unwanted prefix
+// So, where ever the cluster name is required, remember to trim the suffix. This is the actual format of the
+// kafka resource_id: "cluster_name/suffix" (split by '/' and use the first part)
+
 ingester aws_msk_topic_per_broker_cloudwatch module {
   frequency  = 60
   lookback   = 600
@@ -6,6 +10,14 @@ ingester aws_msk_topic_per_broker_cloudwatch module {
   lag        = 60
 
   inputs = "$input{inputs}"
+
+  input_query = <<-EOF
+  label_set(
+    label_replace(
+      kafka_cluster{$input{tag_filter}}, 'id=ClusterName'
+    ), "service", "$input{service}", "namespace", "$input{namespace}"
+  )
+  EOF
 
   label {
     type = "service"
@@ -19,12 +31,16 @@ ingester aws_msk_topic_per_broker_cloudwatch module {
 
   physical_address {
     type = "aws_msk_broker"
-    name = "$input{ClusterName}-$input{BrokerID}"
+    name = <<-EOF
+      format("%s-$input{BrokerID}", split("/", "$input{ClusterName}")[0])
+    EOF
   }
 
   physical_component {
     type = "aws_msk_cluster"
-    name = "$input{ClusterName}"
+    name = <<-EOF
+      split("/", "$input{ClusterName}")[0]
+    EOF
   }
 
   data_for_graph_node {
@@ -47,7 +63,9 @@ ingester aws_msk_topic_per_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "BytesInPerSec"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
           "Topic"        = "$input{Topic}"
         }
@@ -65,7 +83,9 @@ ingester aws_msk_topic_per_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "BytesOutPerSec"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
           "Topic"        = "$input{Topic}"
         }
@@ -83,7 +103,9 @@ ingester aws_msk_topic_per_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "MessagesInPerSec"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
           "Topic"        = "$input{Topic}"
         }
@@ -101,7 +123,9 @@ ingester aws_msk_topic_per_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "FetchMessageConversionsPerSec"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
           "Topic"        = "$input{Topic}"
         }
@@ -119,7 +143,9 @@ ingester aws_msk_topic_per_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "ProduceMessageConversionsPerSec"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
           "Topic"        = "$input{Topic}"
         }
@@ -136,6 +162,14 @@ ingester aws_msk_topic_per_consumer_grp_cloudwatch module {
   lag        = 60
 
   inputs = "$input{inputs}"
+
+  input_query = <<-EOF
+  label_set(
+    label_replace(
+      kafka_cluster{$input{tag_filter}}, 'id=ClusterName'
+    ), "service", "$input{service}", "namespace", "$input{namespace}"
+  )
+  EOF
 
   label {
     type = "service"
@@ -179,7 +213,9 @@ ingester aws_msk_topic_per_consumer_grp_cloudwatch module {
         metric_name = "SumOffsetLag"
 
         dimensions = {
-          "Cluster Name"   = "$input{ClusterName}"
+          "Cluster Name"   = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Consumer Group" = "$input{ConsumerGroup}"
           "Topic"          = "$input{Topic}"
         }
@@ -197,6 +233,14 @@ ingester aws_msk_partition_cloudwatch module {
   lag        = 60
 
   inputs = "$input{inputs}"
+
+  input_query = <<-EOF
+  label_set(
+    label_replace(
+      kafka_cluster{$input{tag_filter}}, 'id=ClusterName'
+    ), "service", "$input{service}", "namespace", "$input{namespace}"
+  )
+  EOF
 
   label {
     type = "service"
@@ -270,7 +314,9 @@ ingester aws_msk_partition_cloudwatch module {
         metric_name = "EstimatedTimeLag"
 
         dimensions = {
-          "Cluster Name"   = "$input{ClusterName}"
+          "Cluster Name"   = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Consumer Group" = "$input{ConsumerGroup}"
           "Partition"      = "$input{Partition}"
           "Topic"          = "$input{Topic}"
@@ -289,6 +335,14 @@ ingester aws_msk_cluster_cloudwatch module {
 
   inputs = "$input{inputs}"
 
+  input_query = <<-EOF
+  label_set(
+    label_replace(
+      kafka_cluster{$input{tag_filter}}, 'id=ClusterName'
+    ), "service", "$input{service}", "namespace", "$input{namespace}"
+  )
+  EOF
+
   label {
     type = "service"
     name = "$input{service}"
@@ -301,12 +355,16 @@ ingester aws_msk_cluster_cloudwatch module {
 
   physical_component {
     type = "aws_msk_cluster"
-    name = "$input{ClusterName}"
+    name = <<-EOF
+      split("/", "$input{ClusterName}")[0]
+    EOF
   }
 
   data_for_graph_node {
     type = "aws_msk_cluster"
-    name = "$input{ClusterName}"
+    name = <<-EOF
+      split("/", "$input{ClusterName}")[0]
+    EOF
   }
 
   using = {
@@ -326,7 +384,9 @@ ingester aws_msk_cluster_cloudwatch module {
         metric_name = "ActiveControllerCount"
 
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
         }
       }
     }
@@ -345,7 +405,9 @@ ingester aws_msk_cluster_cloudwatch module {
         metric_name = "OfflinePartitionsCount"
 
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
         }
       }
     }
@@ -361,6 +423,14 @@ ingester aws_msk_broker_cloudwatch module {
 
   inputs = "$input{inputs}"
 
+  input_query = <<-EOF
+  label_set(
+    label_replace(
+      kafka_cluster{$input{tag_filter}}, 'id=ClusterName'
+    ), "service", "$input{service}", "namespace", "$input{namespace}"
+  )
+  EOF
+
   label {
     type = "service"
     name = "$input{service}"
@@ -373,17 +443,23 @@ ingester aws_msk_broker_cloudwatch module {
 
   physical_address {
     type = "aws_msk_broker"
-    name = "$input{ClusterName}-$input{BrokerID}"
+    name = <<-EOF
+      format("%s-$input{BrokerID}", split("/", "$input{ClusterName}")[0])
+    EOF
   }
 
   physical_component {
     type = "aws_msk_cluster"
-    name = "$input{ClusterName}"
+    name = <<-EOF
+      split("/", "$input{ClusterName}")[0]
+    EOF
   }
 
   data_for_graph_node {
     type = "aws_msk_broker"
-    name = "$input{ClusterName}-$input{BrokerID}"
+    name = <<-EOF
+      format("%s-$input{BrokerID}", split("/", "$input{ClusterName}")[0])
+    EOF
   }
 
   using = {
@@ -401,7 +477,9 @@ ingester aws_msk_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "MemoryFree"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
         }
       }
@@ -419,7 +497,9 @@ ingester aws_msk_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "MessagesInPerSec"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
         }
       }
@@ -437,7 +517,9 @@ ingester aws_msk_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "PartitionCount"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
         }
       }
@@ -455,7 +537,9 @@ ingester aws_msk_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "ProduceTotalTimeMsMean"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
         }
       }
@@ -473,7 +557,9 @@ ingester aws_msk_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "RequestBytesMean"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
         }
       }
@@ -491,7 +577,9 @@ ingester aws_msk_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "RequestTime"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
         }
       }
@@ -509,7 +597,9 @@ ingester aws_msk_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "ProduceMessageConversionsPerSec"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
         }
       }
@@ -527,7 +617,9 @@ ingester aws_msk_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "FetchMessageConversionsPerSec"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
         }
       }
@@ -545,7 +637,9 @@ ingester aws_msk_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "FetchConsumerTotalTimeMsMean"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
         }
       }
@@ -563,7 +657,9 @@ ingester aws_msk_broker_cloudwatch module {
         namespace   = "AWS/Kafka"
         metric_name = "RootDiskUsed"
         dimensions = {
-          "Cluster Name" = "$input{ClusterName}"
+          "Cluster Name" = <<-EOF
+            split("/", "$input{ClusterName}")[0]
+          EOF
           "Broker ID"    = "$input{BrokerID}"
         }
       }
