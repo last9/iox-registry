@@ -33,6 +33,7 @@ ingester managed_kong_endpoint_datadog module {
 
   gauge "throughput" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -49,6 +50,7 @@ ingester managed_kong_endpoint_datadog module {
 
   gauge "latency" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "ms"
     output_unit = "ms"
     aggregator  = "AVG"

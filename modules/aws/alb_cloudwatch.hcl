@@ -41,6 +41,7 @@ ingester aws_alb_cloudwatch module {
 
   gauge "throughput" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -58,6 +59,7 @@ ingester aws_alb_cloudwatch module {
   }
   gauge "new_connections" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -75,6 +77,7 @@ ingester aws_alb_cloudwatch module {
   }
   gauge "rejected_connections" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -92,6 +95,7 @@ ingester aws_alb_cloudwatch module {
   }
   gauge "processed_bytes" {
     index       = 6
+    gap_fill    = "zero_fill"
     input_unit  = "bytes"
     output_unit = "bytes"
     aggregator  = "SUM"
@@ -109,6 +113,7 @@ ingester aws_alb_cloudwatch module {
   }
   gauge "lcu" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -127,6 +132,7 @@ ingester aws_alb_cloudwatch module {
 
   status_histo status_5xx {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -145,6 +151,7 @@ ingester aws_alb_cloudwatch module {
   }
   status_histo status_4xx {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -164,6 +171,7 @@ ingester aws_alb_cloudwatch module {
 
   gauge lb_5xx {
     index       = 8
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -181,6 +189,7 @@ ingester aws_alb_cloudwatch module {
   }
   gauge lb_4xx {
     index       = 7
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -199,6 +208,7 @@ ingester aws_alb_cloudwatch module {
 
   latency "latency_histo" {
     index        = 6
+    gap_fill     = "zero_fill"
     input_unit   = "ms"
     output_unit  = "ms"
     aggregator   = "PERCENTILE"
@@ -320,6 +330,7 @@ ingester aws_alb_endpoint_cloudwatch module {
 
   gauge "throughput" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -337,6 +348,7 @@ ingester aws_alb_endpoint_cloudwatch module {
   }
   latency "latency_histo" {
     index        = 6
+    gap_fill     = "zero_fill"
     input_unit   = "ms"
     output_unit  = "ms"
     aggregator   = "PERCENTILE"
@@ -415,6 +427,7 @@ ingester aws_alb_endpoint_cloudwatch module {
   }
   status_histo status_5xx {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -433,6 +446,7 @@ ingester aws_alb_endpoint_cloudwatch module {
   }
   status_histo status_4xx {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -452,6 +466,7 @@ ingester aws_alb_endpoint_cloudwatch module {
 
   status_histo status_3xx {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -480,6 +495,7 @@ ingester aws_alb_endpoint_cloudwatch module {
   }
   status_histo status_2xx {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -545,6 +561,7 @@ ingester aws_alb_tg_cloudwatch module {
 
   gauge "throughput" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -563,6 +580,7 @@ ingester aws_alb_tg_cloudwatch module {
   }
   latency "latency_histo" {
     index        = 6
+    gap_fill     = "zero_fill"
     input_unit   = "ms"
     output_unit  = "ms"
     aggregator   = "PERCENTILE"
@@ -647,6 +665,7 @@ ingester aws_alb_tg_cloudwatch module {
   }
   status_histo status_5xx {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -666,6 +685,7 @@ ingester aws_alb_tg_cloudwatch module {
   }
   status_histo status_4xx {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -686,6 +706,7 @@ ingester aws_alb_tg_cloudwatch module {
 
   status_histo status_3xx {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -704,6 +725,7 @@ ingester aws_alb_tg_cloudwatch module {
   }
   status_histo status_2xx {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -765,6 +787,7 @@ ingester aws_alb_internal_cloudwatch module {
 
   gauge "throughput" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -782,6 +805,7 @@ ingester aws_alb_internal_cloudwatch module {
   }
   gauge "new_connections" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -799,6 +823,7 @@ ingester aws_alb_internal_cloudwatch module {
   }
   gauge "rejected_connections" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -816,6 +841,7 @@ ingester aws_alb_internal_cloudwatch module {
   }
   gauge "processed_bytes" {
     index       = 6
+    gap_fill    = "zero_fill"
     input_unit  = "bytes"
     output_unit = "bytes"
     aggregator  = "SUM"
@@ -833,6 +859,7 @@ ingester aws_alb_internal_cloudwatch module {
   }
   gauge "lcu" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -850,6 +877,7 @@ ingester aws_alb_internal_cloudwatch module {
   }
   status_histo status_5xx {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -868,6 +896,7 @@ ingester aws_alb_internal_cloudwatch module {
   }
   status_histo status_4xx {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -887,6 +916,7 @@ ingester aws_alb_internal_cloudwatch module {
 
   gauge lb_5xx {
     index       = 8
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -904,6 +934,7 @@ ingester aws_alb_internal_cloudwatch module {
   }
   gauge lb_4xx {
     index       = 7
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -921,6 +952,7 @@ ingester aws_alb_internal_cloudwatch module {
   }
   latency "latency_histo" {
     index        = 6
+    gap_fill     = "zero_fill"
     input_unit   = "ms"
     output_unit  = "ms"
     aggregator   = "PERCENTILE"
@@ -1042,6 +1074,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
 
   gauge "throughput" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -1060,6 +1093,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   latency "latency_histo" {
     error_margin = 0.05
     index        = 6
+    gap_fill     = "zero_fill"
     input_unit   = "ms"
     output_unit  = "ms"
     aggregator   = "PERCENTILE"
@@ -1137,6 +1171,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   }
   status_histo status_5xx {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -1155,6 +1190,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   }
   status_histo status_4xx {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -1174,6 +1210,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
 
   status_histo status_3xx {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -1202,6 +1239,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   }
   status_histo status_2xx {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"

@@ -36,6 +36,7 @@ ingester aws_sqs_cloudwatch module {
 
   gauge "sent" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -54,6 +55,7 @@ ingester aws_sqs_cloudwatch module {
 
   gauge "received" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -72,6 +74,7 @@ ingester aws_sqs_cloudwatch module {
 
   gauge "visible" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -90,6 +93,7 @@ ingester aws_sqs_cloudwatch module {
 
   gauge "empty_receives" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -108,6 +112,7 @@ ingester aws_sqs_cloudwatch module {
 
   gauge "deleted" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -126,6 +131,7 @@ ingester aws_sqs_cloudwatch module {
 
   gauge "delayed" {
     index       = 6
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -144,6 +150,7 @@ ingester aws_sqs_cloudwatch module {
 
   gauge "oldest" {
     index       = 7
+    gap_fill    = "zero_fill"
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"

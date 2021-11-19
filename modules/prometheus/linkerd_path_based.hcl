@@ -33,6 +33,7 @@ ingester prometheus_linkerd_path module {
 
   gauge "throughput" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -48,6 +49,7 @@ ingester prometheus_linkerd_path module {
 
   status_histo "status_2xx" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -64,6 +66,7 @@ ingester prometheus_linkerd_path module {
 
   status_histo "status_3xx" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -80,6 +83,7 @@ ingester prometheus_linkerd_path module {
 
   status_histo "status_4xx" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -96,6 +100,7 @@ ingester prometheus_linkerd_path module {
 
   status_histo "status_5xx" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -112,6 +117,7 @@ ingester prometheus_linkerd_path module {
 
   latency_histo "latency_histo" {
     index       = 6
+    gap_fill    = "zero_fill"
     input_unit  = "ms"
     output_unit = "ms"
     aggregator  = "PERCENTILE"

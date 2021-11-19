@@ -42,6 +42,7 @@ ingester aws_ec2_cloudwatch module {
 
   gauge "cpu" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -61,6 +62,7 @@ ingester aws_ec2_cloudwatch module {
 
   gauge "disk_read_ops" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "tps"
     aggregator  = "SUM"
@@ -80,6 +82,7 @@ ingester aws_ec2_cloudwatch module {
 
   gauge "disk_write_ops" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "tps"
     aggregator  = "SUM"
@@ -99,6 +102,7 @@ ingester aws_ec2_cloudwatch module {
 
   gauge "network_in" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "bytes"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -118,6 +122,7 @@ ingester aws_ec2_cloudwatch module {
 
   gauge "network_out" {
     index       = 6
+    gap_fill    = "zero_fill"
     input_unit  = "bytes"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -137,6 +142,7 @@ ingester aws_ec2_cloudwatch module {
 
   gauge "status_check_failed" {
     index       = 7
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -156,6 +162,7 @@ ingester aws_ec2_cloudwatch module {
 
   gauge "cpu_balance" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MIN"

@@ -41,6 +41,7 @@ ingester aws_lambda_cloudwatch module {
 
   gauge "invocations" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -59,6 +60,7 @@ ingester aws_lambda_cloudwatch module {
 
   latency "latency_histo" {
     index        = 6
+    gap_fill     = "zero_fill"
     input_unit   = "ms"
     output_unit  = "ms"
     aggregator   = "PERCENTILE"
@@ -140,6 +142,7 @@ ingester aws_lambda_cloudwatch module {
 
   gauge "concurrent_executions" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -158,6 +161,7 @@ ingester aws_lambda_cloudwatch module {
 
   gauge "concurrency_spillover" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -176,6 +180,7 @@ ingester aws_lambda_cloudwatch module {
 
   gauge "throttles" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -194,6 +199,7 @@ ingester aws_lambda_cloudwatch module {
 
   gauge "errors" {
     index       = 6
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"

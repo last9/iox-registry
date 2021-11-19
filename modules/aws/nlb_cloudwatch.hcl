@@ -41,6 +41,7 @@ ingester aws_nlb_cloudwatch module {
 
   gauge "throughput" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "MAX"
@@ -59,6 +60,7 @@ ingester aws_nlb_cloudwatch module {
 
   gauge "new_connections" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -77,6 +79,7 @@ ingester aws_nlb_cloudwatch module {
 
   gauge "concurrent_connections" {
     index       = 9
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "MAX"
@@ -96,6 +99,7 @@ ingester aws_nlb_cloudwatch module {
 
   gauge "processed_bytes" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -114,6 +118,7 @@ ingester aws_nlb_cloudwatch module {
 
   gauge "consumed_lcus" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -132,6 +137,7 @@ ingester aws_nlb_cloudwatch module {
 
   gauge "tcp_client_reset_count" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -150,6 +156,7 @@ ingester aws_nlb_cloudwatch module {
 
   gauge "tcp_elb_reset_count" {
     index       = 6
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -168,6 +175,7 @@ ingester aws_nlb_cloudwatch module {
 
   gauge "tcp_target_reset_count" {
     index       = 7
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -186,6 +194,7 @@ ingester aws_nlb_cloudwatch module {
 
   gauge "target_tls_error" {
     index       = 8
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"

@@ -33,6 +33,7 @@ ingester aws_apigateway_cloudwatch module {
 
   gauge "throughput" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -52,6 +53,7 @@ ingester aws_apigateway_cloudwatch module {
 
   latency "latency_histo" {
     index        = 6
+    gap_fill     = "zero_fill"
     input_unit   = "ms"
     output_unit  = "ms"
     aggregator   = "PERCENTILE"
@@ -151,6 +153,7 @@ ingester aws_apigateway_cloudwatch module {
 
   gauge "integration_latency" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "ms"
     output_unit = "ms"
     aggregator  = "AVG"
@@ -172,6 +175,7 @@ ingester aws_apigateway_cloudwatch module {
   // the total number of requests during the period
   gauge "cache_miss" {
     index       = 7
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -193,6 +197,7 @@ ingester aws_apigateway_cloudwatch module {
   // the total number of requests during the period.
   status_histo "status_4xx" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -213,6 +218,7 @@ ingester aws_apigateway_cloudwatch module {
   // the total number of requests during the period.
   status_histo "status_5xx" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
