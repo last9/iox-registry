@@ -279,4 +279,36 @@ ingester aws_rds_physical_cloudwatch module {
       }
     }
   }
+
+  gauge "burst_balance" {
+    unit       = "percent"
+    aggregator = "AVG"
+    source cloudwatch "burst_balance" {
+      query {
+        aggregator  = "Average"
+        namespace   = "AWS/RDS"
+        metric_name = "BurstBalance"
+
+        dimensions = {
+          "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
+        }
+      }
+    }
+  }
+
+  gauge "cpu_credit_balance" {
+    unit       = "count"
+    aggregator = "MAX"
+    source cloudwatch "cpu_credit_balance" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/RDS"
+        metric_name = "CPUCreditBalance"
+
+        dimensions = {
+          "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
+        }
+      }
+    }
+  }
 }
