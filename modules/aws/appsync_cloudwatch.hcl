@@ -135,7 +135,7 @@ ingester aws_appsync_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/AppSync"
         metric_name = "4XXError"
-        dimensions  = {
+        dimensions = {
           "GraphQLAPIId" = "$input{GraphQLAPIId}"
         }
       }
@@ -154,7 +154,7 @@ ingester aws_appsync_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/AppSync"
         metric_name = "5XXError"
-        dimensions  = {
+        dimensions = {
           "GraphQLAPIId" = "$input{GraphQLAPIId}"
         }
       }
@@ -172,7 +172,7 @@ ingester aws_appsync_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/AppSync"
         metric_name = "ConnectServerError"
-        dimensions  = {
+        dimensions = {
           "GraphQLAPIId" = "$input{GraphQLAPIId}"
         }
       }
@@ -190,7 +190,7 @@ ingester aws_appsync_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/AppSync"
         metric_name = "SubscribeServerError"
-        dimensions  = {
+        dimensions = {
           "GraphQLAPIId" = "$input{GraphQLAPIId}"
         }
       }
@@ -208,7 +208,7 @@ ingester aws_appsync_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/AppSync"
         metric_name = "DisconnectServerError"
-        dimensions  = {
+        dimensions = {
           "GraphQLAPIId" = "$input{GraphQLAPIId}"
         }
       }
@@ -226,7 +226,7 @@ ingester aws_appsync_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/AppSync"
         metric_name = "UnsubscribeServerError"
-        dimensions  = {
+        dimensions = {
           "GraphQLAPIId" = "$input{GraphQLAPIId}"
         }
       }
@@ -244,7 +244,7 @@ ingester aws_appsync_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/AppSync"
         metric_name = "PublishDataMessageServerError"
-        dimensions  = {
+        dimensions = {
           "GraphQLAPIId" = "$input{GraphQLAPIId}"
         }
       }
