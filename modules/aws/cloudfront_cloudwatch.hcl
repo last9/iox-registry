@@ -33,6 +33,7 @@ ingester aws_cloudfront_cloudwatch module {
 
   gauge "status_5xx" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "SUM"
@@ -50,6 +51,7 @@ ingester aws_cloudfront_cloudwatch module {
   }
   gauge "status_4xx" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "SUM"
@@ -67,6 +69,7 @@ ingester aws_cloudfront_cloudwatch module {
   }
   gauge "bytes_out" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "bytes"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -84,6 +87,7 @@ ingester aws_cloudfront_cloudwatch module {
   }
   gauge "bytes_in" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "bytes"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -101,6 +105,7 @@ ingester aws_cloudfront_cloudwatch module {
   }
   gauge "throughput" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"

@@ -47,6 +47,7 @@ ingester aws_elasticache_redis_cloudwatch module {
 
   gauge "curr_connections" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"
@@ -66,6 +67,7 @@ ingester aws_elasticache_redis_cloudwatch module {
 
   gauge "new_connections" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"
@@ -85,6 +87,7 @@ ingester aws_elasticache_redis_cloudwatch module {
 
   gauge "curr_items" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -104,6 +107,7 @@ ingester aws_elasticache_redis_cloudwatch module {
 
   gauge "cache_hit_rate" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "MIN"
@@ -123,6 +127,7 @@ ingester aws_elasticache_redis_cloudwatch module {
 
   gauge "cache_hits" {
     index       = 6
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -142,6 +147,7 @@ ingester aws_elasticache_redis_cloudwatch module {
 
   gauge "cache_misses" {
     index       = 7
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -161,6 +167,7 @@ ingester aws_elasticache_redis_cloudwatch module {
 
   gauge "evictions" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -180,6 +187,7 @@ ingester aws_elasticache_redis_cloudwatch module {
   latency "latency_histo" {
     error_margin = 0.05
     index        = 6
+    gap_fill     = "zero_fill"
     input_unit   = "ms"
     output_unit  = "ms"
     aggregator   = "PERCENTILE"
@@ -289,6 +297,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
 
   gauge "replication_lag" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
@@ -308,6 +317,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
 
   gauge "bytes_out" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "bytes"
     output_unit = "bps"
     aggregator  = "SUM"
@@ -327,6 +337,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
 
   gauge "bytes_in" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "bytes"
     output_unit = "bps"
     aggregator  = "SUM"
@@ -346,6 +357,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
 
   gauge "cpu_used" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -365,6 +377,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
 
   gauge "memory_used" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"

@@ -41,6 +41,7 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
 
   gauge "system_errors" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -61,6 +62,7 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
 
   gauge "returned_items" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -81,6 +83,7 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
 
   gauge "throttled" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -101,6 +104,7 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
 
   gauge "latency" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "ms"
     output_unit = "ms"
     aggregator  = "AVG"
@@ -163,6 +167,7 @@ ingester aws_dynamodb_table_cloudwatch module {
 
   gauge "rcu" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -182,6 +187,7 @@ ingester aws_dynamodb_table_cloudwatch module {
 
   gauge "wcu" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -201,6 +207,7 @@ ingester aws_dynamodb_table_cloudwatch module {
 
   gauge "read_throttled" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -220,6 +227,7 @@ ingester aws_dynamodb_table_cloudwatch module {
 
   gauge "write_throttled" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"

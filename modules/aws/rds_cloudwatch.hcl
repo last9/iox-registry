@@ -42,6 +42,7 @@ ingester aws_rds_logical_cloudwatch module {
 
   gauge "connections" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -60,6 +61,7 @@ ingester aws_rds_logical_cloudwatch module {
 
   gauge "write_iops" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "iops"
     output_unit = "iops"
     aggregator  = "AVG"
@@ -78,6 +80,7 @@ ingester aws_rds_logical_cloudwatch module {
 
   gauge "read_iops" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "iops"
     output_unit = "iops"
     aggregator  = "AVG"
@@ -96,6 +99,7 @@ ingester aws_rds_logical_cloudwatch module {
 
   gauge "read_latency" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "AVG"
@@ -114,6 +118,7 @@ ingester aws_rds_logical_cloudwatch module {
 
   gauge "write_latency" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "AVG"
@@ -174,6 +179,7 @@ ingester aws_rds_physical_cloudwatch module {
 
   gauge "network_in" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
@@ -192,6 +198,7 @@ ingester aws_rds_physical_cloudwatch module {
 
   gauge "network_out" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
@@ -210,6 +217,7 @@ ingester aws_rds_physical_cloudwatch module {
 
   gauge "cpu" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -228,6 +236,7 @@ ingester aws_rds_physical_cloudwatch module {
 
   gauge "free_space" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "bytes"
     output_unit = "bytes"
     aggregator  = "MIN"
@@ -246,6 +255,7 @@ ingester aws_rds_physical_cloudwatch module {
 
   gauge "replica_lag" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
@@ -264,6 +274,7 @@ ingester aws_rds_physical_cloudwatch module {
 
   gauge "queue_depth" {
     index       = 6
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"

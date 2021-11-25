@@ -33,6 +33,7 @@ ingester prometheus_kube_cluster module {
 
   gauge "available_nodes" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MIN"
@@ -50,6 +51,7 @@ ingester prometheus_kube_cluster module {
 
   gauge "disk_pressure_nodes" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -67,6 +69,7 @@ ingester prometheus_kube_cluster module {
 
   gauge "pid_pressure_nodes" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -84,6 +87,7 @@ ingester prometheus_kube_cluster module {
 
   gauge "memory_pressure_nodes" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -101,6 +105,7 @@ ingester prometheus_kube_cluster module {
 
   gauge "requested_memory" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "bytes"
     output_unit = "bytes"
     aggregator  = "MAX"
@@ -115,6 +120,7 @@ ingester prometheus_kube_cluster module {
 
   gauge "requested_cpu" {
     index       = 6
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -129,6 +135,7 @@ ingester prometheus_kube_cluster module {
 
   gauge "saturated_nodes" {
     index       = 7
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -178,6 +185,7 @@ ingester prometheus_kube_cluster_with_namespace module {
 
   gauge "unscheduled_pods" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -192,6 +200,7 @@ ingester prometheus_kube_cluster_with_namespace module {
 
   gauge "desired_pods" {
     index       = 6
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -206,6 +215,7 @@ ingester prometheus_kube_cluster_with_namespace module {
 
   gauge "running_pods" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -220,6 +230,7 @@ ingester prometheus_kube_cluster_with_namespace module {
 
   gauge "pending_pods" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -234,6 +245,7 @@ ingester prometheus_kube_cluster_with_namespace module {
 
   gauge "failed_and_unknown_pods" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -248,6 +260,7 @@ ingester prometheus_kube_cluster_with_namespace module {
 
   gauge "container_restarts" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -302,6 +315,7 @@ ingester prometheus_kube_node module {
 
   gauge "disk_pressure" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -319,6 +333,7 @@ ingester prometheus_kube_node module {
 
   gauge "pid_pressure" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -336,6 +351,7 @@ ingester prometheus_kube_node module {
 
   gauge "memory_pressure" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -353,6 +369,7 @@ ingester prometheus_kube_node module {
 
   gauge "saturated" {
     index       = 7
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -413,6 +430,7 @@ ingester prometheus_kube_pod_grp module {
 
   gauge "container_restarted" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"
@@ -429,6 +447,7 @@ ingester prometheus_kube_pod_grp module {
 
   gauge "containers_failed" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"
@@ -445,6 +464,7 @@ ingester prometheus_kube_pod_grp module {
 
   gauge "containers_running" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"
@@ -461,6 +481,7 @@ ingester prometheus_kube_pod_grp module {
 
   gauge "containers_desired" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"
@@ -477,6 +498,7 @@ ingester prometheus_kube_pod_grp module {
 
   gauge "containers_cold" {
     index       = 6
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"
@@ -543,6 +565,7 @@ ingester prometheus_kube_pod module {
 
   gauge "container_restarted" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"
@@ -559,6 +582,7 @@ ingester prometheus_kube_pod module {
 
   gauge "containers_failed" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"
@@ -575,6 +599,7 @@ ingester prometheus_kube_pod module {
 
   gauge "containers_running" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"
@@ -591,6 +616,7 @@ ingester prometheus_kube_pod module {
 
   gauge "containers_desired" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"
@@ -607,6 +633,7 @@ ingester prometheus_kube_pod module {
 
   gauge "containers_cold" {
     index       = 6
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"
@@ -677,6 +704,7 @@ ingester prometheus_kube_container module {
 
   gauge "total_container_restarts" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -693,6 +721,7 @@ ingester prometheus_kube_container module {
 
   gauge "container_in_terminated" {
     index       = 2
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -709,6 +738,7 @@ ingester prometheus_kube_container module {
 
   gauge "container_in_waiting" {
     index       = 3
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -725,6 +755,7 @@ ingester prometheus_kube_container module {
 
   gauge "container_cpu_limit" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"
@@ -741,6 +772,7 @@ ingester prometheus_kube_container module {
 
   gauge "container_memory_limit" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "bytes"
     output_unit = "bytes"
     aggregator  = "AVG"
@@ -803,6 +835,7 @@ ingester prometheus_kube_deployment module {
 
   gauge "unavailable_replicas" {
     index       = 1
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -817,6 +850,7 @@ ingester prometheus_kube_deployment module {
 
   gauge "desired_replicas" {
     index       = 4
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -832,6 +866,7 @@ ingester prometheus_kube_deployment module {
 
   gauge "cold_replicas" {
     index       = 5
+    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
