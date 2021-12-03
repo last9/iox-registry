@@ -50,7 +50,6 @@ ingester prometheus_istio_workload module {
     aggregator  = "SUM"
 
     source prometheus "throughput" {
-      //query = "label_set(sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, pod_name) (increase(istio_requests_total{ reporter='destination', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m]))"
       query = "sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_requests_total{ reporter='destination', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+'}[1m]))"
 
       join_on = {
@@ -137,8 +136,8 @@ ingester prometheus_istio_workload module {
     source prometheus "latency" {
       histo_column = "le"
       query        = <<EOT
-         sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name, le)
-          (increase(istio_request_duration_milliseconds_bucket{ reporter='destination', source_canonical_service!='unknown',  destination_service_name!='PassthroughCluster'}[1m]))
+      sum by (cluster, destination_canonical_service,  destination_workload, destination_workload_namespace, destination_version, pod_name, le)
+      (increase(istio_request_duration_milliseconds_bucket{ reporter='destination', source_canonical_service!='unknown',  destination_service_name!='PassthroughCluster'}[1m]))
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -338,8 +337,8 @@ ingester prometheus_istio_cluster module {
 
     source prometheus "latency" {
       query = <<EOT
-         sum by (cluster, le)
-          (increase(istio_request_duration_milliseconds_bucket{ reporter='destination'}[1m]))
+      sum by (cluster, le)
+      (increase(istio_request_duration_milliseconds_bucket{ reporter='destination'}[1m]))
       EOT
 
       join_on = {
@@ -512,8 +511,8 @@ ingester prometheus_istio_k8s_pod module {
 
     source prometheus "latency" {
       query = <<EOT
-         sum by (cluster, destination_canonical_service, destination_workload_namespace, pod_name, le)
-          (increase(istio_request_duration_milliseconds_bucket{ reporter='destination', destination_canonical_service=~'.+', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m]))
+      sum by (cluster, destination_canonical_service, destination_workload_namespace, pod_name, le)
+      (increase(istio_request_duration_milliseconds_bucket{ reporter='destination', destination_canonical_service=~'.+', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster'}[1m]))
       EOT
 
       join_on = {
