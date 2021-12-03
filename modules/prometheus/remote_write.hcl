@@ -40,7 +40,8 @@ ingester prometheus_remote_write module {
     aggregator  = "MAX"
 
     source prometheus "pending" {
-      query = "label_set(sum by (pod) (prometheus_remote_storage_samples_pending{}), 'pod', '$input{pod}')"
+      // query = "label_set(sum by (pod) (prometheus_remote_storage_samples_pending{}), 'pod', '$input{pod}')"
+      query = "label_replace((sum by (pod) (prometheus_remote_storage_samples_pending{})), 'pod', '$input{pod}', '', '')"
       join_on = {
         "$output{pod}" = "$input{pod}"
       }
@@ -55,7 +56,8 @@ ingester prometheus_remote_write module {
     aggregator  = "MAX"
 
     source prometheus "retried" {
-      query = "label_set(max by (pod) (rate(prometheus_remote_storage_samples_retried_total{}[1m])), 'pod', '$input{pod}')"
+      // query = "label_set(max by (pod) (rate(prometheus_remote_storage_samples_retried_total{}[1m])), 'pod', '$input{pod}')"
+      query = "label_replace((max by (pod) (rate(prometheus_remote_storage_samples_retried_total{}[1m]))), 'pod', '$input{pod}', '', '')"
       join_on = {
         "$output{pod}" = "$input{pod}"
       }
@@ -70,7 +72,8 @@ ingester prometheus_remote_write module {
     aggregator  = "MAX"
 
     source prometheus "failed" {
-      query = "label_set(max by (pod) (rate(prometheus_remote_storage_samples_failed_total{}[1m])), 'pod', '$input{pod}')"
+      // query = "label_set(max by (pod) (rate(prometheus_remote_storage_samples_failed_total{}[1m])), 'pod', '$input{pod}')"
+      query = "label_replace((max by (pod) (rate(prometheus_remote_storage_samples_failed_total{}[1m]))), 'pod', '$input{pod}', '', '')"
       join_on = {
         "$output{pod}" = "$input{pod}"
       }
@@ -85,7 +88,8 @@ ingester prometheus_remote_write module {
     aggregator  = "MAX"
 
     source prometheus "failed" {
-      query = "label_set(max by (pod) (rate(prometheus_remote_storage_samples_dropped_total{}[1m])), 'pod', '$input{pod}')"
+      // query = "label_set(max by (pod) (rate(prometheus_remote_storage_samples_dropped_total{}[1m])), 'pod', '$input{pod}')"
+      query = "label_replace((rate(prometheus_remote_storage_samples_dropped_total{}[1m])), 'pod', '$input{pod}', '', '')"
       join_on = {
         "$output{pod}" = "$input{pod}"
       }
@@ -100,7 +104,8 @@ ingester prometheus_remote_write module {
     aggregator  = "MIN"
 
     source prometheus "processed_percent" {
-      query = "label_set((1 - (sum by (pod) (prometheus_remote_storage_samples_pending{}) / max by (pod) (rate(prometheus_remote_storage_samples_in_total{}[1m])*60))) * 100, 'pod', '$input{pod}')"
+      // query = "label_set((1 - (sum by (pod) (prometheus_remote_storage_samples_pending{}) / max by (pod) (rate(prometheus_remote_storage_samples_in_total{}[1m])*60))) * 100, 'pod', '$input{pod}')"
+      query = "label_replace(((1 - (sum by (pod) (prometheus_remote_storage_samples_pending{}) / max by (pod) (rate(prometheus_remote_storage_samples_in_total{}[1m])*60))) * 100), 'pod', '$input{pod}', '', '')"
       join_on = {
         "$output{pod}" = "$input{pod}"
       }
@@ -115,7 +120,8 @@ ingester prometheus_remote_write module {
     aggregator  = "AVG"
 
     source prometheus "bytes_sent" {
-      query = "label_set(sum by (pod) (rate(prometheus_remote_storage_samples_bytes_total{}[1m])*60 or rate(prometheus_remote_storage_bytes_total{}[1m])*60) + sum by (pod) (rate(prometheus_remote_storage_metadata_bytes_total{}[1m])*60), 'pod', '$input{pod}')"
+      // query = "label_set(sum by (pod) (rate(prometheus_remote_storage_samples_bytes_total{}[1m])*60 or rate(prometheus_remote_storage_bytes_total{}[1m])*60) + sum by (pod) (rate(prometheus_remote_storage_metadata_bytes_total{}[1m])*60), 'pod', '$input{pod}')"
+      query = "label_replace((sum by (pod) (rate(prometheus_remote_storage_samples_bytes_total{}[1m])*60 or rate(prometheus_remote_storage_bytes_total{}[1m])*60) + sum by (pod) (rate(prometheus_remote_storage_metadata_bytes_total{}[1m])*60)), 'pod', '$input{pod}', '', '')"
       join_on = {
         "$output{pod}" = "$input{pod}"
       }
@@ -130,7 +136,8 @@ ingester prometheus_remote_write module {
     aggregator  = "MAX"
 
     source prometheus "wal_lag" {
-      query = "label_set((max by (pod) (max_over_time(prometheus_tsdb_wal_segment_current{}[1m]))) - (max by (pod) (max_over_time(prometheus_wal_watcher_current_segment{}[1m]))), 'pod', '$input{pod}')"
+      // query = "label_set((max by (pod) (max_over_time(prometheus_tsdb_wal_segment_current{}[1m]))) - (max by (pod) (max_over_time(prometheus_wal_watcher_current_segment{}[1m]))), 'pod', '$input{pod}')"
+      query = "label_replace(((max by (pod) (max_over_time(prometheus_tsdb_wal_segment_current{}[1m]))) - (max by (pod) (max_over_time(prometheus_wal_watcher_current_segment{}[1m])))), 'pod', '$input{pod}', '', '')"
       join_on = {
         "$output{pod}" = "$input{pod}"
       }
@@ -146,7 +153,8 @@ ingester prometheus_remote_write module {
     aggregator  = "MAX"
 
     source prometheus "timestamp_lag" {
-      query = "label_set(max_over_time(prometheus_remote_storage_highest_timestamp_in_seconds{}[1m]) - ignoring(remote_name, url) group_right max_over_time(prometheus_remote_storage_queue_highest_sent_timestamp_seconds{}[1m]), 'pod', '$input{pod}')"
+      // query = "label_set(max_over_time(prometheus_remote_storage_highest_timestamp_in_seconds{}[1m]) - ignoring(remote_name, url) group_right max_over_time(prometheus_remote_storage_queue_highest_sent_timestamp_seconds{}[1m]), 'pod', '$input{pod}')"
+      query = "label_replace(((max by (pod) (max_over_time(prometheus_tsdb_wal_segment_current{}[1m]))) - (max by (pod) (max_over_time(prometheus_wal_watcher_current_segment{}[1m])))), 'pod', '$input{pod}', '', '')"
       join_on = {
         "$output{pod}" = "$input{pod}"
       }
@@ -161,7 +169,8 @@ ingester prometheus_remote_write module {
     aggregator  = "AVG"
 
     source prometheus "available_shards" {
-      query = "label_set(max by (pod) (max_over_time(prometheus_remote_storage_shards_max{}[1m])) - max by (pod) (max_over_time(prometheus_remote_storage_shards_desired{}[1m])), 'pod', '$input{pod}')"
+      // query = "label_set(max by (pod) (max_over_time(prometheus_remote_storage_shards_max{}[1m])) - max by (pod) (max_over_time(prometheus_remote_storage_shards_desired{}[1m])), 'pod', '$input{pod}')"
+      query = "label_replace((max by (pod) (max_over_time(prometheus_remote_storage_shards_max{}[1m])) - max by (pod) (max_over_time(prometheus_remote_storage_shards_desired{}[1m]))), 'pod', '$input{pod}', '', '')"
       join_on = {
         "$output{pod}" = "$input{pod}"
       }
