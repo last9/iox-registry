@@ -40,7 +40,6 @@ ingester cloudflare_cdn module {
 
   gauge "throughput" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -70,7 +69,6 @@ EOH
 
   gauge "status_2xx" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -104,7 +102,6 @@ EOH
 
   gauge "status_3xx" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -138,7 +135,6 @@ EOH
 
   gauge "status_4xx" {
     index       = 4
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -172,7 +168,6 @@ EOH
 
   gauge "status_5xx" {
     index       = 5
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -247,7 +242,6 @@ ingester cloudflare_waf module {
 
   gauge "throughput" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -277,7 +271,6 @@ EOH
 
   gauge "connection_close" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -308,7 +301,6 @@ EOH
 
   gauge "bypass" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -339,7 +331,6 @@ EOH
 
   gauge "jschallenge" {
     index       = 4
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -370,7 +361,6 @@ EOH
 
   gauge "log" {
     index       = 5
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -401,7 +391,6 @@ EOH
 
   gauge "block" {
     index       = 6
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -432,7 +421,6 @@ EOH
 
   gauge "status_2xx" {
     index       = 7
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -466,7 +454,6 @@ EOH
 
   gauge "status_4xx" {
     index       = 8
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -500,7 +487,6 @@ EOH
 
   gauge "status_5xx" {
     index       = 9
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"

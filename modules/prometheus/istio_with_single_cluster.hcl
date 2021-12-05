@@ -39,7 +39,6 @@ ingester prometheus_istio_workload module {
 
   gauge "throughput" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -56,7 +55,6 @@ ingester prometheus_istio_workload module {
 
   status_histo "status_2xx" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -74,7 +72,6 @@ ingester prometheus_istio_workload module {
 
   status_histo "status_3xx" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -92,7 +89,6 @@ ingester prometheus_istio_workload module {
 
   status_histo "status_4xx" {
     index       = 4
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -110,7 +106,6 @@ ingester prometheus_istio_workload module {
 
   status_histo "status_5xx" {
     index       = 5
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -128,7 +123,6 @@ ingester prometheus_istio_workload module {
 
   gauge "bytes_in" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "Bps"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -145,7 +139,6 @@ ingester prometheus_istio_workload module {
 
   gauge "bytes_out" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "Bps"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -162,7 +155,6 @@ ingester prometheus_istio_workload module {
 
   latency_histo "latency_histo" {
     index       = 6
-    gap_fill    = "zero_fill"
     input_unit  = "ms"
     output_unit = "ms"
     aggregator  = "PERCENTILE"
@@ -217,7 +209,6 @@ ingester prometheus_istio_cluster module {
 
   gauge "throughput" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -234,7 +225,6 @@ ingester prometheus_istio_cluster module {
 
   status_histo "status_2xx" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -252,7 +242,6 @@ ingester prometheus_istio_cluster module {
 
   status_histo "status_3xx" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -270,7 +259,6 @@ ingester prometheus_istio_cluster module {
 
   status_histo "status_4xx" {
     index       = 4
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -288,7 +276,6 @@ ingester prometheus_istio_cluster module {
 
   status_histo "status_5xx" {
     index       = 5
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -306,7 +293,6 @@ ingester prometheus_istio_cluster module {
 
   gauge "bytes_in" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "Bps"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -323,7 +309,6 @@ ingester prometheus_istio_cluster module {
 
   gauge "bytes_out" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "Bps"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -340,7 +325,6 @@ ingester prometheus_istio_cluster module {
 
   latency_histo "latency_histo" {
     index       = 6
-    gap_fill    = "zero_fill"
     input_unit  = "ms"
     output_unit = "ms"
     aggregator  = "PERCENTILE"
@@ -399,7 +383,6 @@ ingester prometheus_istio_k8s_pod module {
 
   gauge "throughput" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -416,7 +399,6 @@ ingester prometheus_istio_k8s_pod module {
 
   status_histo "status_2xx" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -434,7 +416,6 @@ ingester prometheus_istio_k8s_pod module {
 
   status_histo "status_3xx" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -452,7 +433,6 @@ ingester prometheus_istio_k8s_pod module {
 
   status_histo "status_4xx" {
     index       = 4
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -470,7 +450,6 @@ ingester prometheus_istio_k8s_pod module {
 
   status_histo "status_5xx" {
     index       = 5
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
@@ -488,7 +467,6 @@ ingester prometheus_istio_k8s_pod module {
 
   gauge "bytes_in" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "Bpw"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -505,7 +483,6 @@ ingester prometheus_istio_k8s_pod module {
 
   gauge "bytes_out" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "Bps"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -522,7 +499,6 @@ ingester prometheus_istio_k8s_pod module {
 
   latency_histo "latency_histo" {
     index       = 6
-    gap_fill    = "zero_fill"
     input_unit  = "ms"
     output_unit = "ms"
     aggregator  = "PERCENTILE"

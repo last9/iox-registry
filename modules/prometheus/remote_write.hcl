@@ -34,7 +34,6 @@ ingester prometheus_remote_write module {
 
   gauge "pending" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -50,7 +49,6 @@ ingester prometheus_remote_write module {
 
   gauge "retried" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -66,7 +64,6 @@ ingester prometheus_remote_write module {
 
   gauge "failed" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -82,7 +79,6 @@ ingester prometheus_remote_write module {
 
   gauge "dropped" {
     index       = 4
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -98,7 +94,6 @@ ingester prometheus_remote_write module {
 
   gauge "processed_percent" {
     index       = 5
-    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "MIN"
@@ -114,7 +109,6 @@ ingester prometheus_remote_write module {
 
   gauge "bytes_sent" {
     index       = 8
-    gap_fill    = "zero_fill"
     input_unit  = "bytes"
     output_unit = "bytes"
     aggregator  = "AVG"
@@ -130,7 +124,6 @@ ingester prometheus_remote_write module {
 
   gauge "wal_lag" {
     index       = 6
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -147,7 +140,6 @@ ingester prometheus_remote_write module {
 
   gauge "timestamp_lag" {
     index       = 7
-    gap_fill    = "zero_fill"
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
@@ -163,7 +155,6 @@ ingester prometheus_remote_write module {
 
   gauge "available_shards" {
     index       = 9
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"

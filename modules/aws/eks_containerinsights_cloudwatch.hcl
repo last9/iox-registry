@@ -41,7 +41,6 @@ ingester aws_eks_containerinsights_pod_logical_cloudwatch module {
 
   gauge "cpu" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -62,7 +61,6 @@ ingester aws_eks_containerinsights_pod_logical_cloudwatch module {
 
   gauge "memory" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -83,7 +81,6 @@ ingester aws_eks_containerinsights_pod_logical_cloudwatch module {
 
   gauge "cpu_overlimit" {
     index       = 6
-    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -104,7 +101,6 @@ ingester aws_eks_containerinsights_pod_logical_cloudwatch module {
 
   gauge "memory_overlimit" {
     index       = 7
-    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -125,7 +121,6 @@ ingester aws_eks_containerinsights_pod_logical_cloudwatch module {
 
   gauge "bytes_in" {
     index       = 4
-    gap_fill    = "zero_fill"
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
@@ -146,7 +141,6 @@ ingester aws_eks_containerinsights_pod_logical_cloudwatch module {
 
   gauge "bytes_out" {
     index       = 5
-    gap_fill    = "zero_fill"
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
@@ -167,7 +161,6 @@ ingester aws_eks_containerinsights_pod_logical_cloudwatch module {
 
   gauge "restarts" {
     index       = 8
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -225,7 +218,6 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
 
   gauge "total_nodes" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -244,7 +236,6 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
 
   gauge "failed_nodes" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -263,7 +254,6 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
 
   gauge "cpu_utilization" {
     index       = 6
-    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -282,7 +272,6 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
 
   gauge "memory_utilization" {
     index       = 7
-    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -301,7 +290,6 @@ ingester aws_eks_containerinsights_cluster_cloudwatch module {
 
   gauge "disk_used" {
     index       = 5
-    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
