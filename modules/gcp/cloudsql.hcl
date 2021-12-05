@@ -28,7 +28,6 @@ ingester gcp_cloudsql_logical module {
 
   gauge "connections" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -53,7 +52,6 @@ ingester gcp_cloudsql_logical module {
 
   gauge "write_iops" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "iops"
     output_unit = "iops"
     aggregator  = "AVG"
@@ -78,7 +76,6 @@ ingester gcp_cloudsql_logical module {
 
   gauge "read_iops" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "iops"
     output_unit = "iops"
     aggregator  = "AVG"
@@ -132,7 +129,6 @@ ingester gcp_cloudsql_physical module {
 
   gauge "cpu" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -153,7 +149,6 @@ ingester gcp_cloudsql_physical module {
 
   gauge "network_in" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
@@ -174,7 +169,6 @@ ingester gcp_cloudsql_physical module {
 
   gauge "network_out" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
@@ -195,7 +189,6 @@ ingester gcp_cloudsql_physical module {
 
   gauge "replica_lag" {
     index       = 5
-    gap_fill    = "zero_fill"
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "AVG"
@@ -216,7 +209,6 @@ ingester gcp_cloudsql_physical module {
 
   # gauge "memory_utilization" {
   #   index = 1
-  #   gap_fill = "zero_fill"
   #   input_unit       = "percent"
   #   output_unit       = "percent"
   #   aggregator = "AVG"
@@ -241,7 +233,6 @@ ingester gcp_cloudsql_physical module {
   #
   # gauge "disk_utilization" {
   #   index = 1
-  #   gap_fill = "zero_fill"
   #   input_unit       = "percent"
   #   output_unit       = "percent"
   #   aggregator = "AVG"

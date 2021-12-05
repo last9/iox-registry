@@ -44,7 +44,6 @@ ingester managed_aerospike_namespace_ops_read_datadog module {
 
   gauge "client_success" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -59,7 +58,6 @@ ingester managed_aerospike_namespace_ops_read_datadog module {
 
   gauge "client_error" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -74,7 +72,6 @@ ingester managed_aerospike_namespace_ops_read_datadog module {
 
   gauge "client_timeout" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -134,7 +131,6 @@ ingester managed_aerospike_namespace_sets_datadog module {
 
   gauge "memory" {
     index       = 4
-    gap_fill    = "zero_fill"
     input_unit  = "bytes"
     output_unit = "bytes"
     aggregator  = "AVG"
@@ -149,7 +145,6 @@ ingester managed_aerospike_namespace_sets_datadog module {
 
   gauge "objects" {
     index       = 5
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "AVG"
@@ -164,7 +159,6 @@ ingester managed_aerospike_namespace_sets_datadog module {
 
   gauge "stop_write" {
     index       = 6
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -220,7 +214,6 @@ ingester managed_aerospike_namespace_datadog module {
 
   gauge "query" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "tps"
     output_unit = "tps"
     aggregator  = "AVG"
@@ -235,7 +228,6 @@ ingester managed_aerospike_namespace_datadog module {
 
   gauge "read" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "tps"
     output_unit = "tps"
     aggregator  = "AVG"
@@ -250,7 +242,6 @@ ingester managed_aerospike_namespace_datadog module {
 
   gauge "write" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "tps"
     output_unit = "tps"
     aggregator  = "AVG"

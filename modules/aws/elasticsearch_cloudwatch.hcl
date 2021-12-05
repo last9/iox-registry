@@ -41,7 +41,6 @@ ingester aws_elasticsearch_cloudwatch module {
 
   gauge "nodes" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MIN"
@@ -61,7 +60,6 @@ ingester aws_elasticsearch_cloudwatch module {
 
   gauge "kibana_healthy_nodes" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MIN"
@@ -81,7 +79,6 @@ ingester aws_elasticsearch_cloudwatch module {
 
   gauge "cluster_yellow" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -101,7 +98,6 @@ ingester aws_elasticsearch_cloudwatch module {
 
   gauge "cluster_red" {
     index       = 4
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -121,7 +117,6 @@ ingester aws_elasticsearch_cloudwatch module {
 
   gauge "throughput" {
     index       = 5
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -141,7 +136,6 @@ ingester aws_elasticsearch_cloudwatch module {
 
   gauge "status_4xx" {
     index       = 6
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -162,7 +156,6 @@ ingester aws_elasticsearch_cloudwatch module {
 
   gauge "status_5xx" {
     index       = 7
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -182,7 +175,6 @@ ingester aws_elasticsearch_cloudwatch module {
 
   gauge "cpu" {
     index       = 8
-    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -203,7 +195,6 @@ ingester aws_elasticsearch_cloudwatch module {
 
   gauge "free_space" {
     index       = 11
-    gap_fill    = "zero_fill"
     input_unit  = "bytes"
     output_unit = "bytes"
     aggregator  = "MIN"
@@ -223,7 +214,6 @@ ingester aws_elasticsearch_cloudwatch module {
 
   gauge "jvm_memory_pressure" {
     index       = 12
-    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -243,7 +233,6 @@ ingester aws_elasticsearch_cloudwatch module {
 
   gauge "writes_blocked" {
     index       = 13
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -263,7 +252,6 @@ ingester aws_elasticsearch_cloudwatch module {
 
   gauge "snapshot_failure" {
     index       = 14
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -283,7 +271,6 @@ ingester aws_elasticsearch_cloudwatch module {
 
   gauge "master_reachable" {
     index       = 15
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MIN"
@@ -354,7 +341,6 @@ ingester aws_elasticsearch_master_cloudwatch module {
 
   gauge "master_reachable" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MIN"
@@ -374,7 +360,6 @@ ingester aws_elasticsearch_master_cloudwatch module {
 
   gauge "cpu" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -394,7 +379,6 @@ ingester aws_elasticsearch_master_cloudwatch module {
 
   gauge "jvm_memory_pressure" {
     index       = 5
-    gap_fill    = "zero_fill"
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"

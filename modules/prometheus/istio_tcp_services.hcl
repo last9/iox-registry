@@ -39,7 +39,6 @@ ingester prometheus_istio_tcp_workload module {
 
   gauge "open_connections" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -55,7 +54,6 @@ ingester prometheus_istio_tcp_workload module {
 
   gauge "closed_connections" {
     index       = 4
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -71,7 +69,6 @@ ingester prometheus_istio_tcp_workload module {
 
   gauge "bytes_in" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "Bps"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -87,7 +84,6 @@ ingester prometheus_istio_tcp_workload module {
 
   gauge "bytes_out" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "Bps"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -139,7 +135,6 @@ ingester prometheus_istio_tcp_cluster module {
 
   gauge "open_connections" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -155,7 +150,6 @@ ingester prometheus_istio_tcp_cluster module {
 
   gauge "closed_connections" {
     index       = 4
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -171,7 +165,6 @@ ingester prometheus_istio_tcp_cluster module {
 
   gauge "bytes_in" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "Bps"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -187,7 +180,6 @@ ingester prometheus_istio_tcp_cluster module {
 
   gauge "bytes_out" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "Bps"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -242,7 +234,6 @@ ingester prometheus_istio_tcp_k8s_pod module {
 
   gauge "open_connections" {
     index       = 3
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -258,7 +249,6 @@ ingester prometheus_istio_tcp_k8s_pod module {
 
   gauge "closed_connections" {
     index       = 4
-    gap_fill    = "zero_fill"
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -274,7 +264,6 @@ ingester prometheus_istio_tcp_k8s_pod module {
 
   gauge "bytes_in" {
     index       = 1
-    gap_fill    = "zero_fill"
     input_unit  = "Bps"
     output_unit = "Bps"
     aggregator  = "SUM"
@@ -290,7 +279,6 @@ ingester prometheus_istio_tcp_k8s_pod module {
 
   gauge "bytes_out" {
     index       = 2
-    gap_fill    = "zero_fill"
     input_unit  = "Bps"
     output_unit = "Bps"
     aggregator  = "SUM"
