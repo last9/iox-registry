@@ -29,7 +29,7 @@ ingester prometheus_istio_tcp_workload module {
 
   data_for_graph_node {
     type = "istio_tcp_deployment"
-    name = "$output{destination_workload}-$output{destination_version}"
+    name = "$output{destination_workload}-$output{destination_canonical_service}"
   }
 
   using = {
