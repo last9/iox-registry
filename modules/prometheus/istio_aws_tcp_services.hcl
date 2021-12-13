@@ -19,7 +19,7 @@ ingester prometheus_istio_tcp_workload module {
 
   physical_address {
     type = "k8s_tcp_pod"
-    name = "$output{pod_name}"
+    name = "input{pod_name}"
   }
 
   physical_component {
@@ -43,7 +43,7 @@ ingester prometheus_istio_tcp_workload module {
     aggregator  = "SUM"
 
     source prometheus "open_connections" {
-      query = "label_set(sum without (destination_service_name) (label_replace(sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_tcp_connections_opened_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+', destination_service_name=~'.*(rds|es|kafka|neptune|ec2|smtp).*'}[1m])), 'destination_canonical_service', '$1', 'destination_service_name', '.*(rds|es|kafka|neptune|ec2|smtp).*')), 'cluster', '$input{cluster}')"
+      query = "label_set(sum without (destination_service_name) (label_replace(sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace, destination_version) (increase(istio_tcp_connections_opened_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+', destination_service_name=~'.*(rds|es|kafka|neptune|ec2|smtp).*'}[1m])), 'destination_canonical_service', '$1', 'destination_service_name', '.*(rds|es|kafka|neptune|ec2|smtp).*')), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -58,7 +58,7 @@ ingester prometheus_istio_tcp_workload module {
     aggregator  = "SUM"
 
     source prometheus "closed_connections" {
-      query = "label_set(sum without (destination_service_name) (label_replace(sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_tcp_connections_closed_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+', destination_service_name=~'.*(rds|es|kafka|neptune|ec2|smtp).*'}[1m])), 'destination_canonical_service', '$1', 'destination_service_name', '.*(rds|es|kafka|neptune|ec2|smtp).*')), 'cluster', '$input{cluster}')"
+      query = "label_set(sum without (destination_service_name) (label_replace(sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace, destination_version) (increase(istio_tcp_connections_closed_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+', destination_service_name=~'.*(rds|es|kafka|neptune|ec2|smtp).*'}[1m])), 'destination_canonical_service', '$1', 'destination_service_name', '.*(rds|es|kafka|neptune|ec2|smtp).*')), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -73,7 +73,7 @@ ingester prometheus_istio_tcp_workload module {
     aggregator  = "SUM"
 
     source prometheus "bytes_in" {
-      query = "label_set(sum without (destination_service_name) (label_replace(sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_tcp_received_bytes_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+', destination_service_name=~'.*(rds|es|kafka|neptune|ec2|smtp).*'}[1m])), 'destination_canonical_service', '$1', 'destination_service_name', '.*(rds|es|kafka|neptune|ec2|smtp).*')), 'cluster', '$input{cluster}')"
+      query = "label_set(sum without (destination_service_name) (label_replace(sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace, destination_version) (increase(istio_tcp_received_bytes_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+', destination_service_name=~'.*(rds|es|kafka|neptune|ec2|smtp).*'}[1m])), 'destination_canonical_service', '$1', 'destination_service_name', '.*(rds|es|kafka|neptune|ec2|smtp).*')), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -88,7 +88,7 @@ ingester prometheus_istio_tcp_workload module {
     aggregator  = "SUM"
 
     source prometheus "bytes_out" {
-      query = "label_set(sum without (destination_service_name) (label_replace(sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace, destination_version, pod_name) (increase(istio_tcp_sent_bytes_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+', destination_service_name=~'.*(rds|es|kafka|neptune|ec2|smtp).*'}[1m])), 'destination_canonical_service', '$1', 'destination_service_name', '.*(rds|es|kafka|neptune|ec2|smtp).*')), 'cluster', '$input{cluster}')"
+      query = "label_set(sum without (destination_service_name) (label_replace(sum by (cluster, destination_service_name,  destination_workload, destination_workload_namespace, destination_version) (increase(istio_tcp_sent_bytes_total{reporter='source', source_canonical_service!='unknown', destination_service_name!='PassthroughCluster', destination_canonical_service=~'.+', destination_service_name=~'.*(rds|es|kafka|neptune|ec2|smtp).*'}[1m])), 'destination_canonical_service', '$1', 'destination_service_name', '.*(rds|es|kafka|neptune|ec2|smtp).*')), 'cluster', '$input{cluster}')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
