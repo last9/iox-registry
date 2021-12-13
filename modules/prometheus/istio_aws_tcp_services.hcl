@@ -19,7 +19,7 @@ ingester prometheus_istio_tcp_workload module {
 
   physical_address {
     type = "k8s_tcp_pod"
-    name = "input{pod_name}"
+    name = "$input{pod_name}"
   }
 
   physical_component {
