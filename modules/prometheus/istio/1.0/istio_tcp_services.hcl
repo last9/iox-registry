@@ -98,7 +98,6 @@ ingester prometheus_istio_tcp_workload module {
   }
 }
 
-
 ingester prometheus_istio_tcp_cluster module {
   frequency  = 120
   lookback   = 600
