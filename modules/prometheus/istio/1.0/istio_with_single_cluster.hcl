@@ -11,7 +11,7 @@ ingester prometheus_istio_workload module {
   label {
     type = "service"
     name = "$output{destination_canonical_service}"
-  }
+  }`
 
   label {
     type = "namespace"
