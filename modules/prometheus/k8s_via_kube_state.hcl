@@ -254,12 +254,14 @@ ingester prometheus_kube_cluster_with_namespace module {
 
     source prometheus "container_restarts" {
       // query = "label_set(sum by (cluster, namespace) (kube_pod_container_status_restarts_total{}), 'cluster', '$input{cluster}')"
-      query = "label_replace(sum by (cluster, namespace) (rate(kube_pod_container_status_restarts_total{namespace='default'}[1m])*60), 'cluster', '$input{cluster}', '', '')"
+      // query = "label_replace(sum by (cluster, namespace) (kube_pod_container_status_restarts_total{}), 'cluster', '$input{cluster}', '', '')"
+      query = "label_replace(sum by (cluster, namespace) (rate(kube_pod_container_status_restarts_total{}[1m])*60), 'cluster', '$input{cluster}', '', '')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
   }
+
 }
 
 ingester prometheus_kube_node module {
@@ -418,7 +420,7 @@ ingester prometheus_kube_pod_grp module {
       // label_set(sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')), 'cluster', '$input{cluster}')
       // EOT
       query = <<EOT
-      label_replace(sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')), 'cluster', '$input{cluster}', '', '')
+      label_replace(sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (rate(kube_pod_container_status_restarts_total{}[1m])*60), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')), 'cluster', '$input{cluster}', '', '')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -563,7 +565,7 @@ ingester prometheus_kube_pod module {
       // label_set(label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}')
       // EOT
       query = <<EOT
-      label_replace(label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}', '', '')
+      label_replace(label_replace((sum by (cluster, namespace, pod_group, pod) (rate(kube_pod_container_status_restarts_total{}[1m])*60), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}', '', '')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -712,7 +714,7 @@ ingester prometheus_kube_container module {
       // label_set(label_replace((sum by (cluster, namespace, pod_group, pod, container) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}')
       // EOT
       query = <<EOT
-      label_replace(label_replace((sum by (cluster, namespace, pod_group, pod, container) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}', '', '')
+      label_replace(label_replace((sum by (cluster, namespace, pod_group, pod, container) (rate(kube_pod_container_status_restarts_total{}[1m])*60), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}', '', '')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
