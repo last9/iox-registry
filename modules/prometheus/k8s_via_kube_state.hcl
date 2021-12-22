@@ -420,7 +420,7 @@ ingester prometheus_kube_pod_grp module {
       // label_set(sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')), 'cluster', '$input{cluster}')
       // EOT
       query = <<EOT
-      label_replace(sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (rate(kube_pod_container_status_restarts_total{}[1m])*60), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')), 'cluster', '$input{cluster}', '', '')
+      label_replace(sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (rate(kube_pod_container_status_restarts_total{}[1m])*60)), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')), 'cluster', '$input{cluster}', '', '')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -565,7 +565,7 @@ ingester prometheus_kube_pod module {
       // label_set(label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}')
       // EOT
       query = <<EOT
-      label_replace(label_replace((sum by (cluster, namespace, pod_group, pod) (rate(kube_pod_container_status_restarts_total{}[1m])*60), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}', '', '')
+      label_replace(label_replace((sum by (cluster, namespace, pod_group, pod) (rate(kube_pod_container_status_restarts_total{}[1m])*60)), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}', '', '')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -714,7 +714,7 @@ ingester prometheus_kube_container module {
       // label_set(label_replace((sum by (cluster, namespace, pod_group, pod, container) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}')
       // EOT
       query = <<EOT
-      label_replace(label_replace((sum by (cluster, namespace, pod_group, pod, container) (rate(kube_pod_container_status_restarts_total{}[1m])*60), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}', '', '')
+      label_replace(label_replace((sum by (cluster, namespace, pod_group, pod, container) (rate(kube_pod_container_status_restarts_total{}[1m])*60)), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'), 'cluster', '$input{cluster}', '', '')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
