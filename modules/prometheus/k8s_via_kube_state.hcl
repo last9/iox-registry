@@ -9,7 +9,7 @@ ingester prometheus_kube_cluster module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{prefix}$input{service}"
   }
 
   label {
@@ -149,12 +149,12 @@ ingester prometheus_kube_cluster_with_namespace module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{prefix}$input{service}"
   }
 
   label {
     type = "namespace"
-    name = "$output{namespace}"
+    name = "$input{prefix}$output{namespace}"
   }
 
   physical_component {
@@ -276,7 +276,7 @@ ingester prometheus_kube_node module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{prefix}$input{service}"
   }
 
   label {
@@ -376,12 +376,12 @@ ingester prometheus_kube_pod_grp module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{prefix}$input{service}"
   }
 
   label {
     type = "namespace"
-    name = "$output{namespace}"
+    name = "$input{prefix}$output{namespace}"
   }
 
   physical_component {
@@ -517,12 +517,12 @@ ingester prometheus_kube_pod module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{prefix}$input{service}"
   }
 
   label {
     type = "namespace"
-    name = "$output{namespace}"
+    name = "$input{prefix}$output{namespace}"
   }
 
   physical_component {
@@ -662,12 +662,12 @@ ingester prometheus_kube_container module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{prefix}$input{service}"
   }
 
   label {
     type = "namespace"
-    name = "$output{namespace}"
+    name = "$input{prefix}$output{namespace}"
   }
 
   physical_component {
@@ -811,12 +811,12 @@ ingester prometheus_kube_deployment module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{prefix}$input{service}"
   }
 
   label {
     type = "namespace"
-    name = "$output{namespace}"
+    name = "$input{prefix}$output{namespace}"
   }
 
   physical_component {
@@ -826,7 +826,7 @@ ingester prometheus_kube_deployment module {
 
   data_for_graph_node {
     type = "kube_deployment"
-    name = "$output{deployment}"
+    name = "$input{prefix}$output{deployment}"
   }
 
   logical_parent_nodes = [
