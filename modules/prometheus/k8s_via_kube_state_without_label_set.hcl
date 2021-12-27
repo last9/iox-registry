@@ -9,7 +9,7 @@ ingester prometheus_kube_cluster module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{prefix}$input{service}"
   }
 
   label {
@@ -37,12 +37,8 @@ ingester prometheus_kube_cluster module {
     output_unit = "count"
     aggregator  = "MIN"
 
-
     source prometheus "available_nodes" {
-      query = <<EOF
-      sum by (cluster)(kube_node_status_condition{condition='Ready', status='true'})/
-      sum by (cluster)(kube_node_status_condition{condition='Ready'})
-      EOF
+      query = "sum by (cluster)(kube_node_status_condition{condition='Ready', status='true'})/ sum by (cluster)(kube_node_status_condition{condition='Ready'})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -56,10 +52,7 @@ ingester prometheus_kube_cluster module {
     aggregator  = "MAX"
 
     source prometheus "disk_pressure_nodes" {
-      query = <<EOF
-      sum by (cluster)(kube_node_status_condition{condition='DiskPressure', status='true'})/
-      sum by (cluster)(kube_node_status_condition{condition='DiskPressure'})
-      EOF
+      query = "sum by (cluster)(kube_node_status_condition{condition='DiskPressure', status='true'})/ sum by (cluster)(kube_node_status_condition{condition='DiskPressure'})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -73,10 +66,7 @@ ingester prometheus_kube_cluster module {
     aggregator  = "MAX"
 
     source prometheus "pid_pressure_nodes" {
-      query = <<EOF
-      sum by (cluster)(kube_node_status_condition{condition='PIDPressure', status='true'})/
-      sum by (cluster)(kube_node_status_condition{condition='PIDPressure'})
-      EOF
+      query = "sum by (cluster)(kube_node_status_condition{condition='PIDPressure', status='true'})/ sum by (cluster)(kube_node_status_condition{condition='PIDPressure'})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -90,10 +80,7 @@ ingester prometheus_kube_cluster module {
     aggregator  = "MAX"
 
     source prometheus "memory_pressure_nodes" {
-      query = <<EOF
-      sum by (cluster)(kube_node_status_condition{condition='MemoryPressure', status='true'})/
-      sum by (cluster)(kube_node_status_condition{condition='MemoryPressure'})
-      EOF
+      query = "sum by (cluster)(kube_node_status_condition{condition='MemoryPressure', status='true'})/ sum by (cluster)(kube_node_status_condition{condition='MemoryPressure'})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -155,12 +142,12 @@ ingester prometheus_kube_cluster_with_namespace module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{prefix}$input{service}"
   }
 
   label {
     type = "namespace"
-    name = "$output{namespace}"
+    name = "$input{prefix}$output{namespace}"
   }
 
   physical_component {
@@ -254,12 +241,13 @@ ingester prometheus_kube_cluster_with_namespace module {
     aggregator  = "SUM"
 
     source prometheus "container_restarts" {
-      query = "sum by (cluster, namespace) (kube_pod_container_status_restarts_total{})"
+      query = "sum by (cluster, namespace) (rate(kube_pod_container_status_restarts_total{}[1m])*60)"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
   }
+
 }
 
 ingester prometheus_kube_node module {
@@ -274,7 +262,7 @@ ingester prometheus_kube_node module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{prefix}$input{service}"
   }
 
   label {
@@ -308,10 +296,7 @@ ingester prometheus_kube_node module {
     aggregator  = "MAX"
 
     source prometheus "disk_pressure" {
-      query = <<EOF
-      sum by (cluster, node)(kube_node_status_condition{condition='DiskPressure', status='true'})/
-      sum by (cluster, node)(kube_node_status_condition{condition='DiskPressure'})
-      EOF
+      query = "sum by (cluster, node)(kube_node_status_condition{condition='DiskPressure', status='true'})/ sum by (cluster, node)(kube_node_status_condition{condition='DiskPressure'})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -325,10 +310,7 @@ ingester prometheus_kube_node module {
     aggregator  = "MAX"
 
     source prometheus "pid_pressure" {
-      query = <<EOF
-      sum by (cluster, node)(kube_node_status_condition{condition='PIDPressure', status='true'})/
-      sum by (cluster, node)(kube_node_status_condition{condition='PIDPressure'})
-      EOF
+      query = "sum by (cluster, node)(kube_node_status_condition{condition='PIDPressure', status='true'})/ sum by (cluster, node)(kube_node_status_condition{condition='PIDPressure'})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -342,10 +324,7 @@ ingester prometheus_kube_node module {
     aggregator  = "MAX"
 
     source prometheus "memory_pressure" {
-      query = <<EOF
-      sum by (cluster, node)(kube_node_status_condition{condition='MemoryPressure', status='true'})/
-      sum by (cluster, node)(kube_node_status_condition{condition='MemoryPressure'})
-      EOF
+      query = "sum by (cluster, node)(kube_node_status_condition{condition='MemoryPressure', status='true'})/ sum by (cluster, node)(kube_node_status_condition{condition='MemoryPressure'})"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
@@ -374,16 +353,17 @@ ingester prometheus_kube_pod_grp module {
   resolution = 60
   lag        = 60
 
+
   inputs = "$input{inputs}"
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{prefix}$input{service}"
   }
 
   label {
     type = "namespace"
-    name = "$output{namespace}"
+    name = "$input{prefix}$output{namespace}"
   }
 
   physical_component {
@@ -419,7 +399,7 @@ ingester prometheus_kube_pod_grp module {
 
     source prometheus "container_restarted" {
       query = <<EOT
-      sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
+      sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (rate(kube_pod_container_status_restarts_total{pod=~'.*-.*'}[1m])*60)), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -435,7 +415,7 @@ ingester prometheus_kube_pod_grp module {
 
     source prometheus "containers_failed" {
       query = <<EOT
-      sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_terminated_reason{reason!='Completed'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
+      sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_terminated_reason{pod=~'.*-.*',reason!='Completed'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -451,7 +431,7 @@ ingester prometheus_kube_pod_grp module {
 
     source prometheus "containers_running" {
       query = <<EOT
-      sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
+      sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{pod=~'.*-.*'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -467,7 +447,7 @@ ingester prometheus_kube_pod_grp module {
 
     source prometheus "containers_desired" {
       query = <<EOT
-      sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_terminated{}) +  sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{}) +  sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_waiting{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
+      sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_terminated{pod=~'.*-.*'}) + sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{pod=~'.*-.*'}) + sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_waiting{pod=~'.*-.*'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -483,7 +463,7 @@ ingester prometheus_kube_pod_grp module {
 
     source prometheus "containers_cold" {
       query = <<EOT
-      sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{}) - sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_ready{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
+      sum without (pod) (label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{}) - sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_ready{pod=~'.*-.*'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)'))
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -504,12 +484,12 @@ ingester prometheus_kube_pod module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{prefix}$input{service}"
   }
 
   label {
     type = "namespace"
-    name = "$output{namespace}"
+    name = "$input{prefix}$output{namespace}"
   }
 
   physical_component {
@@ -549,7 +529,7 @@ ingester prometheus_kube_pod module {
 
     source prometheus "container_restarted" {
       query = <<EOT
-      label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_restarts_total{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
+      label_replace((sum by (cluster, namespace, pod_group, pod) (rate(kube_pod_container_status_restarts_total{pod=~'.*-.*'}[1m])*60)), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -565,7 +545,7 @@ ingester prometheus_kube_pod module {
 
     source prometheus "containers_failed" {
       query = <<EOT
-      label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_terminated_reason{reason!='Completed'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
+      label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_terminated_reason{pod=~'.*-.*',reason!='Completed'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -579,9 +559,9 @@ ingester prometheus_kube_pod module {
     output_unit = "count"
     aggregator  = "AVG"
 
-    source prometheus "containers_failed" {
+    source prometheus "containers_running" {
       query = <<EOT
-      label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
+      label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{pod=~'.*-.*'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -597,7 +577,7 @@ ingester prometheus_kube_pod module {
 
     source prometheus "containers_desired" {
       query = <<EOT
-      label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_terminated{}) + sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{}) + sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_waiting{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
+      label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_terminated{pod=~'.*-.*'}) +  sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{pod=~'.*-.*'}) +  sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_waiting{pod=~'.*-.*'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -613,7 +593,7 @@ ingester prometheus_kube_pod module {
 
     source prometheus "containers_cold" {
       query = <<EOT
-      label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{}) - sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_ready{})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
+      label_replace((sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_running{pod=~'.*-.*'}) - sum by (cluster, namespace, pod_group, pod) (kube_pod_container_status_ready{pod=~'.*-.*'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -634,12 +614,12 @@ ingester prometheus_kube_container module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{prefix}$input{service}"
   }
 
   label {
     type = "namespace"
-    name = "$output{namespace}"
+    name = "$input{prefix}$output{namespace}"
   }
 
   physical_component {
@@ -683,7 +663,7 @@ ingester prometheus_kube_container module {
 
     source prometheus "total_container_restarts" {
       query = <<EOT
-      label_replace((sum by (cluster, namespace, pod_group, pod, container) (kube_pod_container_status_restarts_total{pod!~'sshjump.*'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
+      label_replace((sum by (cluster, namespace, pod_group, pod, container) (rate(kube_pod_container_status_restarts_total{pod=~'.*-.*'}[1m])*60)), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -699,7 +679,7 @@ ingester prometheus_kube_container module {
 
     source prometheus "container_in_terminated" {
       query = <<EOT
-      label_replace((sum by (cluster, namespace, pod_group, pod, container) (kube_pod_container_status_terminated_reason{reason!='Completed'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
+      label_replace((sum by (cluster, namespace, pod_group, pod, container) (kube_pod_container_status_terminated_reason{pod=~'.*-.*',reason!='Completed'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -715,7 +695,7 @@ ingester prometheus_kube_container module {
 
     source prometheus "container_in_waiting" {
       query = <<EOT
-      label_replace((sum by (cluster, namespace, pod_group, pod, container) (kube_pod_container_status_waiting_reason{reason!='ContainerCreating', reason!='PodInitializing'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
+      label_replace((sum by (cluster, namespace, pod_group, pod, container) (kube_pod_container_status_waiting_reason{pod=~'.*-.*', reason!='ContainerCreating', reason!='PodInitializing'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -731,7 +711,7 @@ ingester prometheus_kube_container module {
 
     source prometheus "container_cpu_limit" {
       query = <<EOT
-      label_replace((sum by (cluster, namespace, pod_group, pod, container) (kube_pod_container_resource_limits{resource='cpu', unit='core'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
+      label_replace((sum by (cluster, namespace, pod_group, pod, container) (kube_pod_container_resource_limits{pod=~'.*-.*', resource='cpu', unit='core'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -747,7 +727,7 @@ ingester prometheus_kube_container module {
 
     source prometheus "container_memory_limit" {
       query = <<EOT
-      label_replace((sum by (cluster, namespace, pod_group, pod, container) (kube_pod_container_resource_limits{resource='memory', unit='byte'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
+      label_replace((sum by (cluster, namespace, pod_group, pod, container) (kube_pod_container_resource_limits{pod=~'.*-.*', resource='memory', unit='byte'})), 'pod_group', '$1', 'pod', '(\\D+)-(.*)')
       EOT
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -768,12 +748,12 @@ ingester prometheus_kube_deployment module {
 
   label {
     type = "service"
-    name = "$input{service}"
+    name = "$input{prefix}$input{service}"
   }
 
   label {
     type = "namespace"
-    name = "$output{namespace}"
+    name = "$input{prefix}$output{namespace}"
   }
 
   physical_component {
@@ -783,7 +763,7 @@ ingester prometheus_kube_deployment module {
 
   data_for_graph_node {
     type = "kube_deployment"
-    name = "$output{deployment}"
+    name = "$input{prefix}$output{deployment}"
   }
 
   logical_parent_nodes = [
