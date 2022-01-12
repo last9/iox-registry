@@ -40,24 +40,6 @@ ingester aws_rds_logical_cloudstream module {
   //   )
   //   EOF
 
-  // gauge "connections" {
-  //   index       = 1
-  //   input_unit  = "count"
-  //   output_unit = "count"
-  //   aggregator  = "MAX"
-  //   source cloudwatch "connections" {
-  //     query {
-  //       aggregator  = "Maximum"
-  //       namespace   = "AWS/RDS"
-  //       metric_name = "DatabaseConnections"
-
-  //       dimensions = {
-  //         "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-  //       }
-  //     }
-  //   }
-  // }
-
   gauge "connections" {
     index       = 1
     input_unit  = "count"
@@ -66,30 +48,12 @@ ingester aws_rds_logical_cloudstream module {
 
     source prometheus "connections" {
       // query = "group by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_DatabaseConnections_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'} > 0)"
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_DatabaseConnections{DBInstanceIdentifier='$input{DBInstanceIdentifier}', quantile='0'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_DatabaseConnections{DBInstanceIdentifier='$input{DBInstanceIdentifier}', quantile='1'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
     }
   }
-
-  // gauge "write_iops" {
-  //   index       = 2
-  //   input_unit  = "iops"
-  //   output_unit = "iops"
-  //   aggregator  = "AVG"
-  //   source cloudwatch "write_iops" {
-  //     query {
-  //       aggregator  = "Average"
-  //       namespace   = "AWS/RDS"
-  //       metric_name = "WriteIOPS"
-
-  //       dimensions = {
-  //         "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-  //       }
-  //     }
-  //   }
-  // }
 
   gauge "write_iops" {
     index       = 2
@@ -106,24 +70,6 @@ ingester aws_rds_logical_cloudstream module {
     }
   }
 
-  // gauge "read_iops" {
-  //   index       = 3
-  //   input_unit  = "iops"
-  //   output_unit = "iops"
-  //   aggregator  = "AVG"
-  //   source cloudwatch "read_iops" {
-  //     query {
-  //       aggregator  = "Average"
-  //       namespace   = "AWS/RDS"
-  //       metric_name = "ReadIOPS"
-
-  //       dimensions = {
-  //         "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-  //       }
-  //     }
-  //   }
-  // }
-
   gauge "read_iops" {
     index       = 3
     input_unit  = "iops"
@@ -139,24 +85,6 @@ ingester aws_rds_logical_cloudstream module {
     }
   }
 
-  // gauge "read_latency" {
-  //   index       = 4
-  //   input_unit  = "s"
-  //   output_unit = "s"
-  //   aggregator  = "AVG"
-  //   source cloudwatch "read_latency" {
-  //     query {
-  //       aggregator  = "Average"
-  //       namespace   = "AWS/RDS"
-  //       metric_name = "ReadLatency"
-
-  //       dimensions = {
-  //         "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-  //       }
-  //     }
-  //   }
-  // }
-
   gauge "read_latency" {
     index       = 4
     input_unit  = "s"
@@ -171,171 +99,143 @@ ingester aws_rds_logical_cloudstream module {
     }
   }
 
-  // gauge "write_latency" {
-  //   index       = 5
-  //   input_unit  = "s"
-  //   output_unit = "s"
-  //   aggregator  = "AVG"
-  //   source cloudwatch "wrtie_latency" {
-  //     query {
-  //       aggregator  = "Average"
-  //       namespace   = "AWS/RDS"
-  //       metric_name = "WriteLatency"
+  gauge "write_latency" {
+    index       = 4
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "AVG"
 
-  //       dimensions = {
-  //         "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-  //       }
-  //     }
-  //   }
-  // }
+    source prometheus "write_latency" {
+      query = "avg by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_WriteLatency_sum{DBInstanceIdentifier='$input{DBInstanceIdentifier}'})"
+      join_on = {
+        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
+      }
+    }
+  }
 }
 
-// ingester aws_rds_physical_cloudwatch module {
-//   frequency  = 60
-//   lookback   = 600
-//   timeout    = 30
-//   resolution = 60
-//   lag        = 60
+ingester aws_rds_physical_cloudstream module {
+  frequency  = 60
+  lookback   = 600
+  timeout    = 30
+  resolution = 60
+  lag        = 60
 
-//   label {
-//     type = "service"
-//     name = "$input{service}"
-//   }
+  label {
+    type = "service"
+    name = "$input{service}"
+  }
 
-//   label {
-//     type = "namespace"
-//     name = "$input{namespace}"
-//   }
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
 
-//   physical_component {
-//     type = "rds"
-//     name = "$input{DBInstanceIdentifier}"
-//   }
+  physical_component {
+    type = "rds"
+    name = "$input{DBInstanceIdentifier}"
+  }
 
-//   data_for_graph_node {
-//     type = "rds"
-//     name = "$input{DBInstanceIdentifier}"
-//   }
+  data_for_graph_node {
+    type = "rds"
+    name = "$input{DBInstanceIdentifier}"
+  }
 
-//   using = {
-//     default = "$input{using}"
-//   }
+  using = {
+    default = "$input{using}"
+  }
 
-//   inputs = "$input{inputs}"
+  inputs = "$input{inputs}"
 
-//   input_query = <<-EOF
-//   label_set(
-//     label_replace(
-//       rds_db{$input{tag_filter}}, 'id=DBInstanceIdentifier'
-//     ), "Service", "$input{service}"
-//   )
-//   EOF
+  // input_query = <<-EOF
+  // label_set(
+  //   label_replace(
+  //     rds_db{$input{tag_filter}}, 'id=DBInstanceIdentifier'
+  //   ), "Service", "$input{service}"
+  // )
+  // EOF
 
-//   gauge "network_in" {
-//     index       = 1
-//     input_unit  = "bps"
-//     output_unit = "bps"
-//     aggregator  = "AVG"
-//     source cloudwatch "network_in" {
-//       query {
-//         aggregator  = "Average"
-//         namespace   = "AWS/RDS"
-//         metric_name = "NetworkReceiveThroughput"
+  gauge "network_in" {
+    index       = 1
+    input_unit  = "bps"
+    output_unit = "bps"
+    aggregator  = "AVG"
 
-//         dimensions = {
-//           "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-//         }
-//       }
-//     }
-//   }
+    source prometheus "network_in" {
+      query = "avg by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_NetworkReceiveThroughput_sum{DBInstanceIdentifier='$input{DBInstanceIdentifier}'})"
+      join_on = {
+        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
+      }
+    }
+  }
 
-//   gauge "network_out" {
-//     index       = 2
-//     input_unit  = "bps"
-//     output_unit = "bps"
-//     aggregator  = "AVG"
-//     source cloudwatch "network_out" {
-//       query {
-//         aggregator  = "Average"
-//         namespace   = "AWS/RDS"
-//         metric_name = "NetworkTransmitThroughput"
+  gauge "network_out" {
+    index       = 2
+    input_unit  = "bps"
+    output_unit = "bps"
+    aggregator  = "AVG"
 
-//         dimensions = {
-//           "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-//         }
-//       }
-//     }
-//   }
+    source prometheus "network_out" {
+      query = "avg by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_NetworkTransmitThroughput_sum{DBInstanceIdentifier='$input{DBInstanceIdentifier}'})"
+      join_on = {
+        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
+      }
+    }
+  }
 
-//   gauge "cpu" {
-//     index       = 3
-//     input_unit  = "percent"
-//     output_unit = "percent"
-//     aggregator  = "AVG"
-//     source cloudwatch "cpu" {
-//       query {
-//         aggregator  = "Average"
-//         namespace   = "AWS/RDS"
-//         metric_name = "CPUUtilization"
+  gauge "cpu" {
+    index       = 3
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
 
-//         dimensions = {
-//           "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-//         }
-//       }
-//     }
-//   }
+    source prometheus "cpu" {
+      query = "avg by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_CPUUtilization{dbinstanceidentifier='$input{dbinstanceIdentifier}'})"
+      join_on = {
+        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
+      }
+    }
+  }
 
-//   gauge "free_space" {
-//     index       = 4
-//     input_unit  = "bytes"
-//     output_unit = "bytes"
-//     aggregator  = "MIN"
-//     source cloudwatch "free_space" {
-//       query {
-//         aggregator  = "Minimum"
-//         namespace   = "AWS/RDS"
-//         metric_name = "FreeStorageSpace"
+  gauge "free_space" {
+    index       = 4
+    input_unit  = "bytes"
+    output_unit = "bytes"
+    aggregator  = "MIN"
 
-//         dimensions = {
-//           "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-//         }
-//       }
-//     }
-//   }
+    source prometheus "free_space" {
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_FreeStorageSpace{DBInstanceIdentifier='$input{DBInstanceIdentifier}', quantile='0'})"
+      join_on = {
+        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
+      }
+    }
+  }
 
-//   gauge "replica_lag" {
-//     index       = 5
-//     input_unit  = "s"
-//     output_unit = "s"
-//     aggregator  = "MAX"
-//     source cloudwatch "replica_lag" {
-//       query {
-//         aggregator  = "Maximum"
-//         namespace   = "AWS/RDS"
-//         metric_name = "ReplicaLag"
+  gauge "replica_lag" {
+    index       = 5
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "MAX"
 
-//         dimensions = {
-//           "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-//         }
-//       }
-//     }
-//   }
+    source prometheus "replica_lag" {
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_ReplicaLag{DBInstanceIdentifier='$input{DBInstanceIdentifier}', quantile='1'})"
+      join_on = {
+        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
+      }
+    }
+  }
 
-//   gauge "queue_depth" {
-//     index       = 6
-//     input_unit  = "count"
-//     output_unit = "count"
-//     aggregator  = "MAX"
-//     source cloudwatch "queue_depth" {
-//       query {
-//         aggregator  = "Maximum"
-//         namespace   = "AWS/RDS"
-//         metric_name = "DiskQueueDepth"
+  gauge "queue_depth" {
+    index       = 6
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
 
-//         dimensions = {
-//           "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-//         }
-//       }
-//     }
-//   }
-// }
+    source prometheus "replica_lag" {
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_DiskQueueDepth{DBInstanceIdentifier='$input{DBInstanceIdentifier}', quantile='1'})"
+      join_on = {
+        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
+      }
+    }
+  }
+}
