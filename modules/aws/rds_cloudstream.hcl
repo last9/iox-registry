@@ -66,7 +66,7 @@ ingester aws_rds_logical_cloudstream module {
 
     source prometheus "connections" {
       // query = "group by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_DatabaseConnections_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'} > 0)"
-      query = "group by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_DatabaseConnections_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_DatabaseConnections{DBInstanceIdentifier='$input{DBInstanceIdentifier}', quantile='0'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -99,7 +99,7 @@ ingester aws_rds_logical_cloudstream module {
 
     source prometheus "write_iops" {
       // query = "label_set(sum by (pod) (prometheus_remote_storage_samples_pending{}), 'pod', '$input{pod}')"
-      query = "group by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_WriteIOPS_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
+      query = "avg by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_WriteIOPS_sum{DBInstanceIdentifier='$input{DBInstanceIdentifier}'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -132,7 +132,7 @@ ingester aws_rds_logical_cloudstream module {
 
     source prometheus "read_iops" {
       // query = "label_set(sum by (pod) (prometheus_remote_storage_samples_pending{}), 'pod', '$input{pod}')"
-      query = "group by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_ReadIOPS_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
+      query = "avg by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_ReadIOPS_sum{DBInstanceIdentifier='$input{DBInstanceIdentifier}'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -164,7 +164,7 @@ ingester aws_rds_logical_cloudstream module {
     aggregator  = "AVG"
 
     source prometheus "read_latency" {
-      query = "avg by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_ReadLatency_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
+      query = "avg by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_ReadLatency_sum{DBInstanceIdentifier='$input{DBInstanceIdentifier}'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
