@@ -38,10 +38,11 @@ ingester aws_cloudfront_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "5xx" {
-      query = "sum by (DistributionId) (amazonaws_com_AWS_CloudFront_5xxErrorRate_sum{DistributionId='$input{DistributionId}'})"
+      query = "sum by (Region, DistributionId) (amazonaws_com_AWS_CloudFront_5xxErrorRate_sum{DistributionId='$input{DistributionId}', Region='$input{Region}'})"
 
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
+        "$output{Region}" = "$input{Region}"
       }
     }
   }
@@ -53,10 +54,11 @@ ingester aws_cloudfront_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "4xx" {
-      query = "sum by (DistributionId) (amazonaws_com_AWS_CloudFront_4xxErrorRate_sum{DistributionId='$input{DistributionId}'})"
+      query = "sum by (Region, DistributionId) (amazonaws_com_AWS_CloudFront_4xxErrorRate_sum{DistributionId='$input{DistributionId}',Region='$input{Region}'})"
 
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
+        "$output{Region}" = "$input{Region}"
       }
     }
   }
@@ -68,10 +70,11 @@ ingester aws_cloudfront_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "bytes_out" {
-      query = "sum by (DistributionId) (amazonaws_com_AWS_CloudFront_BytesDownloaded_sum{DistributionId='$input{DistributionId}'})"
+      query = "sum by (DistributionId) (amazonaws_com_AWS_CloudFront_BytesDownloaded_sum{DistributionId='$input{DistributionId}', Region='$input{Region}'})"
 
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
+        "$output{Region}" = "$input{Region}"
       }
     }
   }
@@ -83,10 +86,11 @@ ingester aws_cloudfront_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "bytes_in" {
-      query = "sum by (DistributionId) (amazonaws_com_AWS_CloudFront_BytesUploaded_sum{DistributionId='$input{DistributionId}'})"
+      query = "sum by (DistributionId) (amazonaws_com_AWS_CloudFront_BytesUploaded_sum{DistributionId='$input{DistributionId}', Region='$input{Region}'})"
 
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
+        "$output{Region}" = "$input{Region}"
       }
     }
   }
@@ -98,10 +102,11 @@ ingester aws_cloudfront_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "throughput" {
-      query = "sum by (DistributionId) (amazonaws_com_AWS_CloudFront_Requests_sum{DistributionId='$input{DistributionId}'})"
+      query = "sum by (DistributionId) (amazonaws_com_AWS_CloudFront_Requests_sum{DistributionId='$input{DistributionId}', Region='$input{Region}'})"
 
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
+        "$output{Region}" = "$input{Region}"
       }
     }
   }
