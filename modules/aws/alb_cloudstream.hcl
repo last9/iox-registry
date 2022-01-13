@@ -248,7 +248,7 @@ ingester aws_alb_tg_cloudstream module {
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}" = "$input{TargetGroup}"
+        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
@@ -264,7 +264,7 @@ ingester aws_alb_tg_cloudstream module {
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}" = "$input{TargetGroup}"
+        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
@@ -280,7 +280,7 @@ ingester aws_alb_tg_cloudstream module {
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}" = "$input{TargetGroup}"
+        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
@@ -296,7 +296,7 @@ ingester aws_alb_tg_cloudstream module {
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}" = "$input{TargetGroup}"
+        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
@@ -312,7 +312,7 @@ ingester aws_alb_tg_cloudstream module {
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}" = "$input{TargetGroup}"
+        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
@@ -328,7 +328,7 @@ ingester aws_alb_tg_cloudstream module {
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}" = "$input{TargetGroup}"
+        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
@@ -344,7 +344,7 @@ ingester aws_alb_tg_cloudstream module {
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}" = "$input{TargetGroup}"
+        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
@@ -360,7 +360,7 @@ ingester aws_alb_tg_cloudstream module {
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}" = "$input{TargetGroup}"
+        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
