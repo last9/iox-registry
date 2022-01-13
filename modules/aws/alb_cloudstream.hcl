@@ -26,12 +26,12 @@ ingester aws_alb_cloudstream module {
   }
 
   physical_component {
-    type = "alb"
+    type = "alb_cloudstream"
     name = "$input{LoadBalancer}"
   }
 
   data_for_graph_node {
-    type = "alb"
+    type = "alb_cloudstream"
     name = "$input{LoadBalancer}"
   }
 
@@ -114,7 +114,7 @@ ingester aws_alb_cloudstream module {
     }
   }
 
-  gauge "lb_4xx" {
+  gauge "status_4xx" {
     index       = 6
     input_unit  = "count"
     output_unit = "rpm"
@@ -129,7 +129,7 @@ ingester aws_alb_cloudstream module {
     }
   }
 
-  gauge "lb_5xx" {
+  gauge "status_5xx" {
     index       = 7
     input_unit  = "count"
     output_unit = "rpm"
@@ -144,12 +144,10 @@ ingester aws_alb_cloudstream module {
     }
   }
 
-
-
-  gauge "target_response_time_min" {
+  gauge "latency_min" {
     index       = 8
     input_unit  = "s"
-    output_unit = "s"
+    output_unit = "ms"
     aggregator  = "MIN"
 
     source prometheus "lcu" {
@@ -161,10 +159,10 @@ ingester aws_alb_cloudstream module {
     }
   }
 
-  gauge "target_response_time_max" {
+  gauge "latency_max" {
     index       = 9
     input_unit  = "s"
-    output_unit = "s"
+    output_unit = "ms"
     aggregator  = "MAX"
 
     source prometheus "lcu" {
@@ -176,173 +174,10 @@ ingester aws_alb_cloudstream module {
     }
   }
 
-  gauge "target_response_time_avg" {
+  gauge "latency_avg" {
     index       = 11
     input_unit  = "s"
-    output_unit = "s"
-    aggregator  = "MAX"
-
-    source prometheus "lcu" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_sum{LoadBalancer='$input{LoadBalancer}'}) / sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_count{LoadBalancer='$input{LoadBalancer}'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-}
-
-ingester aws_alb_endpoint_cloudstream module {
-  frequency  = 60
-  lookback   = 600
-  timeout    = 30
-  resolution = 60
-  lag        = 60
-
-  using = {
-    "default" : "$input{using}"
-  }
-
-  inputs = "$input{inputs}"
-
-  // input_query = <<-EOF
-  //   label_set(
-  //     label_replace(
-  //       elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
-  //     ), "service", "$input{service}", "namespace", "$input{namespace}"
-  //   )
-  // EOF
-
-  label {
-    type = "service"
-    name = "$input{service}"
-  }
-
-  label {
-    type = "namespace"
-    name = "$input{namespace}"
-  }
-
-  physical_component {
-    type = "alb"
-    name = "$input{LoadBalancer}"
-  }
-
-  data_for_graph_node {
-    type = "endpoint"
-    name = "$input{endpoint}"
-  }
-
-  gauge "throughput" {
-    index       = 1
-    input_unit  = "count"
-    output_unit = "rpm"
-    aggregator  = "SUM"
-
-    source prometheus "throughput" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_RequestCount_sum{LoadBalancer='$input{LoadBalancer}'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "lb_2xx" {
-    index       = 2
-    input_unit  = "count"
-    output_unit = "rpm"
-    aggregator  = "SUM"
-
-    source prometheus "status_200" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_2XX_Count_sum{LoadBalancer='$input{LoadBalancer}'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "lb_3xx" {
-    index       = 3
-    input_unit  = "count"
-    output_unit = "rpm"
-    aggregator  = "SUM"
-
-    source prometheus "status_300" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_3XX_Count_sum{LoadBalancer='$input{LoadBalancer}'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "lb_4xx" {
-    index       = 4
-    input_unit  = "count"
-    output_unit = "rpm"
-    aggregator  = "SUM"
-
-    source prometheus "status_400" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_4XX_Count_sum{LoadBalancer='$input{LoadBalancer}'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "lb_5xx" {
-    index       = 5
-    input_unit  = "count"
-    output_unit = "rpm"
-    aggregator  = "SUM"
-
-    source prometheus "status_500" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_5XX_Count_sum{LoadBalancer='$input{LoadBalancer}'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "target_response_time_min" {
-    index       = 6
-    input_unit  = "s"
-    output_unit = "s"
-    aggregator  = "MIN"
-
-    source prometheus "lcu" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', quantile='0'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "target_response_time_max" {
-    index       = 7
-    input_unit  = "s"
-    output_unit = "s"
-    aggregator  = "MAX"
-
-    source prometheus "lcu" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', quantile='1'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "target_response_time_avg" {
-    index       = 8
-    input_unit  = "s"
-    output_unit = "s"
+    output_unit = "ms"
     aggregator  = "MAX"
 
     source prometheus "lcu" {
@@ -388,17 +223,17 @@ ingester aws_alb_tg_cloudstream module {
   }
 
   physical_component {
-    type = "alb"
+    type = "alb_cloudstream"
     name = "$input{LoadBalancer}"
   }
 
   physical_address {
-    type = "alb_target_group"
+    type = "alb_cloudstream_target_group"
     name = "$input{TargetGroup}"
   }
 
   data_for_graph_node {
-    type = "alb_logical"
+    type = "alb_cloudstream_logical"
     name = "lb: $input{LoadBalancer}"
   }
 
@@ -418,7 +253,7 @@ ingester aws_alb_tg_cloudstream module {
     }
   }
 
-  gauge "lb_2xx" {
+  gauge "status_2xx" {
     index       = 2
     input_unit  = "count"
     output_unit = "rpm"
@@ -434,7 +269,7 @@ ingester aws_alb_tg_cloudstream module {
     }
   }
 
-  gauge "lb_3xx" {
+  gauge "status_3xx" {
     index       = 3
     input_unit  = "count"
     output_unit = "rpm"
@@ -450,7 +285,7 @@ ingester aws_alb_tg_cloudstream module {
     }
   }
 
-  gauge "lb_4xx" {
+  gauge "status_4xx" {
     index       = 4
     input_unit  = "count"
     output_unit = "rpm"
@@ -466,7 +301,7 @@ ingester aws_alb_tg_cloudstream module {
     }
   }
 
-  gauge "lb_5xx" {
+  gauge "status_5xx" {
     index       = 5
     input_unit  = "count"
     output_unit = "rpm"
@@ -482,10 +317,10 @@ ingester aws_alb_tg_cloudstream module {
     }
   }
 
-  gauge "target_response_time_min" {
+  gauge "latency_min" {
     index       = 6
     input_unit  = "s"
-    output_unit = "s"
+    output_unit = "ms"
     aggregator  = "MIN"
 
     source prometheus "lcu" {
@@ -498,10 +333,10 @@ ingester aws_alb_tg_cloudstream module {
     }
   }
 
-  gauge "target_response_time_max" {
+  gauge "latency_max" {
     index       = 7
     input_unit  = "s"
-    output_unit = "s"
+    output_unit = "ms"
     aggregator  = "MAX"
 
     source prometheus "lcu" {
@@ -514,10 +349,10 @@ ingester aws_alb_tg_cloudstream module {
     }
   }
 
-  gauge "target_response_time_avg" {
+  gauge "latency_avg" {
     index       = 8
     input_unit  = "s"
-    output_unit = "s"
+    output_unit = "ms"
     aggregator  = "MAX"
 
     source prometheus "lcu" {
@@ -559,12 +394,12 @@ ingester aws_alb_internal_cloudstream module {
   }
 
   physical_component {
-    type = "internalAlb"
+    type = "internalAlb_cloudstream"
     name = "$input{LoadBalancer}"
   }
 
   data_for_graph_node {
-    type = "internalAlb"
+    type = "internalAlb_cloudstream"
     name = "$input{LoadBalancer}"
   }
 
@@ -647,7 +482,7 @@ ingester aws_alb_internal_cloudstream module {
     }
   }
 
-  gauge "lb_4xx" {
+  gauge "status_4xx" {
     index       = 6
     input_unit  = "count"
     output_unit = "rpm"
@@ -662,7 +497,7 @@ ingester aws_alb_internal_cloudstream module {
     }
   }
 
-  gauge "lb_5xx" {
+  gauge "status_5xx" {
     index       = 7
     input_unit  = "count"
     output_unit = "rpm"
@@ -677,10 +512,10 @@ ingester aws_alb_internal_cloudstream module {
     }
   }
 
-  gauge "target_response_time_min" {
+  gauge "latency_min" {
     index       = 8
     input_unit  = "s"
-    output_unit = "s"
+    output_unit = "ms"
     aggregator  = "MIN"
 
     source prometheus "lcu" {
@@ -692,10 +527,10 @@ ingester aws_alb_internal_cloudstream module {
     }
   }
 
-  gauge "target_response_time_max" {
+  gauge "latency_max" {
     index       = 9
     input_unit  = "s"
-    output_unit = "s"
+    output_unit = "ms"
     aggregator  = "MAX"
 
     source prometheus "lcu" {
@@ -707,10 +542,10 @@ ingester aws_alb_internal_cloudstream module {
     }
   }
 
-  gauge "target_response_time_avg" {
+  gauge "latency_avg" {
     index       = 11
     input_unit  = "s"
-    output_unit = "s"
+    output_unit = "ms"
     aggregator  = "MAX"
 
     source prometheus "lcu" {
@@ -724,164 +559,4 @@ ingester aws_alb_internal_cloudstream module {
 
 }
 
-ingester aws_alb_internal_endpoint_cloudstream module {
-  frequency  = 60
-  lookback   = 600
-  timeout    = 30
-  resolution = 60
-  lag        = 60
 
-  using = {
-    "default" : "$input{using}"
-  }
-
-  inputs = "$input{inputs}"
-
-  // input_query = <<-EOF
-  //   label_set(
-  //     label_replace(
-  //       elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
-  //     ), "service", "$input{service}", "namespace", "$input{namespace}"
-  //   )
-  // EOF
-
-  label {
-    type = "service"
-    name = "$input{service}"
-  }
-
-  label {
-    type = "namespace"
-    name = "$input{namespace}"
-  }
-
-  physical_component {
-    type = "internalAlb"
-    name = "$input{LoadBalancer}"
-  }
-
-  data_for_graph_node {
-    type = "endpoint"
-    name = "$input{namespace}$input{endpoint}"
-  }
-
-  gauge "throughput" {
-    index       = 1
-    input_unit  = "count"
-    output_unit = "rpm"
-    aggregator  = "SUM"
-
-    source prometheus "throughput" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_RequestCount_sum{LoadBalancer='$input{LoadBalancer}'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "lb_2xx" {
-    index       = 2
-    input_unit  = "count"
-    output_unit = "rpm"
-    aggregator  = "SUM"
-
-    source prometheus "status_200" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_2XX_Count_sum{LoadBalancer='$input{LoadBalancer}'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "lb_3xx" {
-    index       = 3
-    input_unit  = "count"
-    output_unit = "rpm"
-    aggregator  = "SUM"
-
-    source prometheus "status_300" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_3XX_Count_sum{LoadBalancer='$input{LoadBalancer}'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "lb_4xx" {
-    index       = 4
-    input_unit  = "count"
-    output_unit = "rpm"
-    aggregator  = "SUM"
-
-    source prometheus "status_400" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_4XX_Count_sum{LoadBalancer='$input{LoadBalancer}'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "lb_5xx" {
-    index       = 5
-    input_unit  = "count"
-    output_unit = "rpm"
-    aggregator  = "SUM"
-
-    source prometheus "status_500" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_5XX_Count_sum{LoadBalancer='$input{LoadBalancer}'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "target_response_time_min" {
-    index       = 6
-    input_unit  = "s"
-    output_unit = "s"
-    aggregator  = "MIN"
-
-    source prometheus "lcu" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', quantile='0'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "target_response_time_max" {
-    index       = 7
-    input_unit  = "s"
-    output_unit = "s"
-    aggregator  = "MAX"
-
-    source prometheus "lcu" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', quantile='1'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "target_response_time_avg" {
-    index       = 8
-    input_unit  = "s"
-    output_unit = "s"
-    aggregator  = "MAX"
-
-    source prometheus "lcu" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_sum{LoadBalancer='$input{LoadBalancer}'}) / sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_count{LoadBalancer='$input{LoadBalancer}'})"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-}
