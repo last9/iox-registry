@@ -42,7 +42,7 @@ ingester aws_cloudfront_cloudstream module {
 
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}" = "$input{Region}"
+        "$output{Region}"         = "$input{Region}"
       }
     }
   }
@@ -58,7 +58,7 @@ ingester aws_cloudfront_cloudstream module {
 
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}" = "$input{Region}"
+        "$output{Region}"         = "$input{Region}"
       }
     }
   }
@@ -74,7 +74,7 @@ ingester aws_cloudfront_cloudstream module {
 
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}" = "$input{Region}"
+        "$output{Region}"         = "$input{Region}"
       }
     }
   }
@@ -90,7 +90,7 @@ ingester aws_cloudfront_cloudstream module {
 
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}" = "$input{Region}"
+        "$output{Region}"         = "$input{Region}"
       }
     }
   }
@@ -106,7 +106,7 @@ ingester aws_cloudfront_cloudstream module {
 
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}" = "$input{Region}"
+        "$output{Region}"         = "$input{Region}"
       }
     }
   }
