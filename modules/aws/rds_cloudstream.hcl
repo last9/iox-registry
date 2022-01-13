@@ -190,7 +190,7 @@ ingester aws_rds_physical_cloudstream module {
     aggregator  = "AVG"
 
     source prometheus "cpu" {
-      query = "avg by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_CPUUtilization{dbinstanceidentifier='$input{dbinstanceIdentifier}'})"
+      query = "avg by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_CPUUtilization_sum{DBInstanceIdentifier='$input{DBInstanceIdentifier}'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
