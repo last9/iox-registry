@@ -100,7 +100,7 @@ ingester aws_rds_logical_cloudstream module {
   }
 
   gauge "write_latency" {
-    index       = 4
+    index       = 5
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "AVG"
