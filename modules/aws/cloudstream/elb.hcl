@@ -26,12 +26,12 @@ ingester aws_elb_cloudstream module {
  }
 
  physical_component {
-   type = "elb"
+   type = "elb_cloudstream"
    name = "$input{LoadBalancerName}"
  }
 
  data_for_graph_node {
-   type = "elb"
+   type = "elb_cloudstream"
    name = "$input{LoadBalancerName}"
  }
 
