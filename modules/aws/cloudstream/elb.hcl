@@ -46,7 +46,7 @@ ingester aws_elb_cloudstream module {
    aggregator  = "SUM"
 
    source prometheus "throughput" {
-     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_RequestCount_sum{LoadBalancerName='$input{LoadBalancerName}'})"
+     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_RequestCount_sum{LoadBalancerName='$input{LoadBalancerName}', AvailabilityZone=''})"
 
      join_on = {
        "$output{LoadBalancerName}" = "$input{LoadBalancerName}"
@@ -60,8 +60,8 @@ ingester aws_elb_cloudstream module {
    output_unit = "rpm"
    aggregator  = "MAX"
 
-   source prometheus "throughput" {
-     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_SurgeQueueLength{LoadBalancerName='$input{LoadBalancerName}', quantile='1'})"
+   source prometheus "surge_queue_length" {
+     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_SurgeQueueLength{LoadBalancerName='$input{LoadBalancerName}', AvailabilityZone='', quantile='1'})"
 
      join_on = {
        "$output{LoadBalancerName}" = "$input{LoadBalancerName}"
@@ -76,7 +76,7 @@ ingester aws_elb_cloudstream module {
    aggregator  = "SUM"
 
    source prometheus "connection_errors" {
-     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_BackendConnectionErrors_sum{LoadBalancerName='$input{LoadBalancerName}'})"
+     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_BackendConnectionErrors_sum{LoadBalancerName='$input{LoadBalancerName}', AvailabilityZone=''})"
 
      join_on = {
        "$output{LoadBalancerName}" = "$input{LoadBalancerName}"
@@ -91,7 +91,7 @@ ingester aws_elb_cloudstream module {
    aggregator  = "MAX"
 
    source prometheus "unhealthy_hosts" {
-     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_UnHealthyHostCount{LoadBalancerName='$input{LoadBalancerName}', quantile='1'})"
+     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_UnHealthyHostCount{LoadBalancerName='$input{LoadBalancerName}', AvailabilityZone='', quantile='1'})"
 
      join_on = {
        "$output{LoadBalancerName}" = "$input{LoadBalancerName}"
@@ -106,7 +106,7 @@ ingester aws_elb_cloudstream module {
    aggregator  = "SUM"
 
    source prometheus "lb_400" {
-     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_HTTPCode_Backend_4XX_sum{LoadBalancerName='$input{LoadBalancerName}'})"
+     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_HTTPCode_Backend_4XX_sum{LoadBalancerName='$input{LoadBalancerName}', AvailabilityZone=''})"
 
      join_on = {
        "$output{LoadBalancerName}" = "$input{LoadBalancerName}"
@@ -121,7 +121,7 @@ ingester aws_elb_cloudstream module {
    aggregator  = "SUM"
 
    source prometheus "lb_500" {
-     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_HTTPCode_Backend_5XX_sum{LoadBalancerName='$input{LoadBalancerName}'})"
+     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_HTTPCode_Backend_5XX_sum{LoadBalancerName='$input{LoadBalancerName}', AvailabilityZone=''})"
 
      join_on = {
        "$output{LoadBalancerName}" = "$input{LoadBalancerName}"
@@ -136,7 +136,7 @@ ingester aws_elb_cloudstream module {
    aggregator  = "MIN"
 
    source prometheus "latency_min" {
-     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_Latency{LoadBalancerName='$input{LoadBalancerName}', quantile='0'})"
+     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_Latency{LoadBalancerName='$input{LoadBalancerName}', quantile='0', AvailabilityZone=''})"
 
      join_on = {
        "$output{LoadBalancerName}" = "$input{LoadBalancerName}"
@@ -151,7 +151,7 @@ ingester aws_elb_cloudstream module {
    aggregator  = "MAX"
 
    source prometheus "latency_max" {
-     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_Latency{LoadBalancerName='$input{LoadBalancerName}', quantile='1'})"
+     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_Latency{LoadBalancerName='$input{LoadBalancerName}', quantile='1', AvailabilityZone=''})"
 
      join_on = {
        "$output{LoadBalancerName}" = "$input{LoadBalancerName}"
@@ -166,7 +166,7 @@ ingester aws_elb_cloudstream module {
    aggregator  = "MAX"
 
    source prometheus "latency_avg" {
-     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_Latency_sum{LoadBalancerName='$input{LoadBalancerName}'}) / sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_Latency_count{LoadBalancerName='$input{LoadBalancerName}'})"
+     query = "sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_Latency_sum{LoadBalancerName='$input{LoadBalancerName}', AvailabilityZone=''}) / sum by (LoadBalancerName) (amazonaws_com_AWS_ELB_Latency_count{LoadBalancerName='$input{LoadBalancerName}', AvailabilityZone=''})"
 
      join_on = {
        "$output{LoadBalancerName}" = "$input{LoadBalancerName}"
