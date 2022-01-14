@@ -150,7 +150,7 @@ ingester aws_alb_cloudstream module {
     output_unit = "ms"
     aggregator  = "MIN"
 
-    source prometheus "lcu" {
+    source prometheus "latency_min" {
       query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', quantile='0'})"
 
       join_on = {
@@ -165,7 +165,7 @@ ingester aws_alb_cloudstream module {
     output_unit = "ms"
     aggregator  = "MAX"
 
-    source prometheus "lcu" {
+    source prometheus "latency_max" {
       query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', quantile='1'})"
 
       join_on = {
@@ -180,7 +180,7 @@ ingester aws_alb_cloudstream module {
     output_unit = "ms"
     aggregator  = "MAX"
 
-    source prometheus "lcu" {
+    source prometheus "latency_avg" {
       query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_sum{LoadBalancer='$input{LoadBalancer}'}) / sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_count{LoadBalancer='$input{LoadBalancer}'})"
 
       join_on = {
