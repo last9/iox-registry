@@ -349,7 +349,7 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "MAX"
 
     source prometheus "lcu" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+'}) / sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_count{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+'})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+'}) / sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_count{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+'})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
