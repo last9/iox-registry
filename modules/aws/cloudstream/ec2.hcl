@@ -46,7 +46,7 @@ ingester aws_ec2_cloudstream module {
     aggregator  = "AVG"
 
     source prometheus "cpu" {
-      query = "avg by (InstanceId) (amazonaws_com_AWS_EC2_CPUUtilization_sum{InstanceId='$input{InstanceId}'})"
+      query = "sum by (InstanceId) (amazonaws_com_AWS_EC2_CPUUtilization_sum{InstanceId='$input{InstanceId}'}) / sum by (InstanceId) (amazonaws_com_AWS_EC2_CPUUtilization_count{InstanceId='$input{InstanceId}'})"
 
       join_on = {
         "$output{InstanceId}" = "$input{InstanceId}"
