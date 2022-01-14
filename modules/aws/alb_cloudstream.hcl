@@ -229,7 +229,7 @@ ingester aws_alb_tg_cloudstream module {
 
   physical_address {
     type = "alb_cloudstream_target_group"
-    name = "$input{TargetGroup}"
+    name = "$output{TargetGroup}"
   }
 
   data_for_graph_node {
@@ -244,11 +244,10 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "throughput" {
-      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_RequestCount_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup='$input{TargetGroup}'})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_RequestCount_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+'})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
@@ -260,11 +259,10 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "status_200" {
-      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_2XX_Count_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup='$input{TargetGroup}'})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_2XX_Count_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+'})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
@@ -276,11 +274,10 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "status_300" {
-      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_3XX_Count_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup='$input{TargetGroup}'})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_3XX_Count_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+'})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
@@ -292,11 +289,10 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "status_400" {
-      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_4XX_Count_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup='$input{TargetGroup}'})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_4XX_Count_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+'})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
@@ -308,11 +304,10 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "status_500" {
-      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_5XX_Count_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup='$input{TargetGroup}'})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_5XX_Count_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+'})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
@@ -324,11 +319,10 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "MIN"
 
     source prometheus "lcu" {
-      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', TargetGroup='$input{TargetGroup}', quantile='0'})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+', quantile='0'})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
@@ -340,11 +334,10 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "MAX"
 
     source prometheus "lcu" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', TargetGroup='$input{TargetGroup}', quantile='1'})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+', quantile='1'})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
@@ -356,11 +349,10 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "MAX"
 
     source prometheus "lcu" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup='$input{TargetGroup}'}) / sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_count{LoadBalancer='$input{LoadBalancer}', TargetGroup='$input{TargetGroup}'})"
+      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+'}) / sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_count{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+'})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
       }
     }
   }
