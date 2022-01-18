@@ -232,11 +232,6 @@ ingester aws_alb_tg_cloudstream module {
     name = "$output{TargetGroup}"
   }
 
-  data_for_graph_node {
-    type = "alb_cloudstream_logical"
-    name = "lb: $input{LoadBalancer}"
-  }
-
   gauge "throughput" {
     index       = 1
     input_unit  = "count"
