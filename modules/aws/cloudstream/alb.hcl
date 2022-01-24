@@ -151,7 +151,7 @@ ingester aws_alb_cloudstream module {
     aggregator  = "MIN"
 
     source prometheus "latency_min" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', quantile='0'},AvailabilityZone='',TargetGroup='')"
+      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', quantile='0',AvailabilityZone='',TargetGroup=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
