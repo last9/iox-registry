@@ -46,7 +46,7 @@ ingester aws_alb_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "throughput" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_RequestCount_sum{LoadBalancer='$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
+      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_RequestCount_sum{LoadBalancer=~'$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -61,7 +61,7 @@ ingester aws_alb_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "new_connections" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_NewConnectionCount_sum{LoadBalancer='$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
+      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_NewConnectionCount_sum{LoadBalancer=~'$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -76,7 +76,7 @@ ingester aws_alb_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "rejected_connections" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_RejectedConnectionCount_sum{LoadBalancer='$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
+      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_RejectedConnectionCount_sum{LoadBalancer=~'$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -91,7 +91,7 @@ ingester aws_alb_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "processed_bytes" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_ProcessedBytes_sum{LoadBalancer='$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
+      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_ProcessedBytes_sum{LoadBalancer=~'$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -106,7 +106,7 @@ ingester aws_alb_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "lcu" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_ConsumedLCUs_sum{LoadBalancer='$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
+      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_ConsumedLCUs_sum{LoadBalancer=~'$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -121,7 +121,7 @@ ingester aws_alb_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "status_400" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_4XX_Count_sum{LoadBalancer='$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
+      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_4XX_Count_sum{LoadBalancer=~'$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -136,7 +136,7 @@ ingester aws_alb_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "status_500" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_5XX_Count_sum{LoadBalancer='$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
+      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_5XX_Count_sum{LoadBalancer=~'$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -151,7 +151,7 @@ ingester aws_alb_cloudstream module {
     aggregator  = "MIN"
 
     source prometheus "latency_min" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', quantile='0',AvailabilityZone='',TargetGroup=''})"
+      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer=~'$input{LoadBalancer}', quantile='0',AvailabilityZone='',TargetGroup=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -166,7 +166,7 @@ ingester aws_alb_cloudstream module {
     aggregator  = "MAX"
 
     source prometheus "latency_max" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', quantile='1',AvailabilityZone='',TargetGroup=''})"
+      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer=~'$input{LoadBalancer}', quantile='1',AvailabilityZone='',TargetGroup=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -181,7 +181,7 @@ ingester aws_alb_cloudstream module {
     aggregator  = "MAX"
 
     source prometheus "latency_avg" {
-      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_sum{LoadBalancer='$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''}) / sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_count{LoadBalancer='$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
+      query = "sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_sum{LoadBalancer=~'$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''}) / sum by (LoadBalancer) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_count{LoadBalancer='$input{LoadBalancer}',AvailabilityZone='',TargetGroup=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -244,7 +244,7 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "throughput" {
-      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_RequestCount_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+', AvailabilityZone=''})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_RequestCount_sum{LoadBalancer=~'$input{LoadBalancer}', TargetGroup=~'.+', AvailabilityZone=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -259,7 +259,7 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "status_200" {
-      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_2XX_Count_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+', AvailabilityZone=''})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_2XX_Count_sum{LoadBalancer=~'$input{LoadBalancer}', TargetGroup=~'.+', AvailabilityZone=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -274,7 +274,7 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "status_300" {
-      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_3XX_Count_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+', AvailabilityZone=''})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_3XX_Count_sum{LoadBalancer=~'$input{LoadBalancer}', TargetGroup=~'.+', AvailabilityZone=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -289,7 +289,7 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "status_400" {
-      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_4XX_Count_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+', AvailabilityZone=''})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_4XX_Count_sum{LoadBalancer=~'$input{LoadBalancer}', TargetGroup=~'.+', AvailabilityZone=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -304,7 +304,7 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "status_500" {
-      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_5XX_Count_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+', AvailabilityZone=''})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_HTTPCode_Target_5XX_Count_sum{LoadBalancer=~'$input{LoadBalancer}', TargetGroup=~'.+', AvailabilityZone=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -319,7 +319,7 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "MIN"
 
     source prometheus "lcu" {
-      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+', quantile='0', AvailabilityZone=''})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer=~'$input{LoadBalancer}', TargetGroup=~'.+', quantile='0', AvailabilityZone=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -334,7 +334,7 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "MAX"
 
     source prometheus "lcu" {
-      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+', quantile='1', AvailabilityZone=''})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime{LoadBalancer=~'$input{LoadBalancer}', TargetGroup=~'.+', quantile='1', AvailabilityZone=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
@@ -349,7 +349,7 @@ ingester aws_alb_tg_cloudstream module {
     aggregator  = "MAX"
 
     source prometheus "lcu" {
-      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_sum{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+', AvailabilityZone=''}) / sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_count{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+', AvailabilityZone=''})"
+      query = "sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_sum{LoadBalancer=~'$input{LoadBalancer}', TargetGroup=~'.+', AvailabilityZone=''}) / sum by (LoadBalancer, TargetGroup) (amazonaws_com_AWS_ApplicationELB_TargetResponseTime_count{LoadBalancer='$input{LoadBalancer}', TargetGroup=~'.+', AvailabilityZone=''})"
 
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
