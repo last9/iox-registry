@@ -7,14 +7,6 @@ ingester aws_alb_cloudstream module {
 
   inputs = "$input{inputs}"
 
-  // input_query = <<-EOF
-  //   label_set(
-  //     label_replace(
-  //       elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
-  //     ), "service", "$input{service}", "namespace", "$input{namespace}"
-  //   )
-  // EOF
-
   label {
     type = "service"
     name = "$input{service}"
@@ -203,14 +195,6 @@ ingester aws_alb_tg_cloudstream module {
   }
 
   inputs = "$input{inputs}"
-
-  // input_query = <<-EOF
-  //   label_set(
-  //     label_replace(
-  //       elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
-  //     ), "service", "$input{service}", "namespace", "$input{namespace}"
-  //   )
-  // EOF
 
   label {
     type = "service"
