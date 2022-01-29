@@ -1,4 +1,3 @@
-// test commit
 ingester aws_rds_logical_cloudstream module {
   frequency  = 60
   lookback   = 600
@@ -32,14 +31,6 @@ ingester aws_rds_logical_cloudstream module {
 
   inputs = "$input{inputs}"
 
-  //   input_query = <<-EOF
-  //   label_set(
-  //     label_replace(
-  //       rds_db{$input{tag_filter}}, 'id=DBInstanceIdentifier'
-  //     ), "Service", "$input{service}"
-  //   )
-  //   EOF
-
   gauge "connections" {
     index       = 1
     input_unit  = "count"
@@ -47,8 +38,7 @@ ingester aws_rds_logical_cloudstream module {
     aggregator  = "MAX"
 
     source prometheus "connections" {
-      // query = "group by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_DatabaseConnections_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'} > 0)"
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_DatabaseConnections{DBInstanceIdentifier='$input{DBInstanceIdentifier}', quantile='1'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_DatabaseConnections{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}', quantile='1'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -62,8 +52,7 @@ ingester aws_rds_logical_cloudstream module {
     aggregator  = "AVG"
 
     source prometheus "write_iops" {
-      // query = "label_set(sum by (pod) (prometheus_remote_storage_samples_pending{}), 'pod', '$input{pod}')"
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_WriteIOPS_sum{DBInstanceIdentifier='$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_WriteIOPS_count{DBInstanceIdentifier='$input{DBInstanceIdentifier}'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_WriteIOPS_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_WriteIOPS_count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -77,8 +66,7 @@ ingester aws_rds_logical_cloudstream module {
     aggregator  = "AVG"
 
     source prometheus "read_iops" {
-      // query = "label_set(sum by (pod) (prometheus_remote_storage_samples_pending{}), 'pod', '$input{pod}')"
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_ReadIOPS_sum{DBInstanceIdentifier='$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_ReadIOPS_count{DBInstanceIdentifier='$input{DBInstanceIdentifier}'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_ReadIOPS_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_ReadIOPS_count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -92,7 +80,7 @@ ingester aws_rds_logical_cloudstream module {
     aggregator  = "AVG"
 
     source prometheus "read_latency" {
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_ReadLatency_sum{DBInstanceIdentifier='$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_ReadLatency_count{DBInstanceIdentifier='$input{DBInstanceIdentifier}'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_ReadLatency_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier)  (amazonaws_com_AWS_RDS_ReadLatency_count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -106,7 +94,7 @@ ingester aws_rds_logical_cloudstream module {
     aggregator  = "AVG"
 
     source prometheus "write_latency" {
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_WriteLatency_sum{DBInstanceIdentifier='$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_WriteLatency_count{DBInstanceIdentifier='$input{DBInstanceIdentifier}'})"
+      query = "sum by (DBInstanceIdentifier)  (amazonaws_com_AWS_RDS_WriteLatency_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier)  (amazonaws_com_AWS_RDS_WriteLatency_count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -147,14 +135,6 @@ ingester aws_rds_physical_cloudstream module {
 
   inputs = "$input{inputs}"
 
-  // input_query = <<-EOF
-  // label_set(
-  //   label_replace(
-  //     rds_db{$input{tag_filter}}, 'id=DBInstanceIdentifier'
-  //   ), "Service", "$input{service}"
-  // )
-  // EOF
-
   gauge "network_in" {
     index       = 1
     input_unit  = "bps"
@@ -162,7 +142,7 @@ ingester aws_rds_physical_cloudstream module {
     aggregator  = "AVG"
 
     source prometheus "network_in" {
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_NetworkReceiveThroughput_sum{DBInstanceIdentifier='$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_NetworkReceiveThroughput_count{DBInstanceIdentifier='$input{DBInstanceIdentifier}'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_NetworkReceiveThroughput_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_NetworkReceiveThroughput_count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -176,7 +156,7 @@ ingester aws_rds_physical_cloudstream module {
     aggregator  = "AVG"
 
     source prometheus "network_out" {
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_NetworkTransmitThroughput_sum{DBInstanceIdentifier='$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_NetworkTransmitThroughput_count{DBInstanceIdentifier='$input{DBInstanceIdentifier}'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_NetworkTransmitThroughput_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_NetworkTransmitThroughput_count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -190,7 +170,7 @@ ingester aws_rds_physical_cloudstream module {
     aggregator  = "AVG"
 
     source prometheus "cpu" {
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_CPUUtilization_sum{DBInstanceIdentifier='$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_CPUUtilization_count{DBInstanceIdentifier='$input{DBInstanceIdentifier}'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_CPUUtilization_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_CPUUtilization_count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -204,7 +184,7 @@ ingester aws_rds_physical_cloudstream module {
     aggregator  = "MIN"
 
     source prometheus "free_space" {
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_FreeStorageSpace{DBInstanceIdentifier='$input{DBInstanceIdentifier}', quantile='0'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_FreeStorageSpace{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}', quantile='0'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -218,7 +198,7 @@ ingester aws_rds_physical_cloudstream module {
     aggregator  = "MAX"
 
     source prometheus "replica_lag" {
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_ReplicaLag{DBInstanceIdentifier='$input{DBInstanceIdentifier}', quantile='1'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_ReplicaLag{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}', quantile='1'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -232,7 +212,7 @@ ingester aws_rds_physical_cloudstream module {
     aggregator  = "MAX"
 
     source prometheus "replica_lag" {
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_DiskQueueDepth{DBInstanceIdentifier='$input{DBInstanceIdentifier}', quantile='1'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_DiskQueueDepth{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}', quantile='1'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
