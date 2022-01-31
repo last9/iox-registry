@@ -74,7 +74,7 @@ ingester aws_rds_logical_cloudstream module {
   }
 
   gauge "burst_balance" {
-    index       = 7
+    index       = 14
     input_unit  = "percentage"
     output_unit = "percentage"
     aggregator  = "MIN"
@@ -130,7 +130,7 @@ ingester aws_rds_logical_cloudstream module {
   }
 
   gauge "cpu_balance" {
-    index       = 8
+    index       = 13
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MIN"
