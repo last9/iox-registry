@@ -46,6 +46,21 @@ ingester aws_ec2_cloudstream module {
     }
   }
 
+  gauge "cpu_credit_balance" {
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MIN"
+
+    source prometheus "cpu_balance" {
+      query = "sum by (InstanceId) (amazonaws_com_AWS_EC2_CPUCreditBalance{InstanceId=~'$input{InstanceId}', quantile='0'})"
+
+      join_on = {
+        "$output{InstanceId}" = "$input{InstanceId}"
+      }
+    }
+  }
+
   gauge "network_in" {
     index       = 5
     input_unit  = "bytes"
@@ -91,23 +106,8 @@ ingester aws_ec2_cloudstream module {
     }
   }
 
-  gauge "cpu_credit_balance" {
-    index       = 2
-    input_unit  = "count"
-    output_unit = "count"
-    aggregator  = "MIN"
-
-    source prometheus "cpu_balance" {
-      query = "sum by (InstanceId) (amazonaws_com_AWS_EC2_CPUCreditBalance{InstanceId=~'$input{InstanceId}', quantile='0'})"
-
-      join_on = {
-        "$output{InstanceId}" = "$input{InstanceId}"
-      }
-    }
-  }
-
   gauge "ebs_io_balance" {
-    index       = 3
+    index       = 8
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MIN"
@@ -122,7 +122,7 @@ ingester aws_ec2_cloudstream module {
   }
 
   gauge "ebs_byte_balance" {
-    index       = 3
+    index       = 9
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MIN"
@@ -137,7 +137,7 @@ ingester aws_ec2_cloudstream module {
   }
 
   gauge "cpu_surplus_credits_charged" {
-    index       = 3
+    index       = 11
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
