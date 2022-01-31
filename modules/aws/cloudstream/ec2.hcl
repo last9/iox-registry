@@ -31,6 +31,66 @@ ingester aws_ec2_cloudstream module {
     name = "$input{InstanceId}"
   }
 
+  gauge "cpu" {
+    index       = 1
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
+
+    source prometheus "cpu" {
+      query = "sum by (InstanceId) (amazonaws_com_AWS_EC2_CPUUtilization_sum{InstanceId=~'$input{InstanceId}'}) / sum by (InstanceId) (amazonaws_com_AWS_EC2_CPUUtilization_count{InstanceId=~'$input{InstanceId}'})"
+
+      join_on = {
+        "$output{InstanceId}" = "$input{InstanceId}"
+      }
+    }
+  }
+
+  gauge "network_in" {
+    index       = 5
+    input_unit  = "bytes"
+    output_unit = "Bps"
+    aggregator  = "SUM"
+
+    source prometheus "network_in" {
+      query = "sum by (InstanceId) (amazonaws_com_AWS_EC2_NetworkIn_sum{InstanceId=~'$input{InstanceId}'})"
+
+      join_on = {
+        "$output{InstanceId}" = "$input{InstanceId}"
+      }
+    }
+  }
+
+  gauge "network_out" {
+    index       = 6
+    input_unit  = "bytes"
+    output_unit = "Bps"
+    aggregator  = "SUM"
+
+    source prometheus "network_out" {
+      query = "sum by (InstanceId) (amazonaws_com_AWS_EC2_NetworkOut_sum{InstanceId=~'$input{InstanceId}'})"
+
+      join_on = {
+        "$output{InstanceId}" = "$input{InstanceId}"
+      }
+    }
+  }
+
+  gauge "status_check_failed" {
+    index       = 7
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+
+    source prometheus "status_check_failed" {
+      query = "sum by (InstanceId) (amazonaws_com_AWS_EC2_StatusCheckFailed_sum{InstanceId=~'$input{InstanceId}'})"
+
+      join_on = {
+        "$output{InstanceId}" = "$input{InstanceId}"
+      }
+    }
+  }
+
   gauge "cpu_credit_balance" {
     index       = 2
     input_unit  = "count"
@@ -45,7 +105,6 @@ ingester aws_ec2_cloudstream module {
       }
     }
   }
-
 
   gauge "ebs_io_balance" {
     index       = 3
