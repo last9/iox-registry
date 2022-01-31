@@ -113,7 +113,7 @@ ingester aws_ec2_cloudstream module {
     aggregator  = "MIN"
 
     source prometheus "ebs_io_balance" {
-      query = "sum by (InstanceId) (amazonaws_com_AWS_EC2_EBSIOBalance_{InstanceId=~'$input{InstanceId}'})"
+      query = "sum by (InstanceId) (amazonaws_com_AWS_EC2_EBSIOBalance_{InstanceId=~'$input{InstanceId}', quantile='0'})"
 
       join_on = {
         "$output{InstanceId}" = "$input{InstanceId}"
@@ -128,7 +128,7 @@ ingester aws_ec2_cloudstream module {
     aggregator  = "MIN"
 
     source prometheus "ebs_byte_balance" {
-      query = "sum by (InstanceId) (amazonaws_com_AWS_EC2_EBSByteBalance_{InstanceId=~'$input{InstanceId}'})"
+      query = "sum by (InstanceId) (amazonaws_com_AWS_EC2_EBSByteBalance_{InstanceId=~'$input{InstanceId}', quantile='0'})"
 
       join_on = {
         "$output{InstanceId}" = "$input{InstanceId}"
@@ -140,10 +140,10 @@ ingester aws_ec2_cloudstream module {
     index       = 3
     input_unit  = "count"
     output_unit = "count"
-    aggregator  = "MIN"
+    aggregator  = "SUM"
 
     source prometheus "cpu_surplus_credits_charged" {
-      query = "sum by (InstanceId) (amazonaws_com_AWS_EC2_CPUSurplusCreditsCharged{InstanceId=~'$input{InstanceId}'})"
+      query = "sum by (InstanceId) (amazonaws_com_AWS_EC2_CPUSurplusCreditsCharged_sum{InstanceId=~'$input{InstanceId}'})"
 
       join_on = {
         "$output{InstanceId}" = "$input{InstanceId}"
