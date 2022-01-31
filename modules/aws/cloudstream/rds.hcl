@@ -52,7 +52,7 @@ ingester aws_rds_logical_cloudstream module {
     aggregator  = "AVG"
 
     source prometheus "ebs_io_balance" {
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_EBSIOBalance%_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_EBSIOBalance%_count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_EBSIOBalance__sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_EBSIOBalance__count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -66,7 +66,7 @@ ingester aws_rds_logical_cloudstream module {
     aggregator  = "AVG"
 
     source prometheus "ebs_byte_balance" {
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_EBSByteBalance%_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_EBSByteBalance%_count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_EBSByteBalance__sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_EBSByteBalance__count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
