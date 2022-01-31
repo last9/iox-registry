@@ -49,10 +49,10 @@ ingester aws_rds_logical_cloudstream module {
     index       = 6
     input_unit  = "percentage"
     output_unit = "percentage"
-    aggregator  = "AVG"
+    aggregator  = "MIN"
 
     source prometheus "ebs_io_balance" {
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_EBSIOBalance__sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_EBSIOBalance__count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_EBSIOBalance_{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}', quantile='0'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -63,10 +63,10 @@ ingester aws_rds_logical_cloudstream module {
     index       = 7
     input_unit  = "percentage"
     output_unit = "percentage"
-    aggregator  = "AVG"
+    aggregator  = "MIN"
 
     source prometheus "ebs_byte_balance" {
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_EBSByteBalance__sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_EBSByteBalance__count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_EBSByteBalance_{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}', quantile='0'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -77,10 +77,10 @@ ingester aws_rds_logical_cloudstream module {
     index       = 7
     input_unit  = "percentage"
     output_unit = "percentage"
-    aggregator  = "AVG"
+    aggregator  = "MIN"
 
     source prometheus "burst_balance" {
-      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_BurstBalance_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_BurstBalance_count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_BurstBalance{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}', quantile='0'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
@@ -123,6 +123,20 @@ ingester aws_rds_logical_cloudstream module {
 
     source prometheus "cpu" {
       query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_CPUUtilization_sum{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'}) / sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_CPUUtilization_count{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}'})"
+      join_on = {
+        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
+      }
+    }
+  }
+
+  gauge "cpu_balance" {
+    index       = 8
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MIN"
+
+    source prometheus "cpu_balance" {
+      query = "sum by (DBInstanceIdentifier) (amazonaws_com_AWS_RDS_CPUCreditBalance{DBInstanceIdentifier=~'$input{DBInstanceIdentifier}', quantile='0'})"
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
       }
