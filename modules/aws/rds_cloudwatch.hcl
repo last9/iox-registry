@@ -67,8 +67,7 @@ ingester aws_rds_logical_cloudwatch module {
       query {
         aggregator  = "Minimum"
         namespace   = "AWS/RDS"
-        // Add placeholder name for EBSIOBalance% till iox supports %
-        metric_name = "EBSIOBalance"
+        metric_name = "EBSIOBalance%"
 
         dimensions = {
           "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
@@ -87,8 +86,7 @@ ingester aws_rds_logical_cloudwatch module {
       query {
         aggregator  = "Minimum"
         namespace   = "AWS/RDS"
-        // Add placeholder name for EBSByteBalance% till iox supports %
-        metric_name = "EBSByteBalance"
+        metric_name = "EBSByteBalance%"
 
         dimensions = {
           "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
