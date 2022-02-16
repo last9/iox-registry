@@ -24,7 +24,7 @@ ingester prometheus_linkerd_path module {
 
   data_for_graph_node {
     type = "linkerd_path"
-    name = "$output{rt_route} $input{cluster}-$output{service}"
+    name = "$output{rt_route} $input{cluster}"
   }
 
   using = {

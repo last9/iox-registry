@@ -29,7 +29,7 @@ ingester prometheus_linkerd_workload module {
 
   data_for_graph_node {
     type = "linkerd_deployment"
-    name = "$input{cluster}-$output{deployment}"
+    name = "$output{deployment}-$input{cluster}"
   }
 
   using = {
