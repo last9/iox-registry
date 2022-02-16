@@ -9,12 +9,12 @@ ingester prometheus_linkerd_workload module {
 
   label {
     type = "service"
-    name = "$input{prefix}$output{service}"
+    name = "$output{service}"
   }
 
   label {
     type = "namespace"
-    name = "$input{prefix}$output{workload_ns}"
+    name = "$input{cluster}.$output{workload_ns}"
   }
 
   physical_address {
@@ -29,7 +29,7 @@ ingester prometheus_linkerd_workload module {
 
   data_for_graph_node {
     type = "linkerd_deployment"
-    name = "$input{prefix}$output{deployment}"
+    name = "$output{deployment}-$input{cluster}"
   }
 
   using = {
@@ -143,12 +143,12 @@ ingester prometheus_linkerd_k8s_pod module {
 
   label {
     type = "service"
-    name = "$input{prefix}$output{service}"
+    name = "$output{service}"
   }
 
   label {
     type = "namespace"
-    name = "$input{prefix}$output{workload_ns}"
+    name = "$input{cluster}.$output{workload_ns}"
   }
 
   physical_address {
