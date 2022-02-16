@@ -9,12 +9,12 @@ ingester prometheus_linkerd_path module {
 
   label {
     type = "service"
-    name = "$input{prefix}$output{service}"
+    name = "$output{service}"
   }
 
   label {
     type = "namespace"
-    name = "$input{prefix}$output{workload_ns}"
+    name = "$input{cluster}.$output{workload_ns}"
   }
 
   physical_component {
@@ -24,7 +24,7 @@ ingester prometheus_linkerd_path module {
 
   data_for_graph_node {
     type = "linkerd_path"
-    name = "$output{rt_route} $input{prefix}$output{service}"
+    name = "$output{rt_route} $input{cluster}-$output{service}"
   }
 
   using = {
