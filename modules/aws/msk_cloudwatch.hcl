@@ -29,7 +29,7 @@ ingester aws_msk_topic_per_broker_cloudwatch module {
 
   data_for_graph_node {
     type = "aws_msk_topic_per_broker"
-    name = "${coalesce_on_interpolation(\"$input{Topic} $input{custom_tag}\",\"$input{Topic}\")}"
+    name = "coalesce_on_interpolation(\"$input{Topic} $input{custom_tag}\",\"$input{Topic}\")"
   }
 
   using = {
