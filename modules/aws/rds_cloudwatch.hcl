@@ -57,43 +57,43 @@ ingester aws_rds_logical_cloudwatch module {
     }
   }
 
-  gauge "ebs_io_balance" {
-    index       = 6
-    input_unit  = "percentage"
-    output_unit = "percentage"
-    aggregator  = "MIN"
+  //   gauge "ebs_io_balance" {
+  //     index       = 6
+  //     input_unit  = "percentage"
+  //     output_unit = "percentage"
+  //     aggregator  = "MIN"
 
-    source cloudwatch "ebs_io_balance" {
-      query {
-        aggregator  = "Minimum"
-        namespace   = "AWS/RDS"
-        metric_name = "EBSIOBalance%"
+  //     source cloudwatch "ebs_io_balance" {
+  //       query {
+  //         aggregator  = "Minimum"
+  //         namespace   = "AWS/RDS"
+  //         metric_name = "EBSIOBalance%"
 
-        dimensions = {
-          "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-        }
-      }
-    }
-  }
+  //         dimensions = {
+  //           "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
+  //         }
+  //       }
+  //     }
+  //   }
 
-  gauge "ebs_byte_balance" {
-    index       = 7
-    input_unit  = "percentage"
-    output_unit = "percentage"
-    aggregator  = "MIN"
+  //   gauge "ebs_byte_balance" {
+  //     index       = 7
+  //     input_unit  = "percentage"
+  //     output_unit = "percentage"
+  //     aggregator  = "MIN"
 
-    source cloudwatch "ebs_byte_balance" {
-      query {
-        aggregator  = "Minimum"
-        namespace   = "AWS/RDS"
-        metric_name = "EBSByteBalance%"
+  //     source cloudwatch "ebs_byte_balance" {
+  //       query {
+  //         aggregator  = "Minimum"
+  //         namespace   = "AWS/RDS"
+  //         metric_name = "EBSByteBalance%"
 
-        dimensions = {
-          "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
-        }
-      }
-    }
-  }
+  //         dimensions = {
+  //           "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
+  //         }
+  //       }
+  //     }
+  //   }
 
   gauge "burst_balance" {
     index       = 14
