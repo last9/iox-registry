@@ -45,7 +45,7 @@ ingester aws_dax_cloudwatch module {
       query = "sum by (ClusterId, NodeId, tag_namespace, tag_service) (throughput)"
       join_on = {
         "$output{ClusterId}" = "$input{ClusterId}"
-        "$output{NodeId}" = "$input{NodeId}"
+        "$output{NodeId}"    = "$input{NodeId}"
       }
     }
   }
@@ -58,7 +58,7 @@ ingester aws_dax_cloudwatch module {
       query = "sum by (ClusterId, NodeId, tag_namespace, tag_service) (errored)"
       join_on = {
         "$output{ClusterId}" = "$input{ClusterId}"
-        "$output{NodeId}" = "$input{NodeId}"
+        "$output{NodeId}"    = "$input{NodeId}"
       }
     }
   }
@@ -71,7 +71,7 @@ ingester aws_dax_cloudwatch module {
       query = "sum by (ClusterId, NodeId, tag_namespace, tag_service) (throttled)"
       join_on = {
         "$output{ClusterId}" = "$input{ClusterId}"
-        "$output{NodeId}" = "$input{NodeId}"
+        "$output{NodeId}"    = "$input{NodeId}"
       }
     }
   }
@@ -84,7 +84,7 @@ ingester aws_dax_cloudwatch module {
       query = "max by (ClusterId, NodeId, tag_namespace, tag_service) (connections)"
       join_on = {
         "$output{ClusterId}" = "$input{ClusterId}"
-        "$output{NodeId}" = "$input{NodeId}"
+        "$output{NodeId}"    = "$input{NodeId}"
       }
     }
   }
@@ -97,7 +97,7 @@ ingester aws_dax_cloudwatch module {
       query = "sum by (ClusterId, NodeId, tag_namespace, tag_service) (query_miss)"
       join_on = {
         "$output{ClusterId}" = "$input{ClusterId}"
-        "$output{NodeId}" = "$input{NodeId}"
+        "$output{NodeId}"    = "$input{NodeId}"
       }
     }
   }
@@ -110,7 +110,7 @@ ingester aws_dax_cloudwatch module {
       query = "sum by (ClusterId, NodeId, tag_namespace, tag_service) (cache_memory)"
       join_on = {
         "$output{ClusterId}" = "$input{ClusterId}"
-        "$output{NodeId}" = "$input{NodeId}"
+        "$output{NodeId}"    = "$input{NodeId}"
       }
     }
   }
@@ -123,7 +123,7 @@ ingester aws_dax_cloudwatch module {
       query = "sum by (ClusterId, NodeId, tag_namespace, tag_service) (cpu)"
       join_on = {
         "$output{ClusterId}" = "$input{ClusterId}"
-        "$output{NodeId}" = "$input{NodeId}"
+        "$output{NodeId}"    = "$input{NodeId}"
       }
     }
   }

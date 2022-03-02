@@ -40,7 +40,7 @@ ingester aws_cloudfront_cloudwatch module {
       query = "sum by (DistributionId, Region, tag_domain, tag_service) (status_5xx)"
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}" = "$input{Region}"
+        "$output{Region}"         = "$input{Region}"
       }
     }
   }
@@ -53,7 +53,7 @@ ingester aws_cloudfront_cloudwatch module {
       query = "sum by (DistributionId, Region, tag_domain, tag_service) (status_4xx)"
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}" = "$input{Region}"
+        "$output{Region}"         = "$input{Region}"
       }
     }
   }
@@ -66,7 +66,7 @@ ingester aws_cloudfront_cloudwatch module {
       query = "sum by (DistributionId, Region, tag_domain, tag_service) (bytes_out)"
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}" = "$input{Region}"
+        "$output{Region}"         = "$input{Region}"
       }
     }
   }
@@ -79,7 +79,7 @@ ingester aws_cloudfront_cloudwatch module {
       query = "sum by (DistributionId, Region, tag_domain, tag_service) (bytes_in)"
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}" = "$input{Region}"
+        "$output{Region}"         = "$input{Region}"
       }
     }
   }
@@ -92,7 +92,7 @@ ingester aws_cloudfront_cloudwatch module {
       query = "sum by (DistributionId, Region, tag_domain, tag_service) (throughput)"
       join_on = {
         "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}" = "$input{Region}"
+        "$output{Region}"         = "$input{Region}"
       }
     }
   }

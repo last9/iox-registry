@@ -40,7 +40,7 @@ ingester aws_elasticsearch_cloudwatch module {
       query = "min by (DomainName, ClientId, tag_namespace, tag_service) (nodes)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -54,7 +54,7 @@ ingester aws_elasticsearch_cloudwatch module {
       query = "min by (DomainName, ClientId, tag_namespace, tag_service) (kibana_healthy_nodes)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -68,7 +68,7 @@ ingester aws_elasticsearch_cloudwatch module {
       query = "max by (DomainName, ClientId, tag_namespace, tag_service) (cluster_yellow)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -82,7 +82,7 @@ ingester aws_elasticsearch_cloudwatch module {
       query = "max by (DomainName, ClientId, tag_namespace, tag_service) (cluster_red)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -96,7 +96,7 @@ ingester aws_elasticsearch_cloudwatch module {
       query = "sum by (DomainName, ClientId, tag_namespace, tag_service) (throughput)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -110,7 +110,7 @@ ingester aws_elasticsearch_cloudwatch module {
       query = "sum by (DomainName, ClientId, tag_namespace, tag_service) (status_4xx)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -125,7 +125,7 @@ ingester aws_elasticsearch_cloudwatch module {
       query = "sum by (DomainName, ClientId, tag_namespace, tag_service) (status_5xx)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -139,7 +139,7 @@ ingester aws_elasticsearch_cloudwatch module {
       query = "avg by (DomainName, ClientId, tag_namespace, tag_service) (cpu)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -154,7 +154,7 @@ ingester aws_elasticsearch_cloudwatch module {
       query = "min by (DomainName, ClientId, tag_namespace, tag_service) (free_space)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -168,7 +168,7 @@ ingester aws_elasticsearch_cloudwatch module {
       query = "avg by (DomainName, ClientId, tag_namespace, tag_service) (jvm_memory_pressure)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -182,7 +182,7 @@ ingester aws_elasticsearch_cloudwatch module {
       query = "max by (DomainName, ClientId, tag_namespace, tag_service) (writes_blocked)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -196,7 +196,7 @@ ingester aws_elasticsearch_cloudwatch module {
       query = "max by (DomainName, ClientId, tag_namespace, tag_service) (snapshot_failure)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -210,7 +210,7 @@ ingester aws_elasticsearch_cloudwatch module {
       query = "min by (DomainName, ClientId, tag_namespace, tag_service) (master_reachable)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -266,7 +266,7 @@ ingester aws_elasticsearch_master_cloudwatch module {
       query = "min by (DomainName, ClientId, tag_namespace, tag_service) (master_reachable)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -280,7 +280,7 @@ ingester aws_elasticsearch_master_cloudwatch module {
       query = "avg by (DomainName, ClientId, tag_namespace, tag_service) (cpu)"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
@@ -294,7 +294,7 @@ ingester aws_elasticsearch_master_cloudwatch module {
       query = "avg by (DomainName, ClientId, tag_namespace, tag_service) (jvm_memory_pressure))"
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
-        "$output{ClientId}" = "$input{ClientId}"
+        "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }

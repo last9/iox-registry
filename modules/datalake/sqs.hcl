@@ -99,7 +99,7 @@ ingester aws_sqs_cloudwatch module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
- 
+
     source prometheus "delayed" {
       query = "sum by (QueueName, tag_service) (delayed)"
       join_on = {

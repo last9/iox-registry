@@ -559,7 +559,7 @@ ingester aws_elb_cloudwatch module {
 //         "$output{LoadBalancerName}" = "$input{LoadBalancerName}"
 //       }
 //     }
-    
+
 //   latency "latency_histo" {
 //     index        = 6
 //     input_unit   = "ms"
