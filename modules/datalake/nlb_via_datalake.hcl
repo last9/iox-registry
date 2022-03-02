@@ -7,14 +7,6 @@ ingester aws_nlb_cloudwatch module {
 
   inputs = "$input{inputs}"
 
-  input_query = <<-EOF
-  label_set(
-    label_replace(
-      elasticloadbalancing_loadbalancer{id=~"^net/.*",$input{tag_filter}}, 'id=LoadBalancer'
-    ), "service", "$input{service}", "namespace", "$input{namespace}"
-  )
-  EOF
-
   label {
     type = "service"
     name = "$input{tag_service}"
