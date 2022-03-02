@@ -45,8 +45,8 @@ ingester aws_msk_topic_per_broker_datalake module {
       query = "sum by (ClusterName, BrokerID, Topic, tag_service, tag_namespace) (bytes_in)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
-        "$output{Topic}" = "$input{Topic}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
+        "$output{Topic}"       = "$input{Topic}"
       }
     }
   }
@@ -59,8 +59,8 @@ ingester aws_msk_topic_per_broker_datalake module {
       query = "sum by (ClusterName, BrokerID, Topic, tag_service, tag_namespace) (bytes_out)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
-        "$output{Topic}" = "$input{Topic}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
+        "$output{Topic}"       = "$input{Topic}"
       }
     }
   }
@@ -73,8 +73,8 @@ ingester aws_msk_topic_per_broker_datalake module {
       query = "avg by (ClusterName, BrokerID, Topic, tag_service, tag_namespace) (messages_in)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
-        "$output{Topic}" = "$input{Topic}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
+        "$output{Topic}"       = "$input{Topic}"
       }
     }
   }
@@ -87,8 +87,8 @@ ingester aws_msk_topic_per_broker_datalake module {
       query = "avg by (ClusterName, BrokerID, Topic, tag_service, tag_namespace) (fetch_msg_conversions)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
-        "$output{Topic}" = "$input{Topic}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
+        "$output{Topic}"       = "$input{Topic}"
       }
     }
   }
@@ -101,8 +101,8 @@ ingester aws_msk_topic_per_broker_datalake module {
       query = "avg by (ClusterName, BrokerID, Topic, tag_service, tag_namespace) (produce_msg_conversions)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
-        "$output{Topic}" = "$input{Topic}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
+        "$output{Topic}"       = "$input{Topic}"
       }
     }
   }
@@ -156,7 +156,7 @@ ingester aws_msk_topic_per_consumer_grp_datalake module {
       query = "max by (ConsumerGroup, Topic, tag_service, tag_namespace) (offset_lag)"
       join_on = {
         "$output{ConsumerGroup}" = "$input{ConsumerGroup}"
-        "$output{Topic}" = "$input{Topic}"
+        "$output{Topic}"         = "$input{Topic}"
       }
     }
   }
@@ -218,10 +218,10 @@ ingester aws_msk_partition_datalake module {
     source prometheus "offset_lag" {
       query = "max by (ClusterName, ConsumerGroup, Partition, Topic, tag_service, tag_namespace) (offset_lag)"
       join_on = {
-        "$output{ClusterName}" = "$input{ClusterName}"
+        "$output{ClusterName}"   = "$input{ClusterName}"
         "$output{ConsumerGroup}" = "$input{ConsumerGroup}"
-        "$output{Partition}" = "$input{Partition}"
-        "$output{Topic}" = "$input{Topic}"
+        "$output{Partition}"     = "$input{Partition}"
+        "$output{Topic}"         = "$input{Topic}"
       }
     }
   }
@@ -235,10 +235,10 @@ ingester aws_msk_partition_datalake module {
     source prometheus "time_lag" {
       query = "max by (ClusterName, ConsumerGroup, Partition, Topic, tag_service, tag_namespace) (time_lag)"
       join_on = {
-        "$output{ClusterName}" = "$input{ClusterName}"
+        "$output{ClusterName}"   = "$input{ClusterName}"
         "$output{ConsumerGroup}" = "$input{ConsumerGroup}"
-        "$output{Partition}" = "$input{Partition}"
-        "$output{Topic}" = "$input{Topic}"
+        "$output{Partition}"     = "$input{Partition}"
+        "$output{Topic}"         = "$input{Topic}"
       }
     }
   }
@@ -353,7 +353,7 @@ ingester aws_msk_broker_datalake module {
       query = "min by (ClusterName, BrokerID, tag_service, tag_namespace) (mem_free)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
       }
     }
   }
@@ -367,7 +367,7 @@ ingester aws_msk_broker_datalake module {
       query = "avg by (ClusterName, BrokerID, tag_service, tag_namespace) (messages_in)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
       }
     }
   }
@@ -381,7 +381,7 @@ ingester aws_msk_broker_datalake module {
       query = "min by (ClusterName, BrokerID, tag_service, tag_namespace) (partition_count)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
       }
     }
   }
@@ -395,7 +395,7 @@ ingester aws_msk_broker_datalake module {
       query = "avg by (ClusterName, BrokerID, tag_service, tag_namespace) (produce_time_ms_mean)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
       }
     }
   }
@@ -409,7 +409,7 @@ ingester aws_msk_broker_datalake module {
       query = "sum by (ClusterName, BrokerID, tag_service, tag_namespace) (request_bytes_mean)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
       }
     }
   }
@@ -423,7 +423,7 @@ ingester aws_msk_broker_datalake module {
       query = "avg by (ClusterName, BrokerID, tag_service, tag_namespace) (request_time)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
       }
     }
   }
@@ -437,7 +437,7 @@ ingester aws_msk_broker_datalake module {
       query = "avg by (ClusterName, BrokerID, tag_service, tag_namespace) (produce_msg_conversions)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
       }
     }
   }
@@ -451,7 +451,7 @@ ingester aws_msk_broker_datalake module {
       query = "avg by (ClusterName, BrokerID, tag_service, tag_namespace) (fetch_msg_conversions)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
       }
     }
   }
@@ -465,7 +465,7 @@ ingester aws_msk_broker_datalake module {
       query = "avg by (ClusterName, BrokerID, tag_service, tag_namespace) (fetch_time_ms_mean)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
       }
     }
   }
@@ -479,7 +479,7 @@ ingester aws_msk_broker_datalake module {
       query = "max by (ClusterName, BrokerID, tag_service, tag_namespace) (root_disk_used)"
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{BrokerID}" = "$input{BrokerID}"
+        "$output{BrokerID}"    = "$input{BrokerID}"
       }
     }
   }
