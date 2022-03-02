@@ -52,7 +52,7 @@ ingester aws_nlb_cloudwatch module {
     aggregator  = "SUM"
 
     source prometheus "new_connections" {
-      query = "max by (LoadBalancer, tag_namespace, tag_service) (new_connections)"
+      query = "sum by (LoadBalancer, tag_namespace, tag_service) (new_connections)"
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
       }
@@ -79,7 +79,7 @@ ingester aws_nlb_cloudwatch module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "processed_bytes" {
-      query = "max by (LoadBalancer, tag_namespace, tag_service) (processed_bytes)"
+      query = "sum by (LoadBalancer, tag_namespace, tag_service) (processed_bytes)"
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
       }
@@ -92,7 +92,7 @@ ingester aws_nlb_cloudwatch module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "consumed_lcus" {
-      query = "max by (LoadBalancer, tag_namespace, tag_service) (consumed_lcus)"
+      query = "sum by (LoadBalancer, tag_namespace, tag_service) (consumed_lcus)"
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
       }
@@ -105,7 +105,7 @@ ingester aws_nlb_cloudwatch module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "tcp_client_reset_count" {
-      query = "max by (LoadBalancer, tag_namespace, tag_service) (tcp_client_reset_count)"
+      query = "sum by (LoadBalancer, tag_namespace, tag_service) (tcp_client_reset_count)"
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
       }
@@ -118,7 +118,7 @@ ingester aws_nlb_cloudwatch module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "tcp_elb_reset_count" {
-      query = "max by (LoadBalancer, tag_namespace, tag_service) (tcp_elb_reset_count)"
+      query = "sum by (LoadBalancer, tag_namespace, tag_service) (tcp_elb_reset_count)"
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
       }
@@ -131,7 +131,7 @@ ingester aws_nlb_cloudwatch module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "tcp_target_reset_count" {
-      query = "max by (LoadBalancer, tag_namespace, tag_service) (tcp_target_reset_count)"
+      query = "sum by (LoadBalancer, tag_namespace, tag_service) (tcp_target_reset_count)"
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
       }
@@ -144,7 +144,7 @@ ingester aws_nlb_cloudwatch module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "target_tls_error" {
-      query = "max by (LoadBalancer, tag_namespace, tag_service) (target_tls_error)"
+      query = "sum by (LoadBalancer, tag_namespace, tag_service) (target_tls_error)"
       join_on = {
         "$output{LoadBalancer}" = "$input{LoadBalancer}"
       }

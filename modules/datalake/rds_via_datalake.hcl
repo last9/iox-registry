@@ -67,7 +67,7 @@ ingester rds_via_datalake module {
     aggregator  = "SUM"
 
     source prometheus "write_iops" {
-      query = "avg by (DBInstanceIdentifier, tag_namespace, tag_service) (write_iops)"
+      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (write_iops)"
 
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
@@ -82,7 +82,7 @@ ingester rds_via_datalake module {
     aggregator  = "SUM"
 
     source prometheus "write_iops" {
-      query = "avg by (DBInstanceIdentifier, tag_namespace, tag_service) (write_iops)"
+      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (write_iops)"
 
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
@@ -97,7 +97,7 @@ ingester rds_via_datalake module {
     aggregator  = "SUM"
 
     source prometheus "write_iops" {
-      query = "avg by (DBInstanceIdentifier, tag_namespace, tag_service) (read_latency)"
+      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (read_latency)"
 
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
@@ -112,7 +112,7 @@ ingester rds_via_datalake module {
     aggregator  = "SUM"
 
     source prometheus "write_iops" {
-      query = "avg by (DBInstanceIdentifier, tag_namespace, tag_service) (write_latency)"
+      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (write_latency)"
 
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
@@ -127,7 +127,7 @@ ingester rds_via_datalake module {
     aggregator  = "SUM"
 
     source prometheus "write_iops" {
-      query = "avg by (DBInstanceIdentifier, tag_namespace, tag_service) (network_in)"
+      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (network_in)"
 
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
@@ -142,7 +142,7 @@ ingester rds_via_datalake module {
     aggregator  = "SUM"
 
     source prometheus "write_iops" {
-      query = "avg by (DBInstanceIdentifier, tag_namespace, tag_service) (network_out)"
+      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (network_out)"
 
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
@@ -157,7 +157,7 @@ ingester rds_via_datalake module {
     aggregator  = "SUM"
 
     source prometheus "write_iops" {
-      query = "min (DBInstanceIdentifier, tag_namespace, tag_service) (free_space)"
+      query = "sum (DBInstanceIdentifier, tag_namespace, tag_service) (free_space)"
 
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
@@ -172,7 +172,7 @@ ingester rds_via_datalake module {
     aggregator  = "SUM"
 
     source prometheus "write_iops" {
-      query = "max (DBInstanceIdentifier, tag_namespace, tag_service) (replica_lag)"
+      query = "sum (DBInstanceIdentifier, tag_namespace, tag_service) (replica_lag)"
 
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
@@ -187,7 +187,7 @@ ingester rds_via_datalake module {
     aggregator  = "SUM"
 
     source prometheus "write_iops" {
-      query = "max (DBInstanceIdentifier, tag_namespace, tag_service) (queue_depth)"
+      query = "sum (DBInstanceIdentifier, tag_namespace, tag_service) (queue_depth)"
 
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
@@ -202,7 +202,7 @@ ingester rds_via_datalake module {
     aggregator  = "SUM"
 
     source prometheus "write_iops" {
-      query = "max (DBInstanceIdentifier, tag_namespace, tag_service) (queue_depth)"
+      query = "sum (DBInstanceIdentifier, tag_namespace, tag_service) (queue_depth)"
 
       join_on = {
         "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
