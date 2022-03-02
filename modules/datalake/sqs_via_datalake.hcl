@@ -7,7 +7,7 @@ ingester aws_sqs_cloudwatch module {
 
   label {
     type = "service"
-    name = "$input{tag_service}"
+    name = "$output{tag_service}"
   }
 
   physical_component {

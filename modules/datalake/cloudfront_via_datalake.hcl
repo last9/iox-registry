@@ -13,12 +13,12 @@ ingester aws_cloudfront_cloudwatch module {
 
   label {
     type = "service"
-    name = "$input{tag_service}"
+    name = "$output{tag_service}"
   }
 
   label {
     type = "namespace"
-    name = "$input{tag_domain}"
+    name = "$output{domain}"
   }
 
   physical_component {

@@ -7,12 +7,12 @@ ingester aws_aurora_instance_logical_cloudwatch module {
 
   label {
     type = "service"
-    name = "$input{tag_service}"
+    name = "$output{tag_service}"
   }
 
   label {
     type = "namespace"
-    name = "$input{tag_namespace}"
+    name = "$output{tag_namespace}"
   }
 
   physical_component {
@@ -182,12 +182,12 @@ ingester aws_aurora_instance_physical_cloudwatch module {
 
   label {
     type = "service"
-    name = "$input{tag_service}"
+    name = "$output{tag_service}"
   }
 
   label {
     type = "namespace"
-    name = "$input{tag_namespace}"
+    name = "$output{tag_namespace}"
   }
 
   physical_component {
