@@ -114,7 +114,7 @@ ingester aws_sqs_cloudwatch module {
     output_unit = "s"
     aggregator  = "MAX"
     source prometheus "oldest" {
-      query = "sum by (QueueName, tag_service) (oldest)"
+      query = "max by (QueueName, tag_service) (oldest)"
       join_on = {
         "$output{QueueName}" = "$input{QueueName}"
       }
