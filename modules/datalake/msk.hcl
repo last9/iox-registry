@@ -1,4 +1,4 @@
-ingester aws_msk_topic_per_broker_datalake module {
+ingester aws_msk_topic_per_broker module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -108,7 +108,7 @@ ingester aws_msk_topic_per_broker_datalake module {
   }
 }
 
-ingester aws_msk_topic_per_consumer_grp_datalake module {
+ingester aws_msk_topic_per_consumer_grp module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -163,7 +163,7 @@ ingester aws_msk_topic_per_consumer_grp_datalake module {
 }
 
 
-ingester aws_msk_partition_datalake module {
+ingester aws_msk_partition module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -244,7 +244,7 @@ ingester aws_msk_partition_datalake module {
   }
 }
 
-ingester aws_msk_cluster_datalake module {
+ingester aws_msk_cluster module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -306,7 +306,7 @@ ingester aws_msk_cluster_datalake module {
   }
 }
 
-ingester aws_msk_broker_datalake module {
+ingester aws_msk_broker module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

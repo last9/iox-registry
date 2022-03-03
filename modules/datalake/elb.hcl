@@ -1,4 +1,4 @@
-ingester aws_elb_cloudwatch module {
+ingester aws_elb module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

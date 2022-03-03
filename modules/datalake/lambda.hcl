@@ -1,4 +1,4 @@
-ingester lambda_via_datalake module {
+ingester aws_lambda module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

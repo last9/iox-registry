@@ -1,4 +1,4 @@
-ingester ec2_via_datalake module {
+ingester aws_ec2 module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

@@ -1,4 +1,4 @@
-ingester apigateway_via_datalake module {
+ingester aws_apigateway module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

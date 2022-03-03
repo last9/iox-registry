@@ -1,4 +1,4 @@
-ingester aws_nlb_cloudwatch module {
+ingester aws_nlb module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

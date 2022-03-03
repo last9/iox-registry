@@ -1,4 +1,4 @@
-ingester aws_elasticsearch_cloudwatch module {
+ingester aws_elasticsearch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -217,7 +217,7 @@ ingester aws_elasticsearch_cloudwatch module {
 
 }
 
-ingester aws_elasticsearch_master_cloudwatch module {
+ingester aws_elasticsearch_master module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

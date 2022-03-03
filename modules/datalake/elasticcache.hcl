@@ -1,4 +1,4 @@
-ingester aws_elasticache_redis_cloudwatch module {
+ingester aws_elasticache_redis module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -198,7 +198,7 @@ ingester aws_elasticache_redis_cloudwatch module {
   }
 }
 
-ingester aws_elasticache_cluster_cloudwatch module {
+ingester aws_elasticache_cluster module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

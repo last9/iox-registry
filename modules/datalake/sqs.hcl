@@ -1,4 +1,4 @@
-ingester aws_sqs_cloudwatch module {
+ingester aws_sqs module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

@@ -1,4 +1,4 @@
-ingester aws_aurora_instance_logical_cloudwatch module {
+ingester aws_aurora_instance_logical module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -173,7 +173,7 @@ ingester aws_aurora_instance_logical_cloudwatch module {
   }
 }
 
-ingester aws_aurora_instance_physical_cloudwatch module {
+ingester aws_aurora_instance_physical module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

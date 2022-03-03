@@ -1,4 +1,4 @@
-ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module {
+ingester aws_eks_containerinsights_deployment_without_service module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -151,7 +151,7 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
   }
 }
 
-ingester aws_eks_containerinsights_node_cloudwatch module {
+ingester aws_eks_containerinsights_node module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -276,7 +276,7 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
 }
 
 
-ingester aws_eks_containerinsights_service_cloudwatch module {
+ingester aws_eks_containerinsights_service module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -430,7 +430,7 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
 }
 
 
-ingester eks_containerinsights_eks_cluster_cloudwatch module {
+ingester aws_eks_containerinsights_eks_cluster module {
   frequency  = 60
   lookback   = 600
   timeout    = 30

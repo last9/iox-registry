@@ -1,4 +1,4 @@
-ingester aws_cloudfront_cloudwatch module {
+ingester aws_cloudfront module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
