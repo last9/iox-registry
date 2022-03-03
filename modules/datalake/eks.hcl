@@ -42,8 +42,8 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{Namespace}" = "$input{Namespace}"
-        "$output{PodName}" = "$input{PodName}"
+        "$output{Namespace}"   = "$input{Namespace}"
+        "$output{PodName}"     = "$input{PodName}"
       }
     }
   }
@@ -59,8 +59,8 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{Namespace}" = "$input{Namespace}"
-        "$output{PodName}" = "$input{PodName}"
+        "$output{Namespace}"   = "$input{Namespace}"
+        "$output{PodName}"     = "$input{PodName}"
       }
     }
   }
@@ -76,8 +76,8 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{Namespace}" = "$input{Namespace}"
-        "$output{PodName}" = "$input{PodName}"
+        "$output{Namespace}"   = "$input{Namespace}"
+        "$output{PodName}"     = "$input{PodName}"
       }
     }
   }
@@ -93,8 +93,8 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{Namespace}" = "$input{Namespace}"
-        "$output{PodName}" = "$input{PodName}"
+        "$output{Namespace}"   = "$input{Namespace}"
+        "$output{PodName}"     = "$input{PodName}"
       }
     }
   }
@@ -110,8 +110,8 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{Namespace}" = "$input{Namespace}"
-        "$output{PodName}" = "$input{PodName}"
+        "$output{Namespace}"   = "$input{Namespace}"
+        "$output{PodName}"     = "$input{PodName}"
       }
     }
   }
@@ -127,8 +127,8 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{Namespace}" = "$input{Namespace}"
-        "$output{PodName}" = "$input{PodName}"
+        "$output{Namespace}"   = "$input{Namespace}"
+        "$output{PodName}"     = "$input{PodName}"
       }
     }
   }
@@ -144,8 +144,8 @@ ingester aws_eks_containerinsights_deployment_without_service_cloudwatch module 
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{Namespace}" = "$input{Namespace}"
-        "$output{PodName}" = "$input{PodName}"
+        "$output{Namespace}"   = "$input{Namespace}"
+        "$output{PodName}"     = "$input{PodName}"
       }
     }
   }
@@ -200,8 +200,8 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{NodeName}" = "$input{NodeName}"
-        "$output{InstanceId}" = "$input{InstanceId}"
+        "$output{NodeName}"    = "$input{NodeName}"
+        "$output{InstanceId}"  = "$input{InstanceId}"
       }
     }
   }
@@ -217,8 +217,8 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{NodeName}" = "$input{NodeName}"
-        "$output{InstanceId}" = "$input{InstanceId}"
+        "$output{NodeName}"    = "$input{NodeName}"
+        "$output{InstanceId}"  = "$input{InstanceId}"
       }
     }
   }
@@ -234,8 +234,8 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{NodeName}" = "$input{NodeName}"
-        "$output{InstanceId}" = "$input{InstanceId}"
+        "$output{NodeName}"    = "$input{NodeName}"
+        "$output{InstanceId}"  = "$input{InstanceId}"
       }
     }
   }
@@ -251,8 +251,8 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{NodeName}" = "$input{NodeName}"
-        "$output{InstanceId}" = "$input{InstanceId}"
+        "$output{NodeName}"    = "$input{NodeName}"
+        "$output{InstanceId}"  = "$input{InstanceId}"
       }
     }
   }
@@ -268,8 +268,8 @@ ingester aws_eks_containerinsights_node_cloudwatch module {
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{NodeName}" = "$input{NodeName}"
-        "$output{InstanceId}" = "$input{InstanceId}"
+        "$output{NodeName}"    = "$input{NodeName}"
+        "$output{InstanceId}"  = "$input{InstanceId}"
       }
     }
   }
@@ -320,8 +320,8 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{Namespace}" = "$input{Namespace}"
-        "$output{Service}" = "$input{Service}"
+        "$output{Namespace}"   = "$input{Namespace}"
+        "$output{Service}"     = "$input{Service}"
       }
     }
   }
@@ -337,8 +337,8 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{Namespace}" = "$input{Namespace}"
-        "$output{Service}" = "$input{Service}"
+        "$output{Namespace}"   = "$input{Namespace}"
+        "$output{Service}"     = "$input{Service}"
       }
     }
   }
@@ -354,8 +354,8 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{Namespace}" = "$input{Namespace}"
-        "$output{Service}" = "$input{Service}"
+        "$output{Namespace}"   = "$input{Namespace}"
+        "$output{Service}"     = "$input{Service}"
       }
     }
   }
@@ -371,8 +371,8 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{Namespace}" = "$input{Namespace}"
-        "$output{Service}" = "$input{Service}"
+        "$output{Namespace}"   = "$input{Namespace}"
+        "$output{Service}"     = "$input{Service}"
       }
     }
   }
@@ -388,8 +388,8 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{Namespace}" = "$input{Namespace}"
-        "$output{Service}" = "$input{Service}"
+        "$output{Namespace}"   = "$input{Namespace}"
+        "$output{Service}"     = "$input{Service}"
       }
     }
   }
@@ -405,8 +405,8 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{Namespace}" = "$input{Namespace}"
-        "$output{Service}" = "$input{Service}"
+        "$output{Namespace}"   = "$input{Namespace}"
+        "$output{Service}"     = "$input{Service}"
       }
     }
   }
@@ -418,12 +418,12 @@ ingester aws_eks_containerinsights_service_cloudwatch module {
     aggregator  = "SUM"
 
     source prometheus "running_pods" {
-      query = "avg by (ClusterName, Namespace, Service, tag_namespace, tag_service) (running_pods)"
+      query = "sum by (ClusterName, Namespace, Service, tag_namespace, tag_service) (running_pods)"
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
-        "$output{Namespace}" = "$input{Namespace}"
-        "$output{Service}" = "$input{Service}"
+        "$output{Namespace}"   = "$input{Namespace}"
+        "$output{Service}"     = "$input{Service}"
       }
     }
   }
@@ -500,7 +500,7 @@ ingester eks_containerinsights_eks_cluster_cloudwatch module {
     aggregator  = "AVG"
 
     source prometheus "cpu_utilization" {
-      query = "max by (ClusterName, tag_namespace, tag_service) (cpu_utilization)"
+      query = "avg by (ClusterName, tag_namespace, tag_service) (cpu_utilization)"
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
@@ -515,7 +515,7 @@ ingester eks_containerinsights_eks_cluster_cloudwatch module {
     aggregator  = "AVG"
 
     source prometheus "memory_utilization" {
-      query = "max by (ClusterName, tag_namespace, tag_service) (memory_utilization)"
+      query = "avg by (ClusterName, tag_namespace, tag_service) (memory_utilization)"
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
@@ -530,7 +530,7 @@ ingester eks_containerinsights_eks_cluster_cloudwatch module {
     aggregator  = "AVG"
 
     source prometheus "disk_used" {
-      query = "max by (ClusterName, tag_namespace, tag_service) (disk_used)"
+      query = "avg by (ClusterName, tag_namespace, tag_service) (disk_used)"
 
       join_on = {
         "$output{ClusterName}" = "$input{ClusterName}"
