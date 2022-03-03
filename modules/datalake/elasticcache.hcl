@@ -70,7 +70,7 @@ ingester aws_elasticache_redis_cloudwatch module {
     aggregator  = "MAX"
 
     source prometheus "curr_items" {
-      query = "max (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (curr_items)"
+      query = "max by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (curr_items)"
 
       join_on = {
         "$output{CacheClusterId}" = "$input{CacheClusterId}"
@@ -86,7 +86,7 @@ ingester aws_elasticache_redis_cloudwatch module {
     aggregator  = "MIN"
 
     source prometheus "cache_hit_rate" {
-      query = "min (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (cache_hit_rate)"
+      query = "min by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (cache_hit_rate)"
 
       join_on = {
         "$output{CacheClusterId}" = "$input{CacheClusterId}"
@@ -102,7 +102,7 @@ ingester aws_elasticache_redis_cloudwatch module {
     aggregator  = "MAX"
 
     source prometheus "cache_hits" {
-      query = "max (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (cache_hits)"
+      query = "max by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (cache_hits)"
 
       join_on = {
         "$output{CacheClusterId}" = "$input{CacheClusterId}"
@@ -118,7 +118,7 @@ ingester aws_elasticache_redis_cloudwatch module {
     aggregator  = "MAX"
 
     source prometheus "cache_misses" {
-      query = "max (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (cache_misses)"
+      query = "max by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (cache_misses)"
 
       join_on = {
         "$output{CacheClusterId}" = "$input{CacheClusterId}"
@@ -238,7 +238,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
     aggregator  = "MAX"
 
     source prometheus "replication_lag" {
-      query = "max (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (replication_lag)"
+      query = "max by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (replication_lag)"
 
       join_on = {
         "$output{CacheClusterId}" = "$input{CacheClusterId}"

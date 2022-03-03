@@ -55,7 +55,7 @@ ingester dynamodb_table_operation_via_datalake module {
     aggregator  = "MAX"
 
     source prometheus "returned_items" {
-      query = "max (TableName, Operation, tag_namespace, tag_service) (returned_items)"
+      query = "max by (TableName, Operation, tag_namespace, tag_service) (returned_items)"
       join_on = {
         "$output{TableName}" = "$input{TableName}"
         "$output{Operation}" = "$input{Operation}"

@@ -130,7 +130,7 @@ ingester ec2_via_datalake module {
     aggregator  = "MIN"
 
     source prometheus "cpu_balance" {
-      query = "min (InstanceId, tag_namespace, tag_service) (cpu_balance)"
+      query = "min by (InstanceId, tag_namespace, tag_service) (cpu_balance)"
 
       join_on = {
         "$output{InstanceId}" = "$input{InstanceId}"
