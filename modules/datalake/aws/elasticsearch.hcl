@@ -17,7 +17,7 @@ ingester aws_elasticsearch module {
 
   physical_component {
     type = "aws_elasticsearch_cluster"
-    name = "$input{DomainName}"
+    name = "aws_elasticsearch_cluster"
   }
 
   data_for_graph_node {
@@ -236,7 +236,7 @@ ingester aws_elasticsearch_master module {
 
   physical_component {
     type = "aws_elasticsearch_cluster"
-    name = "$input{DomainName}"
+    name = "aws_elasticsearch_cluster"
   }
 
   data_for_graph_node {

@@ -23,7 +23,7 @@ ingester aws_cloudfront module {
 
   physical_component {
     type = "cloudfront_distribution"
-    name = "$input{DistributionId}"
+    name = "cloudfront_distribution"
   }
 
   data_for_graph_node {

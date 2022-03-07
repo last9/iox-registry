@@ -24,7 +24,7 @@ ingester aws_apigateway module {
 
   physical_component {
     type = "aws_apigateway"
-    name = "$input{ApiName}-$input{Stage}"
+    name = "aws_apigateway"
   }
 
   data_for_graph_node {

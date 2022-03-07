@@ -24,7 +24,7 @@ ingester aws_dynamodb_table_operation module {
 
   physical_component {
     type = "dynamodb"
-    name = "$input{TableName}"
+    name = "dynamodb"
   }
 
   data_for_graph_node {

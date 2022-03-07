@@ -24,7 +24,7 @@ ingester aws_ec2 module {
 
   physical_component {
     type = "ec2_instance"
-    name = "$input{InstanceId}"
+    name = "ec2_instance"
   }
 
   data_for_graph_node {

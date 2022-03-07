@@ -23,7 +23,7 @@ ingester aws_alb_cloudwatch module {
 
   physical_component {
     type = "alb"
-    name = "$input{LoadBalancer}"
+    name = "alb"
   }
 
   data_for_graph_node {
@@ -243,7 +243,7 @@ ingester aws_alb_tg_cloudwatch module {
 
   physical_component {
     type = "alb"
-    name = "$input{LoadBalancer}"
+    name = "alb"
   }
 
   physical_address {

@@ -17,7 +17,7 @@ ingester aws_aurora_instance_logical module {
 
   physical_component {
     type = "aurora_instance"
-    name = "$input{DBInstanceIdentifier}"
+    name = "aurora_instance"
   }
 
   data_for_graph_node {
@@ -192,7 +192,7 @@ ingester aws_aurora_instance_physical module {
 
   physical_component {
     type = "aurora_instance"
-    name = "$input{DBInstanceIdentifier}"
+    name = "aurora_instance"
   }
 
   data_for_graph_node {

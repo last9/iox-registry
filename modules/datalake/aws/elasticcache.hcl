@@ -19,7 +19,7 @@ ingester aws_elasticache_redis module {
 
   physical_component {
     type = "elasticache_cluster"
-    name = "$input{CacheClusterId}"
+    name = "elasticache_cluster"
   }
 
   physical_address {
@@ -219,7 +219,7 @@ ingester aws_elasticache_cluster module {
 
   physical_component {
     type = "elasticache_cluster"
-    name = "$input{CacheClusterId}"
+    name = "elasticache_cluster"
   }
 
   data_for_graph_node {

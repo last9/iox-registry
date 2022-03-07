@@ -19,7 +19,7 @@ ingester aws_nlb module {
 
   physical_component {
     type = "nlb"
-    name = "$input{LoadBalancer}"
+    name = "nlb"
   }
 
   data_for_graph_node {

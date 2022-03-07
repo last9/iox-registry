@@ -19,7 +19,7 @@ ingester aws_elb module {
 
   physical_component {
     type = "elb"
-    name = "$input{LoadBalancerName}"
+    name = "elb"
   }
 
   data_for_graph_node {
@@ -208,7 +208,7 @@ ingester aws_elb module {
 
 //   physical_component {
 //     type = "internalElb"
-//     name = "$input{LoadBalancerName}"
+//     name = "internalElb"
 //   }
 
 //   data_for_graph_node {
@@ -393,7 +393,7 @@ ingester aws_elb module {
 
 //   physical_component {
 //     type = "elb"
-//     name = "$input{LoadBalancerName}"
+//     name = "elb"
 //   }
 
 //   data_for_graph_node {
@@ -537,7 +537,7 @@ ingester aws_elb module {
 
 //   physical_component {
 //     type = "internalElb"
-//     name = "$input{LoadBalancerName}"
+//     name = "internalElb"
 //   }
 
 //   data_for_graph_node {
