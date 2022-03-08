@@ -28,7 +28,7 @@ ingester aws_alb_cloudwatch module {
 
   data_for_graph_node {
     type = "alb"
-    name = "$input{LoadBalancer}"
+    name = "$output{LoadBalancer}"
   }
 
   gauge "throughput" {
@@ -86,7 +86,7 @@ ingester aws_alb_cloudwatch module {
     }
   }
 
-  status_histo status_5xx {
+  gauge status_5xx {
     index       = 5
     input_unit  = "count"
     output_unit = "rpm"
@@ -97,7 +97,7 @@ ingester aws_alb_cloudwatch module {
     }
   }
 
-  status_histo status_4xx {
+  gauge status_4xx {
     index       = 4
     input_unit  = "count"
     output_unit = "rpm"
