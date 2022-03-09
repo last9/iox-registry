@@ -24,7 +24,7 @@ ingester aws_lambda module {
 
   physical_component {
     type = "aws_lambda"
-    name = "$input{FunctionName}"
+    name = "aws_lambda"
   }
 
   data_for_graph_node {

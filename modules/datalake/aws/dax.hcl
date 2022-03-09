@@ -22,7 +22,7 @@ ingester aws_dax module {
 
   physical_component {
     type = "dax_cluster"
-    name = "$input{ClusterId}"
+    name = "dax_cluster"
   }
 
   data_for_graph_node {

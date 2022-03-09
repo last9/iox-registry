@@ -24,7 +24,7 @@ ingester aws_apigateway module {
 
   physical_component {
     type = "aws_apigateway"
-    name = "$input{ApiName}-$input{Stage}"
+    name = "aws_apigateway"
   }
 
   data_for_graph_node {
@@ -39,11 +39,7 @@ ingester aws_apigateway module {
     aggregator  = "SUM"
 
     source prometheus "throughput" {
-      query = "sum by (ApiName, Stage, tag_namespace, tag_service) (throughput)"
-      join_on = {
-        "$output{ApiName}" = "$input{ApiName}"
-        "$output{Stage}"   = "$input{Stage}"
-      }
+      query = "sum by (ApiName, Stage, tag_service, tag_namespace) (throughput{ApiName != '', Stage != ''})"
     }
   }
 
@@ -57,59 +53,31 @@ ingester aws_apigateway module {
 
 
     source prometheus "throughput" {
-      query = "avg by (ApiName, Stage, tag_namespace, tag_service) (latency_histo{le='throughput'})"
-      join_on = {
-        "$output{ApiName}" = "$input{ApiName}"
-        "$output{Stage}"   = "$input{Stage}"
-      }
+      query = "sum by (ApiName, Stage, tag_service, tag_namespace) (throughput{ApiName != '', Stage != ''})"
     }
 
     source prometheus "p50" {
-      query = "avg by (ApiName, Stage, tag_namespace, tag_service) (latency_histo{le='p50'})"
-      join_on = {
-        "$output{ApiName}" = "$input{ApiName}"
-        "$output{Stage}"   = "$input{Stage}"
-      }
+      query = "sum by (ApiName, Stage, tag_service, tag_namespace) (latency{latency='p50', ApiName != '', Stage != ''})"
     }
 
     source prometheus "latency" {
-      query = "avg by (ApiName, Stage, tag_namespace, tag_service) (latency_histo{le='latency'})"
-      join_on = {
-        "$output{ApiName}" = "$input{ApiName}"
-        "$output{Stage}"   = "$input{Stage}"
-      }
+      query = "sum by (ApiName, Stage, tag_service, tag_namespace) (latency{ApiName != '', Stage != ''})"
     }
 
     source prometheus "p75" {
-      query = "avg by (ApiName, Stage, tag_namespace, tag_service) (latency_histo{le='p75'})"
-      join_on = {
-        "$output{ApiName}" = "$input{ApiName}"
-        "$output{Stage}"   = "$input{Stage}"
-      }
+      query = "sum by (ApiName, Stage, tag_service, tag_namespace) (latency{latency='p75', ApiName != '', Stage != ''})"
     }
 
     source prometheus "p90" {
-      query = "avg by (ApiName, Stage, tag_namespace, tag_service) (latency_histo{le='p90'})"
-      join_on = {
-        "$output{ApiName}" = "$input{ApiName}"
-        "$output{Stage}"   = "$input{Stage}"
-      }
+      query = "sum by (ApiName, Stage, tag_service, tag_namespace) (latency{latency='p90', ApiName != '', Stage != ''})"
     }
 
     source prometheus "p99" {
-      query = "avg by (ApiName, Stage, tag_namespace, tag_service) (latency_histo{le='p99'})"
-      join_on = {
-        "$output{ApiName}" = "$input{ApiName}"
-        "$output{Stage}"   = "$input{Stage}"
-      }
+      query = "sum by (ApiName, Stage, tag_service, tag_namespace) (latency{latency='p99', ApiName != '', Stage != ''})"
     }
 
     source prometheus "p100" {
-      query = "avg by (ApiName, Stage, tag_namespace, tag_service) (latency_histo{le='p100'})"
-      join_on = {
-        "$output{ApiName}" = "$input{ApiName}"
-        "$output{Stage}"   = "$input{Stage}"
-      }
+      query = "sum by (ApiName, Stage, tag_service, tag_namespace) (latency{latency='p100', ApiName != '', Stage != ''})"
     }
 
   }
@@ -121,11 +89,7 @@ ingester aws_apigateway module {
     aggregator  = "AVG"
 
     source prometheus "integration_latency" {
-      query = "avg by (ApiName, Stage, tag_namespace, tag_service) (integration_latency)"
-      join_on = {
-        "$output{ApiName}" = "$input{ApiName}"
-        "$output{Stage}"   = "$input{Stage}"
-      }
+      query = "sum by (ApiName, Stage, tag_service, tag_namespace) (integration_latency{ApiName != '', Stage != ''})"
     }
   }
 
@@ -138,11 +102,7 @@ ingester aws_apigateway module {
     aggregator  = "SUM"
 
     source prometheus "cache_miss" {
-      query = "sum by (ApiName, Stage, tag_namespace, tag_service) (cache_miss)"
-      join_on = {
-        "$output{ApiName}" = "$input{ApiName}"
-        "$output{Stage}"   = "$input{Stage}"
-      }
+      query = "sum by (ApiName, Stage, tag_service, tag_namespace) (cache_miss{ApiName != '', Stage != ''})"
     }
   }
 
@@ -155,11 +115,7 @@ ingester aws_apigateway module {
     aggregator  = "SUM"
 
     source prometheus "status_4xx" {
-      query = "sum by (ApiName, Stage, tag_namespace, tag_service) (status_4xx)"
-      join_on = {
-        "$output{ApiName}" = "$input{ApiName}"
-        "$output{Stage}"   = "$input{Stage}"
-      }
+      query = "sum by (ApiName, Stage, tag_service, tag_namespace) (status_4xx{ApiName != '', Stage != ''})"
     }
   }
 
@@ -172,11 +128,7 @@ ingester aws_apigateway module {
     aggregator  = "SUM"
 
     source prometheus "status_5xx" {
-      query = "sum by (ApiName, Stage, tag_namespace, tag_service) (status_5xx)"
-      join_on = {
-        "$output{ApiName}" = "$input{ApiName}"
-        "$output{Stage}"   = "$input{Stage}"
-      }
+      query = "sum by (ApiName, Stage, tag_service, tag_namespace) (status_5xx{ApiName != '', Stage != ''})"
     }
   }
 }

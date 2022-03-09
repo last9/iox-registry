@@ -19,7 +19,7 @@ ingester aws_rds module {
 
   physical_component {
     type = "rds"
-    name = "$input{DBInstanceIdentifier}"
+    name = "rds"
   }
 
   data_for_graph_node {

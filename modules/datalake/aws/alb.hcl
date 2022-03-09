@@ -23,12 +23,12 @@ ingester aws_alb_cloudwatch module {
 
   physical_component {
     type = "alb"
-    name = "$input{LoadBalancer}"
+    name = "alb"
   }
 
   data_for_graph_node {
     type = "alb"
-    name = "$input{LoadBalancer}"
+    name = "$output{LoadBalancer}"
   }
 
   gauge "throughput" {
@@ -38,56 +38,7 @@ ingester aws_alb_cloudwatch module {
     aggregator  = "SUM"
 
     source prometheus "throughput" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (throughput)"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "new_connections" {
-    index       = 4
-    input_unit  = "count"
-    output_unit = "count"
-    aggregator  = "SUM"
-
-    source prometheus "new_connections" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (new_connections)"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "rejected_connections" {
-    index       = 5
-    input_unit  = "count"
-    output_unit = "count"
-    aggregator  = "SUM"
-
-    source prometheus "rejected_connections" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (rejected_connections)"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  gauge "processed_bytes" {
-    index       = 6
-    input_unit  = "bytes"
-    output_unit = "bytes"
-    aggregator  = "SUM"
-
-    source prometheus "processed_bytes" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (processed_bytes)"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (throughput{LoadBalancer != ''})"
     }
   }
 
@@ -98,56 +49,40 @@ ingester aws_alb_cloudwatch module {
     aggregator  = "SUM"
 
     source prometheus "lcu" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (lcu)"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (lcu{LoadBalancer != ''})"
     }
   }
 
-  status_histo status_5xx {
-    index       = 5
-    input_unit  = "count"
-    output_unit = "rpm"
-    aggregator  = "SUM"
-
-    source prometheus "status_5xx" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (status_5xx)"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
-    }
-  }
-
-  status_histo status_4xx {
+  gauge "new_connections" {
     index       = 4
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
 
-    source prometheus "status_4xx" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (status_4xx)"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+    source prometheus "new_connections" {
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (new_connections{LoadBalancer != ''})"
     }
   }
 
-  gauge lb_5xx {
-    index       = 8
+  gauge "rejected_connections" {
+    index       = 5
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
 
-    source prometheus "lb_5xx" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (lb_5xx)"
+    source prometheus "rejected_connections" {
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (rejected_connections{LoadBalancer != ''})"
+    }
+  }
 
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+  gauge "processed_bytes" {
+    index       = 6
+    input_unit  = "bytes"
+    output_unit = "bytes"
+    aggregator  = "SUM"
+
+    source prometheus "processed_bytes" {
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (processed_bytes{LoadBalancer != ''})"
     }
   }
 
@@ -158,61 +93,73 @@ ingester aws_alb_cloudwatch module {
     aggregator  = "SUM"
 
     source prometheus "lb_4xx" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (lb_4xx)"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (response{code='4xx_lb', LoadBalancer != ''})"
     }
   }
 
-  latency "latency_histo" {
-    index        = 6
-    input_unit   = "ms"
-    output_unit  = "ms"
-    aggregator   = "PERCENTILE"
-    error_margin = 0.05
+  gauge lb_5xx {
+    index       = 8
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
-    source prometheus "throughput" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (throughput)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+    source prometheus "lb_5xx" {
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (response{code='5xx_lb', LoadBalancer != ''})"
     }
+  }
 
-    source prometheus "p50" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p50'})"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+  gauge status_5xx {
+    index       = 9
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
+
+    source prometheus "status_5xx" {
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (response{code='5xx_target', LoadBalancer != ''})"
     }
+  }
 
-    source prometheus "p75" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p75'})"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+  gauge status_4xx {
+    index       = 11
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
+
+    source prometheus "status_4xx" {
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (response{code='4xx_target', LoadBalancer != ''})"
     }
+  }
 
-    source prometheus "p90" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p90'})"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+  gauge latency_min {
+    index       = 12
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "MIN"
+
+    source prometheus "latency_min" {
+      query = "min by (LoadBalancer, tag_service, tag_namespace) (latency{stat='min', LoadBalancer != ''})"
     }
+  }
 
-    source prometheus "p99" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p99'})"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+  gauge latency_max {
+    index       = 13
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "MAX"
+
+    source prometheus "latency_max" {
+      query = "max by (LoadBalancer, tag_service, tag_namespace) (latency{stat='max', LoadBalancer != ''})"
     }
+  }
 
-    source prometheus "p100" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p100'})"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+  gauge latency_avg {
+    index       = 14
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "AVG"
+
+    source prometheus "latency_avg" {
+      query = "avg by (LoadBalancer, tag_service, tag_namespace) (latency{stat='avg', LoadBalancer != ''})"
     }
   }
 }
@@ -243,7 +190,7 @@ ingester aws_alb_tg_cloudwatch module {
 
   physical_component {
     type = "alb"
-    name = "$input{LoadBalancer}"
+    name = "alb"
   }
 
   physical_address {
@@ -262,12 +209,7 @@ ingester aws_alb_tg_cloudwatch module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "throughput" {
-      query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (throughput)"
-
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
-      }
+      query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (throughput{LoadBalancer != '', TargetGroup != ''})"
     }
   }
 
@@ -278,51 +220,27 @@ ingester aws_alb_tg_cloudwatch module {
     aggregator   = "PERCENTILE"
     error_margin = 0.05
     source prometheus "throughput" {
-      query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (throughput)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
-      }
+      query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (throughput{LoadBalancer != '', TargetGroup != ''})"
     }
 
     source prometheus "p50" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p50'})"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
-      }
+      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p50', LoadBalancer != '', TargetGroup != ''})"
     }
 
     source prometheus "p75" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p75'})"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
-      }
+      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p75', LoadBalancer != '', TargetGroup != ''})"
     }
 
     source prometheus "p90" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p90'})"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
-      }
+      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p90', LoadBalancer != '', TargetGroup != ''})"
     }
 
     source prometheus "p99" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p99'})"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
-      }
+      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p99', LoadBalancer != '', TargetGroup != ''})"
     }
 
     source prometheus "p100" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p100'})"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
-      }
+      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p100', LoadBalancer != '', TargetGroup != ''})"
     }
   }
 
@@ -332,11 +250,7 @@ ingester aws_alb_tg_cloudwatch module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "status_500" {
-      query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (status_5xx)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
-      }
+      query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (status_5xx{LoadBalancer != '', TargetGroup != ''})"
     }
   }
 
@@ -346,11 +260,7 @@ ingester aws_alb_tg_cloudwatch module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "status_400" {
-      query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (status_4xx)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
-      }
+      query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (status_4xx{LoadBalancer != '', TargetGroup != ''})"
     }
   }
 
@@ -360,11 +270,7 @@ ingester aws_alb_tg_cloudwatch module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "status_300" {
-      query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (status_3xx)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
-      }
+      query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (status_3xx{LoadBalancer != '', TargetGroup != ''})"
     }
   }
 
@@ -374,11 +280,7 @@ ingester aws_alb_tg_cloudwatch module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "status_200" {
-      query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (status_2xx)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-        "$output{TargetGroup}"  = "$input{TargetGroup}"
-      }
+      query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (status_2xx{LoadBalancer != '', TargetGroup != ''})"
     }
   }
 }

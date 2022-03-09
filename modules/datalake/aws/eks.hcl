@@ -23,7 +23,7 @@ ingester aws_eks_containerinsights_deployment_without_service module {
 
   physical_component {
     type = "eks_cluster"
-    name = "$input{ClusterName}"
+    name = "eks_cluster"
   }
 
   data_for_graph_node {
@@ -181,7 +181,7 @@ ingester aws_eks_containerinsights_node module {
 
   physical_component {
     type = "eks_cluster"
-    name = "$input{ClusterName}"
+    name = "eks_cluster"
   }
 
   data_for_graph_node {
@@ -301,7 +301,7 @@ ingester aws_eks_containerinsights_service module {
 
   physical_component {
     type = "eks_cluster"
-    name = "$input{ClusterName}"
+    name = "eks_cluster"
   }
 
   data_for_graph_node {
@@ -455,7 +455,7 @@ ingester aws_eks_containerinsights_eks_cluster module {
 
   physical_component {
     type = "eks_cluster"
-    name = "$input{ClusterName}"
+    name = "eks_cluster"
   }
 
   data_for_graph_node {

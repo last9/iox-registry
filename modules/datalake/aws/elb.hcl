@@ -19,12 +19,12 @@ ingester aws_elb module {
 
   physical_component {
     type = "elb"
-    name = "$input{LoadBalancerName}"
+    name = "elb"
   }
 
   data_for_graph_node {
     type = "elb"
-    name = "$input{LoadBalancerName}"
+    name = "$output{LoadBalancerName}"
   }
 
   using = {
@@ -83,7 +83,7 @@ ingester aws_elb module {
       }
     }
   }
-  status_histo status_5xx {
+  gauge status_5xx {
     index       = 5
     input_unit  = "count"
     output_unit = "rpm"
@@ -96,7 +96,8 @@ ingester aws_elb module {
       }
     }
   }
-  status_histo status_4xx {
+
+  gauge status_4xx {
     index       = 4
     input_unit  = "count"
     output_unit = "rpm"
@@ -143,7 +144,7 @@ ingester aws_elb module {
     aggregator   = "PERCENTILE"
     error_margin = 0.05
 
-    source prometheus "latency_histo" {
+    source prometheus "throughput" {
       query = "avg by (LoadBalancerName, tag_namespace, tag_service) (latency_histo{le='throughput'})"
       join_on = {
         "$output{LoadBalancerName}" = "$input{LoadBalancerName}"
@@ -208,7 +209,7 @@ ingester aws_elb module {
 
 //   physical_component {
 //     type = "internalElb"
-//     name = "$input{LoadBalancerName}"
+//     name = "internalElb"
 //   }
 
 //   data_for_graph_node {
@@ -393,7 +394,7 @@ ingester aws_elb module {
 
 //   physical_component {
 //     type = "elb"
-//     name = "$input{LoadBalancerName}"
+//     name = "elb"
 //   }
 
 //   data_for_graph_node {
@@ -537,7 +538,7 @@ ingester aws_elb module {
 
 //   physical_component {
 //     type = "internalElb"
-//     name = "$input{LoadBalancerName}"
+//     name = "internalElb"
 //   }
 
 //   data_for_graph_node {

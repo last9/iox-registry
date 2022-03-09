@@ -12,7 +12,7 @@ ingester aws_sqs module {
 
   physical_component {
     type = "sqs"
-    name = "$input{QueueName}"
+    name = "sqs"
   }
 
   data_for_graph_node {

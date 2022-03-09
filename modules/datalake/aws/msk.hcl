@@ -24,7 +24,7 @@ ingester aws_msk_topic_per_broker module {
 
   physical_component {
     type = "aws_msk_cluster"
-    name = "$input{ClusterName}"
+    name = "aws_msk_cluster"
   }
 
   data_for_graph_node {
@@ -265,7 +265,7 @@ ingester aws_msk_cluster module {
 
   physical_component {
     type = "aws_msk_cluster"
-    name = "$input{ClusterName}"
+    name = "aws_msk_cluster"
   }
 
   data_for_graph_node {
@@ -332,7 +332,7 @@ ingester aws_msk_broker module {
 
   physical_component {
     type = "aws_msk_cluster"
-    name = "$input{ClusterName}"
+    name = "aws_msk_cluster"
   }
 
   data_for_graph_node {
