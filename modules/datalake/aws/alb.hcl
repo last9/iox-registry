@@ -42,6 +42,17 @@ ingester aws_alb_cloudwatch module {
     }
   }
 
+  gauge "lcu" {
+    index       = 3
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+
+    source prometheus "lcu" {
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (lcu{LoadBalancer != ''})"
+    }
+  }
+
   gauge "new_connections" {
     index       = 4
     input_unit  = "count"
@@ -75,36 +86,14 @@ ingester aws_alb_cloudwatch module {
     }
   }
 
-  gauge "lcu" {
-    index       = 3
-    input_unit  = "count"
-    output_unit = "count"
-    aggregator  = "SUM"
-
-    source prometheus "lcu" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (lcu{LoadBalancer != ''})"
-    }
-  }
-
-  gauge status_5xx {
-    index       = 5
+  gauge lb_4xx {
+    index       = 7
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
 
-    source prometheus "status_5xx" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (status_5xx{LoadBalancer != ''})"
-    }
-  }
-
-  gauge status_4xx {
-    index       = 4
-    input_unit  = "count"
-    output_unit = "rpm"
-    aggregator  = "SUM"
-
-    source prometheus "status_4xx" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (status_4xx{LoadBalancer != ''})"
+    source prometheus "lb_4xx" {
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (response{code='4xx_lb', LoadBalancer != ''})"
     }
   }
 
@@ -115,50 +104,62 @@ ingester aws_alb_cloudwatch module {
     aggregator  = "SUM"
 
     source prometheus "lb_5xx" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (lb_5xx{LoadBalancer != ''})"
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (response{code='5xx_lb', LoadBalancer != ''})"
     }
   }
 
-  gauge lb_4xx {
-    index       = 7
+  gauge status_5xx {
+    index       = 9
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
 
-    source prometheus "lb_4xx" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (lb_4xx{LoadBalancer != ''})"
+    source prometheus "status_5xx" {
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (response{code='5xx_target', LoadBalancer != ''})"
     }
   }
 
-  latency "latency_histo" {
-    index        = 6
-    input_unit   = "ms"
-    output_unit  = "ms"
-    aggregator   = "PERCENTILE"
-    error_margin = 0.05
+  gauge status_4xx {
+    index       = 11
+    input_unit  = "count"
+    output_unit = "rpm"
+    aggregator  = "SUM"
 
-    source prometheus "throughput" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (throughput{LoadBalancer != ''})"
+    source prometheus "status_4xx" {
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (response{code='4xx_target', LoadBalancer != ''})"
     }
+  }
 
-    source prometheus "p50" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p50', LoadBalancer != ''})"
+  gauge latency_min {
+    index       = 12
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "MIN"
+
+    source prometheus "latency_min" {
+      query = "min by (LoadBalancer, tag_service, tag_namespace) (latency{stat='min', LoadBalancer != ''})"
     }
+  }
 
-    source prometheus "p75" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p75', LoadBalancer != ''})"
+  gauge latency_max {
+    index       = 13
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "MAX"
+
+    source prometheus "latency_max" {
+      query = "max by (LoadBalancer, tag_service, tag_namespace) (latency{stat='max', LoadBalancer != ''})"
     }
+  }
 
-    source prometheus "p90" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p90', LoadBalancer != ''})"
-    }
+  gauge latency_avg {
+    index       = 14
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "AVG"
 
-    source prometheus "p99" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p99', LoadBalancer != ''})"
-    }
-
-    source prometheus "p100" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p100', LoadBalancer != ''})"
+    source prometheus "latency_avg" {
+      query = "avg by (LoadBalancer, tag_service, tag_namespace) (latency{stat='avg', LoadBalancer != ''})"
     }
   }
 }
