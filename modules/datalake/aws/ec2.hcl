@@ -5,7 +5,7 @@ ingester aws_ec2 module {
   resolution = 60
   lag        = 60
 
-  inputs = "$input{input}"
+  inputs = "[]"
 
   using = {
     "default" = "$input{using}"
@@ -24,12 +24,12 @@ ingester aws_ec2 module {
 
   physical_component {
     type = "ec2_instance"
-    name = "$input{InstanceId}"
+    name = "EC2_INSTANCE"
   }
 
   data_for_graph_node {
-    type = "ec2_instance"
-    name = "$input{InstanceId}"
+    type = "ec2_instance_logical"
+    name = "$output{InstanceId}"
   }
 
   gauge "cpu" {
@@ -40,9 +40,6 @@ ingester aws_ec2 module {
 
     source prometheus "cpu" {
       query = "avg by (InstanceId, tag_namespace, tag_service) (cpu)"
-      join_on = {
-        "$output{InstanceId}" = "$input{InstanceId}"
-      }
     }
   }
 
@@ -54,10 +51,6 @@ ingester aws_ec2 module {
 
     source prometheus "disk_read_ops" {
       query = "sum by (InstanceId, tag_namespace, tag_service) (disk_read_ops)"
-
-      join_on = {
-        "$output{InstanceId}" = "$input{InstanceId}"
-      }
     }
   }
 
@@ -69,10 +62,6 @@ ingester aws_ec2 module {
 
     source prometheus "disk_write_ops" {
       query = "sum by (InstanceId, tag_namespace, tag_service) (disk_write_ops)"
-
-      join_on = {
-        "$output{InstanceId}" = "$input{InstanceId}"
-      }
     }
   }
 
@@ -84,11 +73,6 @@ ingester aws_ec2 module {
 
     source prometheus "network_in" {
       query = "sum by (InstanceId, tag_namespace, tag_service) (network_in)"
-
-      join_on = {
-        "$output{InstanceId}" = "$input{InstanceId}"
-      }
-
     }
   }
 
@@ -100,10 +84,6 @@ ingester aws_ec2 module {
 
     source prometheus "network_out" {
       query = "sum by (InstanceId, tag_namespace, tag_service) (network_out)"
-
-      join_on = {
-        "$output{InstanceId}" = "$input{InstanceId}"
-      }
     }
   }
 
@@ -115,11 +95,6 @@ ingester aws_ec2 module {
 
     source prometheus "status_check_failed" {
       query = "sum by (InstanceId, tag_namespace, tag_service) (status_check_failed)"
-
-      join_on = {
-        "$output{InstanceId}" = "$input{InstanceId}"
-      }
-
     }
   }
 
@@ -131,10 +106,6 @@ ingester aws_ec2 module {
 
     source prometheus "cpu_balance" {
       query = "min by (InstanceId, tag_namespace, tag_service) (cpu_balance)"
-
-      join_on = {
-        "$output{InstanceId}" = "$input{InstanceId}"
-      }
     }
   }
 }
