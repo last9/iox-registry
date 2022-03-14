@@ -16,7 +16,6 @@ ingester aws_ec2 module {
     name = "$output{tag_namespace}"
   }
 
-
   label {
     type = "service"
     name = "$output{tag_service}"

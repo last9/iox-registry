@@ -275,7 +275,6 @@ ingester aws_eks_containerinsights_node module {
   }
 }
 
-
 ingester aws_eks_containerinsights_service module {
   frequency  = 60
   lookback   = 600
@@ -428,7 +427,6 @@ ingester aws_eks_containerinsights_service module {
     }
   }
 }
-
 
 ingester aws_eks_cluster module {
   frequency  = 60

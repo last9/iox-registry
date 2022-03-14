@@ -16,7 +16,6 @@ ingester aws_apigateway module {
     name = "$output{tag_namespace}"
   }
 
-
   label {
     type = "service"
     name = "$output{tag_service}"
@@ -40,6 +39,7 @@ ingester aws_apigateway module {
 
     source prometheus "throughput" {
       query = "sum by (ApiName, Stage, tag_namespace, tag_service) (throughput)"
+
       join_on = {
         "$output{ApiName}" = "$input{ApiName}"
         "$output{Stage}"   = "$input{Stage}"
@@ -55,9 +55,9 @@ ingester aws_apigateway module {
     error_margin = 0.05
     multiplier   = 1
 
-
     source prometheus "throughput" {
       query = "avg by (ApiName, Stage, tag_namespace, tag_service) (latency_histo{le='throughput'})"
+
       join_on = {
         "$output{ApiName}" = "$input{ApiName}"
         "$output{Stage}"   = "$input{Stage}"
@@ -66,6 +66,7 @@ ingester aws_apigateway module {
 
     source prometheus "p50" {
       query = "avg by (ApiName, Stage, tag_namespace, tag_service) (latency_histo{le='p50'})"
+
       join_on = {
         "$output{ApiName}" = "$input{ApiName}"
         "$output{Stage}"   = "$input{Stage}"
@@ -74,6 +75,7 @@ ingester aws_apigateway module {
 
     source prometheus "latency" {
       query = "avg by (ApiName, Stage, tag_namespace, tag_service) (latency_histo{le='latency'})"
+
       join_on = {
         "$output{ApiName}" = "$input{ApiName}"
         "$output{Stage}"   = "$input{Stage}"
@@ -82,6 +84,7 @@ ingester aws_apigateway module {
 
     source prometheus "p75" {
       query = "avg by (ApiName, Stage, tag_namespace, tag_service) (latency_histo{le='p75'})"
+
       join_on = {
         "$output{ApiName}" = "$input{ApiName}"
         "$output{Stage}"   = "$input{Stage}"
@@ -90,6 +93,7 @@ ingester aws_apigateway module {
 
     source prometheus "p90" {
       query = "avg by (ApiName, Stage, tag_namespace, tag_service) (latency_histo{le='p90'})"
+
       join_on = {
         "$output{ApiName}" = "$input{ApiName}"
         "$output{Stage}"   = "$input{Stage}"
@@ -98,6 +102,7 @@ ingester aws_apigateway module {
 
     source prometheus "p99" {
       query = "avg by (ApiName, Stage, tag_namespace, tag_service) (latency_histo{le='p99'})"
+
       join_on = {
         "$output{ApiName}" = "$input{ApiName}"
         "$output{Stage}"   = "$input{Stage}"
@@ -106,12 +111,12 @@ ingester aws_apigateway module {
 
     source prometheus "p100" {
       query = "avg by (ApiName, Stage, tag_namespace, tag_service) (latency_histo{le='p100'})"
+
       join_on = {
         "$output{ApiName}" = "$input{ApiName}"
         "$output{Stage}"   = "$input{Stage}"
       }
     }
-
   }
 
   gauge "integration_latency" {
@@ -122,6 +127,7 @@ ingester aws_apigateway module {
 
     source prometheus "integration_latency" {
       query = "avg by (ApiName, Stage, tag_namespace, tag_service) (integration_latency)"
+
       join_on = {
         "$output{ApiName}" = "$input{ApiName}"
         "$output{Stage}"   = "$input{Stage}"
@@ -139,6 +145,7 @@ ingester aws_apigateway module {
 
     source prometheus "cache_miss" {
       query = "sum by (ApiName, Stage, tag_namespace, tag_service) (cache_miss)"
+
       join_on = {
         "$output{ApiName}" = "$input{ApiName}"
         "$output{Stage}"   = "$input{Stage}"
@@ -156,6 +163,7 @@ ingester aws_apigateway module {
 
     source prometheus "status_4xx" {
       query = "sum by (ApiName, Stage, tag_namespace, tag_service) (status_4xx)"
+
       join_on = {
         "$output{ApiName}" = "$input{ApiName}"
         "$output{Stage}"   = "$input{Stage}"
@@ -173,6 +181,7 @@ ingester aws_apigateway module {
 
     source prometheus "status_5xx" {
       query = "sum by (ApiName, Stage, tag_namespace, tag_service) (status_5xx)"
+
       join_on = {
         "$output{ApiName}" = "$input{ApiName}"
         "$output{Stage}"   = "$input{Stage}"

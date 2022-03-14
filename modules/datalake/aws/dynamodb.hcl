@@ -16,7 +16,6 @@ ingester aws_dynamodb_table_operation module {
     name = "$output{tag_namespace}"
   }
 
-
   label {
     type = "service"
     name = "$output{tag_service}"
@@ -32,7 +31,6 @@ ingester aws_dynamodb_table_operation module {
     name = "$output{Operation}"
   }
 
-
   gauge "system_errors" {
     index       = 1
     input_unit  = "count"
@@ -41,7 +39,6 @@ ingester aws_dynamodb_table_operation module {
 
     source prometheus "system_errors" {
       query = "sum by (TableName, Operation, tag_namespace, tag_service) (system_errors{TableName!='',Operation!=''})"
-      
     }
   }
 
@@ -74,11 +71,10 @@ ingester aws_dynamodb_table_operation module {
     aggregator  = "AVG"
 
     source prometheus "latency" {
-      query = "avg by (TableName, Operation, tag_namespace, tag_service) (latency{TableName!='',Operation!=''})" 
+      query = "avg by (TableName, Operation, tag_namespace, tag_service) (latency{TableName!='',Operation!=''})"
     }
   }
 }
-
 
 ingester aws_dynamodb_table module {
   frequency  = 60
@@ -97,7 +93,6 @@ ingester aws_dynamodb_table module {
     type = "namespace"
     name = "$output{tag_namespace}"
   }
-
 
   label {
     type = "service"

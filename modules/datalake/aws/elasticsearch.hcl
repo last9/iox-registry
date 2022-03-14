@@ -36,8 +36,10 @@ ingester aws_elasticsearch module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MIN"
+
     source prometheus "nodes" {
       query = "min by (DomainName, ClientId, tag_namespace, tag_service) (nodes)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
@@ -50,8 +52,10 @@ ingester aws_elasticsearch module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MIN"
+
     source prometheus "kibana_healthy_nodes" {
       query = "min by (DomainName, ClientId, tag_namespace, tag_service) (kibana_healthy_nodes)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
@@ -64,8 +68,10 @@ ingester aws_elasticsearch module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
+
     source prometheus "cluster_yellow" {
       query = "max by (DomainName, ClientId, tag_namespace, tag_service) (cluster_yellow)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
@@ -78,8 +84,10 @@ ingester aws_elasticsearch module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
+
     source prometheus "cluster_red" {
       query = "max by (DomainName, ClientId, tag_namespace, tag_service) (cluster_red)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
@@ -92,8 +100,10 @@ ingester aws_elasticsearch module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
+
     source prometheus "throughput" {
       query = "sum by (DomainName, ClientId, tag_namespace, tag_service) (throughput)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
@@ -106,8 +116,10 @@ ingester aws_elasticsearch module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
+
     source prometheus "status_4xx" {
       query = "sum by (DomainName, ClientId, tag_namespace, tag_service) (status_4xx)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
@@ -115,14 +127,15 @@ ingester aws_elasticsearch module {
     }
   }
 
-
   gauge "status_5xx" {
     index       = 7
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
+
     source prometheus "status_5xx" {
       query = "sum by (DomainName, ClientId, tag_namespace, tag_service) (status_5xx)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
@@ -135,8 +148,10 @@ ingester aws_elasticsearch module {
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
+
     source prometheus "cpu" {
       query = "avg by (DomainName, ClientId, tag_namespace, tag_service) (cpu)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
@@ -144,14 +159,15 @@ ingester aws_elasticsearch module {
     }
   }
 
-
   gauge "free_space" {
     index       = 11
     input_unit  = "bytes"
     output_unit = "bytes"
     aggregator  = "MIN"
+
     source prometheus "free_space" {
       query = "min by (DomainName, ClientId, tag_namespace, tag_service) (free_space)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
@@ -164,8 +180,10 @@ ingester aws_elasticsearch module {
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
+
     source prometheus "jvm_memory_pressure" {
       query = "avg by (DomainName, ClientId, tag_namespace, tag_service) (jvm_memory_pressure)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
@@ -178,8 +196,10 @@ ingester aws_elasticsearch module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
+
     source prometheus "writes_blocked" {
       query = "max by (DomainName, ClientId, tag_namespace, tag_service) (writes_blocked)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
@@ -192,8 +212,10 @@ ingester aws_elasticsearch module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
+
     source prometheus "snapshot_failure" {
       query = "max by (DomainName, ClientId, tag_namespace, tag_service) (snapshot_failure)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
@@ -206,15 +228,16 @@ ingester aws_elasticsearch module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MIN"
+
     source prometheus "master_reachable" {
       query = "min by (DomainName, ClientId, tag_namespace, tag_service) (master_reachable)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
-
 }
 
 ingester aws_elasticsearch_master module {
@@ -262,8 +285,10 @@ ingester aws_elasticsearch_master module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MIN"
+
     source prometheus "master_reachable" {
       query = "min by (DomainName, ClientId, tag_namespace, tag_service) (master_reachable)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
@@ -276,8 +301,10 @@ ingester aws_elasticsearch_master module {
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
+
     source prometheus "cpu" {
       query = "avg by (DomainName, ClientId, tag_namespace, tag_service) (cpu)"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
@@ -290,13 +317,14 @@ ingester aws_elasticsearch_master module {
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
+
     source prometheus "jvm_memory_pressure" {
       query = "avg by (DomainName, ClientId, tag_namespace, tag_service) (jvm_memory_pressure))"
+
       join_on = {
         "$output{DomainName}" = "$input{DomainName}"
         "$output{ClientId}"   = "$input{ClientId}"
       }
     }
   }
-
 }

@@ -41,6 +41,7 @@ ingester aws_elb module {
       query = "sum by (LoadBalancerName, tag_namespace, tag_service) (throughput{LoadBalancerName!=''})"
     }
   }
+
   gauge "surge_queue_length" {
     index       = 2
     input_unit  = "count"
@@ -48,9 +49,10 @@ ingester aws_elb module {
     aggregator  = "MAX"
 
     source prometheus "surge_queue_length" {
-      query = "max by (LoadBalancerName, tag_namespace, tag_service) (surge_queue_length{LoadBalancerName!=''})"    
+      query = "max by (LoadBalancerName, tag_namespace, tag_service) (surge_queue_length{LoadBalancerName!=''})"
     }
   }
+
   gauge "connection_errors" {
     index       = 3
     input_unit  = "count"
@@ -58,9 +60,10 @@ ingester aws_elb module {
     aggregator  = "SUM"
 
     source prometheus "connection_errors" {
-      query = "sum by (LoadBalancerName, tag_namespace, tag_service) (connection_errors{LoadBalancerName!=''})" 
+      query = "sum by (LoadBalancerName, tag_namespace, tag_service) (connection_errors{LoadBalancerName!=''})"
     }
   }
+
   gauge "unhealthy_hosts" {
     index       = 4
     input_unit  = "count"
@@ -104,6 +107,7 @@ ingester aws_elb module {
       query = "sum by (LoadBalancerName, tag_namespace, tag_service) (lb_5xx{LoadBalancerName!=''})"
     }
   }
+
   gauge lb_4xx {
     index       = 7
     input_unit  = "count"
@@ -114,6 +118,7 @@ ingester aws_elb module {
       query = "sum by (LoadBalancerName, tag_namespace, tag_service) (lb_4xx{LoadBalancerName!=''})"
     }
   }
+
   latency "latency_histo" {
     index        = 6
     input_unit   = "ms"

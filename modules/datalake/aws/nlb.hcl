@@ -39,7 +39,6 @@ ingester aws_nlb module {
 
     source prometheus "throughput" {
       query = "max by (LoadBalancer, tag_namespace, tag_service) (throughput{LoadBalancer!=''})"
-      
     }
   }
 
@@ -59,17 +58,18 @@ ingester aws_nlb module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "MAX"
+
     source prometheus "concurrent_connections" {
       query = "max by (LoadBalancer, tag_namespace, tag_service) (concurrent_connections{LoadBalancer!=''})"
     }
   }
-
 
   gauge "processed_bytes" {
     index       = 3
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source prometheus "processed_bytes" {
       query = "sum by (LoadBalancer, tag_namespace, tag_service) (processed_bytes{LoadBalancer!=''})"
     }
@@ -80,6 +80,7 @@ ingester aws_nlb module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source prometheus "consumed_lcus" {
       query = "sum by (LoadBalancer, tag_namespace, tag_service) (consumed_lcus{LoadBalancer!=''})"
     }
@@ -90,6 +91,7 @@ ingester aws_nlb module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source prometheus "tcp_client_reset_count" {
       query = "sum by (LoadBalancer, tag_namespace, tag_service) (tcp_client_reset_count{LoadBalancer!=''})"
     }
@@ -100,6 +102,7 @@ ingester aws_nlb module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source prometheus "tcp_elb_reset_count" {
       query = "sum by (LoadBalancer, tag_namespace, tag_service) (tcp_elb_reset_count{LoadBalancer!=''})"
     }
@@ -110,6 +113,7 @@ ingester aws_nlb module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source prometheus "tcp_target_reset_count" {
       query = "sum by (LoadBalancer, tag_namespace, tag_service) (tcp_target_reset_count{LoadBalancer!=''})"
     }
@@ -120,10 +124,9 @@ ingester aws_nlb module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source prometheus "target_tls_error" {
       query = "sum by (LoadBalancer, tag_namespace, tag_service) (target_tls_error{LoadBalancer!=''})"
     }
   }
-
-
 }
