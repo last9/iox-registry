@@ -5,7 +5,7 @@ ingester aws_nlb module {
   resolution = 60
   lag        = 60
 
-  inputs = "$input{inputs}"
+  inputs = "[]"
 
   label {
     type = "service"
@@ -19,12 +19,12 @@ ingester aws_nlb module {
 
   physical_component {
     type = "nlb"
-    name = "$input{LoadBalancer}"
+    name = "NLB"
   }
 
   data_for_graph_node {
-    type = "nlb"
-    name = "$input{LoadBalancer}"
+    type = "nlb_logical"
+    name = "$output{LoadBalancer}"
   }
 
   using = {
@@ -38,10 +38,8 @@ ingester aws_nlb module {
     aggregator  = "MAX"
 
     source prometheus "throughput" {
-      query = "max by (LoadBalancer, tag_namespace, tag_service) (throughput)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+      query = "max by (LoadBalancer, tag_namespace, tag_service) (throughput{LoadBalancer!=''})"
+      
     }
   }
 
@@ -52,10 +50,7 @@ ingester aws_nlb module {
     aggregator  = "SUM"
 
     source prometheus "new_connections" {
-      query = "sum by (LoadBalancer, tag_namespace, tag_service) (new_connections)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+      query = "sum by (LoadBalancer, tag_namespace, tag_service) (new_connections{LoadBalancer!=''})"
     }
   }
 
@@ -65,10 +60,7 @@ ingester aws_nlb module {
     output_unit = "rpm"
     aggregator  = "MAX"
     source prometheus "concurrent_connections" {
-      query = "max by (LoadBalancer, tag_namespace, tag_service) (concurrent_connections)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+      query = "max by (LoadBalancer, tag_namespace, tag_service) (concurrent_connections{LoadBalancer!=''})"
     }
   }
 
@@ -79,10 +71,7 @@ ingester aws_nlb module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "processed_bytes" {
-      query = "sum by (LoadBalancer, tag_namespace, tag_service) (processed_bytes)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+      query = "sum by (LoadBalancer, tag_namespace, tag_service) (processed_bytes{LoadBalancer!=''})"
     }
   }
 
@@ -92,10 +81,7 @@ ingester aws_nlb module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "consumed_lcus" {
-      query = "sum by (LoadBalancer, tag_namespace, tag_service) (consumed_lcus)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+      query = "sum by (LoadBalancer, tag_namespace, tag_service) (consumed_lcus{LoadBalancer!=''})"
     }
   }
 
@@ -105,10 +91,7 @@ ingester aws_nlb module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "tcp_client_reset_count" {
-      query = "sum by (LoadBalancer, tag_namespace, tag_service) (tcp_client_reset_count)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+      query = "sum by (LoadBalancer, tag_namespace, tag_service) (tcp_client_reset_count{LoadBalancer!=''})"
     }
   }
 
@@ -118,10 +101,7 @@ ingester aws_nlb module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "tcp_elb_reset_count" {
-      query = "sum by (LoadBalancer, tag_namespace, tag_service) (tcp_elb_reset_count)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+      query = "sum by (LoadBalancer, tag_namespace, tag_service) (tcp_elb_reset_count{LoadBalancer!=''})"
     }
   }
 
@@ -131,10 +111,7 @@ ingester aws_nlb module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "tcp_target_reset_count" {
-      query = "sum by (LoadBalancer, tag_namespace, tag_service) (tcp_target_reset_count)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+      query = "sum by (LoadBalancer, tag_namespace, tag_service) (tcp_target_reset_count{LoadBalancer!=''})"
     }
   }
 
@@ -144,10 +121,7 @@ ingester aws_nlb module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "target_tls_error" {
-      query = "sum by (LoadBalancer, tag_namespace, tag_service) (target_tls_error)"
-      join_on = {
-        "$output{LoadBalancer}" = "$input{LoadBalancer}"
-      }
+      query = "sum by (LoadBalancer, tag_namespace, tag_service) (target_tls_error{LoadBalancer!=''})"
     }
   }
 

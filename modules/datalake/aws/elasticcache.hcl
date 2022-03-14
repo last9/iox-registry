@@ -5,7 +5,7 @@ ingester aws_elasticache_redis module {
   resolution = 60
   lag        = 60
 
-  inputs = "$input{input}"
+  inputs = "[]"
 
   label {
     type = "service"
@@ -19,12 +19,17 @@ ingester aws_elasticache_redis module {
 
   physical_component {
     type = "elasticache_cluster"
-    name = "$input{CacheClusterId}"
+    name = "ELASTICACHE_CLUSTER"
   }
 
   physical_address {
     type = "elasticache_node"
     name = "0001"
+  }
+
+  data_for_graph_node {
+    type = "elasticache_database"
+    name = "$output{CacheClusterId}"
   }
 
   using = {
@@ -38,12 +43,7 @@ ingester aws_elasticache_redis module {
     aggregator  = "AVG"
 
     source prometheus "curr_connections" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (curr_connections)"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (curr_connections{CacheClusterId!='',CacheNodeId!=''})"
     }
   }
 
@@ -54,12 +54,7 @@ ingester aws_elasticache_redis module {
     aggregator  = "AVG"
 
     source prometheus "new_connections" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (new_connections)"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (new_connections{CacheClusterId!='',CacheNodeId!=''})"
     }
   }
 
@@ -70,12 +65,7 @@ ingester aws_elasticache_redis module {
     aggregator  = "MAX"
 
     source prometheus "curr_items" {
-      query = "max by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (curr_items)"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "max by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (curr_items{CacheClusterId!='',CacheNodeId!=''})"
     }
   }
 
@@ -86,12 +76,7 @@ ingester aws_elasticache_redis module {
     aggregator  = "MIN"
 
     source prometheus "cache_hit_rate" {
-      query = "min by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (cache_hit_rate)"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "min by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (cache_hit_rate{CacheClusterId!='',CacheNodeId!=''})"
     }
   }
 
@@ -102,12 +87,7 @@ ingester aws_elasticache_redis module {
     aggregator  = "MAX"
 
     source prometheus "cache_hits" {
-      query = "max by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (cache_hits)"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "max by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (cache_hits{CacheClusterId!='',CacheNodeId!=''})"
     }
   }
 
@@ -118,12 +98,7 @@ ingester aws_elasticache_redis module {
     aggregator  = "MAX"
 
     source prometheus "cache_misses" {
-      query = "max by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (cache_misses)"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "max by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (cache_misses{CacheClusterId!='',CacheNodeId!=''})"
     }
   }
 
@@ -134,12 +109,7 @@ ingester aws_elasticache_redis module {
     aggregator  = "SUM"
 
     source prometheus "evictions" {
-      query = "sum by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (evictions)"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "sum by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (evictions{CacheClusterId!='',CacheNodeId!=''})"
     }
   }
 
@@ -152,48 +122,23 @@ ingester aws_elasticache_redis module {
     multiplier   = 0.001
 
     source prometheus "throughput" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='throughput'})"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='throughput',CacheClusterId!='',CacheNodeId!=''})"
     }
 
     source prometheus "p50" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p50'})"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p50',CacheClusterId!='',CacheNodeId!=''})"
     }
 
     source prometheus "p75" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p75'})"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p75',CacheClusterId!='',CacheNodeId!=''})"
     }
 
     source prometheus "p90" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p90'})"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p90',CacheClusterId!='',CacheNodeId!=''})"
     }
 
     source prometheus "p99" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p99'})"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p99',CacheClusterId!='',CacheNodeId!=''})"
     }
   }
 }
@@ -205,7 +150,7 @@ ingester aws_elasticache_cluster module {
   resolution = 60
   lag        = 60
 
-  inputs = "$input{input}"
+  inputs = "[]"
 
   label {
     type = "service"
@@ -219,12 +164,12 @@ ingester aws_elasticache_cluster module {
 
   physical_component {
     type = "elasticache_cluster"
-    name = "$input{CacheClusterId}"
+    name = "ELASTICACHE_CLUSTER"
   }
 
   data_for_graph_node {
-    type = "elasticache_cluster"
-    name = "$input{CacheClusterId}"
+    type = "elasticache_cluster_logical"
+    name = "$output{CacheClusterId}"
   }
 
   using = {
@@ -239,11 +184,6 @@ ingester aws_elasticache_cluster module {
 
     source prometheus "replication_lag" {
       query = "max by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (replication_lag)"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
     }
   }
 
@@ -254,12 +194,7 @@ ingester aws_elasticache_cluster module {
     aggregator  = "SUM"
 
     source prometheus "bytes_out" {
-      query = "sum by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (bytes_out)"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "sum by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (bytes_out{CacheClusterId!='',CacheNodeId!=''})"
     }
   }
 
@@ -270,12 +205,7 @@ ingester aws_elasticache_cluster module {
     aggregator  = "SUM"
 
     source prometheus "bytes_in" {
-      query = "sum by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (bytes_in)"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "sum by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (bytes_in{CacheClusterId!='',CacheNodeId!=''})"
     }
   }
 
@@ -286,12 +216,7 @@ ingester aws_elasticache_cluster module {
     aggregator  = "AVG"
 
     source prometheus "cpu_used" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (cpu_used)"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (cpu_used{CacheClusterId!='',CacheNodeId!=''})"
     }
   }
 
@@ -302,12 +227,7 @@ ingester aws_elasticache_cluster module {
     aggregator  = "AVG"
 
     source prometheus "memory_used" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (memory_used)"
-
-      join_on = {
-        "$output{CacheClusterId}" = "$input{CacheClusterId}"
-        "$output{CacheNodeId}"    = "0001"
-      }
+      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (memory_used{CacheClusterId!='',CacheNodeId!=''})"
     }
   }
 }

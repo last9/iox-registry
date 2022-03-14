@@ -5,7 +5,7 @@ ingester aws_rds module {
   resolution = 60
   lag        = 60
 
-  inputs = "$input{input}"
+  inputs = "[]"
 
   label {
     type = "service"
@@ -19,12 +19,12 @@ ingester aws_rds module {
 
   physical_component {
     type = "rds"
-    name = "$input{DBInstanceIdentifier}"
+    name = "RDS"
   }
 
   data_for_graph_node {
-    type = "rds_database"
-    name = "$input{DBInstanceIdentifier}-db"
+    type = "rds_logical"
+    name = "$output{DBInstanceIdentifier}"
   }
 
   using = {
@@ -37,11 +37,7 @@ ingester aws_rds module {
     output_unit = "count"
     aggregator  = "MAX"
     source prometheus "connections" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (connections)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (connections{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -52,11 +48,9 @@ ingester aws_rds module {
     aggregator  = "AVG"
 
     source prometheus "cpu" {
-      query = "avg by (DBInstanceIdentifier, tag_namespace, tag_service) (cpu)"
+      query = "avg by (DBInstanceIdentifier, tag_namespace, tag_service) (cpu{DBInstanceIdentifier!=''})"
 
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      
     }
   }
 
@@ -67,11 +61,9 @@ ingester aws_rds module {
     aggregator  = "SUM"
 
     source prometheus "write_iops" {
-      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (write_iops)"
+      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (write_iops{DBInstanceIdentifier!=''})"
 
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      
     }
   }
 
@@ -81,12 +73,10 @@ ingester aws_rds module {
     output_unit = "rpm"
     aggregator  = "SUM"
 
-    source prometheus "write_iops" {
-      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (write_iops)"
+    source prometheus "read_iops" {
+      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (read_iops{DBInstanceIdentifier!=''})"
 
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      
     }
   }
 
@@ -96,12 +86,10 @@ ingester aws_rds module {
     output_unit = "rpm"
     aggregator  = "SUM"
 
-    source prometheus "write_iops" {
-      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (read_latency)"
+    source prometheus "read_latency" {
+      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (read_latency{DBInstanceIdentifier!=''})"
 
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      
     }
   }
 
@@ -111,12 +99,10 @@ ingester aws_rds module {
     output_unit = "rpm"
     aggregator  = "SUM"
 
-    source prometheus "write_iops" {
-      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (write_latency)"
+    source prometheus "write_latency" {
+      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (write_latency{DBInstanceIdentifier!=''})"
 
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      
     }
   }
 
@@ -126,12 +112,10 @@ ingester aws_rds module {
     output_unit = "rpm"
     aggregator  = "SUM"
 
-    source prometheus "write_iops" {
-      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (network_in)"
+    source prometheus "network_in" {
+      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (network_in{DBInstanceIdentifier!=''})"
 
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      
     }
   }
 
@@ -141,12 +125,10 @@ ingester aws_rds module {
     output_unit = "rpm"
     aggregator  = "SUM"
 
-    source prometheus "write_iops" {
-      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (network_out)"
+    source prometheus "network_out" {
+      query = "sum by (DBInstanceIdentifier, tag_namespace, tag_service) (network_out{DBInstanceIdentifier!=''})"
 
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      
     }
   }
 
@@ -156,12 +138,10 @@ ingester aws_rds module {
     output_unit = "rpm"
     aggregator  = "SUM"
 
-    source prometheus "write_iops" {
-      query = "sum (DBInstanceIdentifier, tag_namespace, tag_service) (free_space)"
+    source prometheus "free_space" {
+      query = "sum (DBInstanceIdentifier, tag_namespace, tag_service) (free_space{DBInstanceIdentifier!=''})"
 
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      
     }
   }
 
@@ -171,12 +151,10 @@ ingester aws_rds module {
     output_unit = "rpm"
     aggregator  = "SUM"
 
-    source prometheus "write_iops" {
-      query = "sum (DBInstanceIdentifier, tag_namespace, tag_service) (replica_lag)"
+    source prometheus "replica_lag" {
+      query = "sum (DBInstanceIdentifier, tag_namespace, tag_service) (replica_lag{DBInstanceIdentifier!=''})"
 
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      
     }
   }
 
@@ -186,27 +164,8 @@ ingester aws_rds module {
     output_unit = "rpm"
     aggregator  = "SUM"
 
-    source prometheus "write_iops" {
-      query = "sum (DBInstanceIdentifier, tag_namespace, tag_service) (queue_depth)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
-    }
-  }
-
-  gauge "queue_depth" {
-    index       = 13
-    input_unit  = "count"
-    output_unit = "rpm"
-    aggregator  = "SUM"
-
-    source prometheus "write_iops" {
-      query = "sum (DBInstanceIdentifier, tag_namespace, tag_service) (queue_depth)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+    source prometheus "queue_depth" {
+      query = "sum (DBInstanceIdentifier, tag_namespace, tag_service) (queue_depth{DBInstanceIdentifier!=''})" 
     }
   }
 }

@@ -39,7 +39,7 @@ ingester aws_ec2 module {
     aggregator  = "AVG"
 
     source prometheus "cpu" {
-      query = "avg by (InstanceId, tag_namespace, tag_service) (cpu)"
+      query = "avg by (InstanceId, tag_namespace, tag_service) (cpu{InstanceId!=''})"
     }
   }
 
@@ -50,7 +50,7 @@ ingester aws_ec2 module {
     aggregator  = "SUM"
 
     source prometheus "disk_read_ops" {
-      query = "sum by (InstanceId, tag_namespace, tag_service) (disk_read_ops)"
+      query = "sum by (InstanceId, tag_namespace, tag_service) (disk_read_ops{InstanceId!=''})"
     }
   }
 
@@ -61,7 +61,7 @@ ingester aws_ec2 module {
     aggregator  = "SUM"
 
     source prometheus "disk_write_ops" {
-      query = "sum by (InstanceId, tag_namespace, tag_service) (disk_write_ops)"
+      query = "sum by (InstanceId, tag_namespace, tag_service) (disk_write_ops{InstanceId!=''})"
     }
   }
 
@@ -72,7 +72,7 @@ ingester aws_ec2 module {
     aggregator  = "SUM"
 
     source prometheus "network_in" {
-      query = "sum by (InstanceId, tag_namespace, tag_service) (network_in)"
+      query = "sum by (InstanceId, tag_namespace, tag_service) (network_in{InstanceId!=''})"
     }
   }
 
@@ -83,7 +83,7 @@ ingester aws_ec2 module {
     aggregator  = "SUM"
 
     source prometheus "network_out" {
-      query = "sum by (InstanceId, tag_namespace, tag_service) (network_out)"
+      query = "sum by (InstanceId, tag_namespace, tag_service) (network_out{InstanceId!=''})"
     }
   }
 
@@ -94,7 +94,7 @@ ingester aws_ec2 module {
     aggregator  = "SUM"
 
     source prometheus "status_check_failed" {
-      query = "sum by (InstanceId, tag_namespace, tag_service) (status_check_failed)"
+      query = "sum by (InstanceId, tag_namespace, tag_service) (status_check_failed{InstanceId!=''})"
     }
   }
 
@@ -105,7 +105,7 @@ ingester aws_ec2 module {
     aggregator  = "MIN"
 
     source prometheus "cpu_balance" {
-      query = "min by (InstanceId, tag_namespace, tag_service) (cpu_balance)"
+      query = "min by (InstanceId, tag_namespace, tag_service) (cpu_balance{InstanceId!=''})"
     }
   }
 }
