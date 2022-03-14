@@ -28,7 +28,7 @@ ingester aws_nlb module {
   }
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   gauge "throughput" {

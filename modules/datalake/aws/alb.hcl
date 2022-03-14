@@ -39,8 +39,6 @@ ingester aws_alb module {
 
     source prometheus "throughput" {
       query = "sum by (LoadBalancer, tag_service, tag_namespace) (throughput{LoadBalancer!=''})"
-
-      
     }
   }
 
@@ -73,7 +71,7 @@ ingester aws_alb module {
     aggregator  = "SUM"
 
     source prometheus "processed_bytes" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (processed_bytes{LoadBalancer!=''})" 
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (processed_bytes{LoadBalancer!=''})"
     }
   }
 
@@ -84,7 +82,7 @@ ingester aws_alb module {
     aggregator  = "SUM"
 
     source prometheus "lcu" {
-      query = "sum by (LoadBalancer, tag_service, tag_namespace) (lcu{LoadBalancer!=''})" 
+      query = "sum by (LoadBalancer, tag_service, tag_namespace) (lcu{LoadBalancer!=''})"
     }
   }
 
@@ -148,7 +146,7 @@ ingester aws_alb module {
     }
 
     source prometheus "p75" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p75',LoadBalancer!=''})" 
+      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p75',LoadBalancer!=''})"
     }
 
     source prometheus "p90" {
@@ -165,7 +163,6 @@ ingester aws_alb module {
   }
 }
 
-
 ingester aws_alb_tg module {
   frequency  = 60
   lookback   = 600
@@ -174,7 +171,7 @@ ingester aws_alb_tg module {
   lag        = 60
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   inputs = "[]"
@@ -209,10 +206,9 @@ ingester aws_alb_tg module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source prometheus "throughput" {
       query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (throughput{LoadBalancer!='',TargetGroup!=''})"
-
-      
     }
   }
 
@@ -222,12 +218,13 @@ ingester aws_alb_tg module {
     output_unit  = "ms"
     aggregator   = "PERCENTILE"
     error_margin = 0.05
+
     source prometheus "throughput" {
-      query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (throughput{LoadBalancer!='',TargetGroup!=''})" 
+      query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (throughput{LoadBalancer!='',TargetGroup!=''})"
     }
 
     source prometheus "p50" {
-      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p50',LoadBalancer!='',TargetGroup!=''})" 
+      query = "avg by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (latency{latency='p50',LoadBalancer!='',TargetGroup!=''})"
     }
 
     source prometheus "p75" {
@@ -252,6 +249,7 @@ ingester aws_alb_tg module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source prometheus "status_500" {
       query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (status_5xx)"
     }
@@ -262,6 +260,7 @@ ingester aws_alb_tg module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source prometheus "status_400" {
       query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (status_4xx)"
     }
@@ -272,6 +271,7 @@ ingester aws_alb_tg module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source prometheus "status_300" {
       query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (status_3xx)"
     }
@@ -282,6 +282,7 @@ ingester aws_alb_tg module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source prometheus "status_200" {
       query = "sum by (LoadBalancer, TargetGroup, tag_service, tag_namespace) (status_2xx)"
     }

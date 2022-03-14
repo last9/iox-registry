@@ -28,7 +28,7 @@ ingester aws_rds module {
   }
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   gauge "connections" {

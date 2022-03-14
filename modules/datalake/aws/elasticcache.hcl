@@ -33,7 +33,7 @@ ingester aws_elasticache_redis module {
   }
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   gauge "curr_connections" {
@@ -173,7 +173,7 @@ ingester aws_elasticache_cluster module {
   }
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   gauge "replication_lag" {

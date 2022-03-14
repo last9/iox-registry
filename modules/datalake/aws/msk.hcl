@@ -33,7 +33,7 @@ ingester aws_msk_topic_per_broker module {
   }
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   gauge "bytes_in" {
@@ -143,7 +143,7 @@ ingester aws_msk_topic_per_consumer_grp module {
   }
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   gauge "offset_lag" {
@@ -206,7 +206,7 @@ ingester aws_msk_partition module {
 
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   gauge "offset_lag" {
@@ -274,7 +274,7 @@ ingester aws_msk_cluster module {
   }
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   gauge "active_controller_count" {
@@ -341,7 +341,7 @@ ingester aws_msk_broker module {
   }
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   gauge "mem_free" {

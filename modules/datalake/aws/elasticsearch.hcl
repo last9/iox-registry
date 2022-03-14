@@ -26,7 +26,7 @@ ingester aws_elasticsearch module {
   }
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   inputs = "$input{inputs}"
@@ -252,7 +252,7 @@ ingester aws_elasticsearch_master module {
   ]
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   inputs = "$input{inputs}"

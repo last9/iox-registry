@@ -21,7 +21,7 @@ ingester aws_sqs module {
   }
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   inputs = "$input{inputs}"
