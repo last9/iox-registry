@@ -275,7 +275,6 @@ ingester aws_eks_containerinsights_node module {
   }
 }
 
-
 ingester aws_eks_containerinsights_service module {
   frequency  = 60
   lookback   = 600
@@ -429,15 +428,14 @@ ingester aws_eks_containerinsights_service module {
   }
 }
 
-
-ingester aws_eks_containerinsights_eks_cluster module {
+ingester aws_eks_cluster module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
   resolution = 60
   lag        = 60
 
-  inputs = "$input{input}"
+  inputs = "[]"
 
   using = {
     "default" = "$input{using}"
@@ -455,12 +453,12 @@ ingester aws_eks_containerinsights_eks_cluster module {
 
   physical_component {
     type = "eks_cluster"
-    name = "$input{ClusterName}"
+    name = "EKS_CLUSTER"
   }
 
   data_for_graph_node {
-    type = "eks_cluster"
-    name = "$input{ClusterName}"
+    type = "eks_cluster_logical"
+    name = "$output{ClusterName}"
   }
 
   gauge "total_nodes" {
@@ -470,11 +468,7 @@ ingester aws_eks_containerinsights_eks_cluster module {
     aggregator  = "MAX"
 
     source prometheus "total_nodes" {
-      query = "max by (ClusterName, tag_namespace, tag_service) (total_nodes)"
-
-      join_on = {
-        "$output{ClusterName}" = "$input{ClusterName}"
-      }
+      query = "max by (ClusterName, tag_namespace, tag_service) (total_nodes{ClusterName!=''})"
     }
   }
 
@@ -485,11 +479,7 @@ ingester aws_eks_containerinsights_eks_cluster module {
     aggregator  = "MAX"
 
     source prometheus "failed_nodes" {
-      query = "max by (ClusterName, tag_namespace, tag_service) (failed_nodes)"
-
-      join_on = {
-        "$output{ClusterName}" = "$input{ClusterName}"
-      }
+      query = "max by (ClusterName, tag_namespace, tag_service) (failed_nodes{ClusterName!=''})"
     }
   }
 
@@ -500,11 +490,7 @@ ingester aws_eks_containerinsights_eks_cluster module {
     aggregator  = "AVG"
 
     source prometheus "cpu_utilization" {
-      query = "avg by (ClusterName, tag_namespace, tag_service) (cpu_utilization)"
-
-      join_on = {
-        "$output{ClusterName}" = "$input{ClusterName}"
-      }
+      query = "avg by (ClusterName, tag_namespace, tag_service) (cpu_utilization{ClusterName!=''})"
     }
   }
 
@@ -515,11 +501,7 @@ ingester aws_eks_containerinsights_eks_cluster module {
     aggregator  = "AVG"
 
     source prometheus "memory_utilization" {
-      query = "avg by (ClusterName, tag_namespace, tag_service) (memory_utilization)"
-
-      join_on = {
-        "$output{ClusterName}" = "$input{ClusterName}"
-      }
+      query = "avg by (ClusterName, tag_namespace, tag_service) (memory_utilization{ClusterName!=''})"
     }
   }
 
@@ -530,11 +512,7 @@ ingester aws_eks_containerinsights_eks_cluster module {
     aggregator  = "AVG"
 
     source prometheus "disk_used" {
-      query = "avg by (ClusterName, tag_namespace, tag_service) (disk_used)"
-
-      join_on = {
-        "$output{ClusterName}" = "$input{ClusterName}"
-      }
+      query = "avg by (ClusterName, tag_namespace, tag_service) (disk_used{ClusterName!=''})"
     }
   }
 }

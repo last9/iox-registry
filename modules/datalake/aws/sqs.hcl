@@ -21,7 +21,7 @@ ingester aws_sqs module {
   }
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   inputs = "$input{inputs}"
@@ -34,6 +34,7 @@ ingester aws_sqs module {
 
     source prometheus "sent" {
       query = "sum by (QueueName, tag_service) (sent)"
+
       join_on = {
         "$output{QueueName}" = "$input{QueueName}"
       }
@@ -48,6 +49,7 @@ ingester aws_sqs module {
 
     source prometheus "received" {
       query = "sum by (QueueName, tag_service) (received)"
+
       join_on = {
         "$output{QueueName}" = "$input{QueueName}"
       }
@@ -62,6 +64,7 @@ ingester aws_sqs module {
 
     source prometheus "visible" {
       query = "sum by (QueueName, tag_service) (visible)"
+
       join_on = {
         "$output{QueueName}" = "$input{QueueName}"
       }
@@ -73,8 +76,10 @@ ingester aws_sqs module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
+
     source prometheus "empty_receives" {
       query = "sum by (QueueName, tag_service) (empty_receives)"
+
       join_on = {
         "$output{QueueName}" = "$input{QueueName}"
       }
@@ -86,8 +91,10 @@ ingester aws_sqs module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
+
     source prometheus "deleted" {
       query = "sum by (QueueName, tag_service) (deleted)"
+
       join_on = {
         "$output{QueueName}" = "$input{QueueName}"
       }
@@ -102,6 +109,7 @@ ingester aws_sqs module {
 
     source prometheus "delayed" {
       query = "sum by (QueueName, tag_service) (delayed)"
+
       join_on = {
         "$output{QueueName}" = "$input{QueueName}"
       }
@@ -113,8 +121,10 @@ ingester aws_sqs module {
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
+
     source prometheus "oldest" {
       query = "max by (QueueName, tag_service) (oldest)"
+
       join_on = {
         "$output{QueueName}" = "$input{QueueName}"
       }

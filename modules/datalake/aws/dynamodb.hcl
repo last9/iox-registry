@@ -5,7 +5,7 @@ ingester aws_dynamodb_table_operation module {
   resolution = 60
   lag        = 60
 
-  inputs = "$input{input}"
+  inputs = "[]"
 
   using = {
     "default" = "$input{using}"
@@ -16,7 +16,6 @@ ingester aws_dynamodb_table_operation module {
     name = "$output{tag_namespace}"
   }
 
-
   label {
     type = "service"
     name = "$output{tag_service}"
@@ -24,14 +23,13 @@ ingester aws_dynamodb_table_operation module {
 
   physical_component {
     type = "dynamodb"
-    name = "$input{TableName}"
+    name = "DYNAMODB_OPERATION"
   }
 
   data_for_graph_node {
     type = "dynamodb_operation"
-    name = "$input{Operation}"
+    name = "$output{Operation}"
   }
-
 
   gauge "system_errors" {
     index       = 1
@@ -40,11 +38,7 @@ ingester aws_dynamodb_table_operation module {
     aggregator  = "SUM"
 
     source prometheus "system_errors" {
-      query = "sum by (TableName, Operation, tag_namespace, tag_service) (system_errors)"
-      join_on = {
-        "$output{TableName}" = "$input{TableName}"
-        "$output{Operation}" = "$input{Operation}"
-      }
+      query = "sum by (TableName, Operation, tag_namespace, tag_service) (system_errors{TableName!='',Operation!=''})"
     }
   }
 
@@ -55,11 +49,7 @@ ingester aws_dynamodb_table_operation module {
     aggregator  = "MAX"
 
     source prometheus "returned_items" {
-      query = "max by (TableName, Operation, tag_namespace, tag_service) (returned_items)"
-      join_on = {
-        "$output{TableName}" = "$input{TableName}"
-        "$output{Operation}" = "$input{Operation}"
-      }
+      query = "max by (TableName, Operation, tag_namespace, tag_service) (returned_items{TableName!='',Operation!=''})"
     }
   }
 
@@ -70,11 +60,7 @@ ingester aws_dynamodb_table_operation module {
     aggregator  = "SUM"
 
     source prometheus "latency_update" {
-      query = "sum by (TableName, Operation, tag_namespace, tag_service) (latency_update)"
-      join_on = {
-        "$output{TableName}" = "$input{TableName}"
-        "$output{Operation}" = "$input{Operation}"
-      }
+      query = "sum by (TableName, Operation, tag_namespace, tag_service) (latency_update{TableName!='',Operation!=''})"
     }
   }
 
@@ -85,15 +71,10 @@ ingester aws_dynamodb_table_operation module {
     aggregator  = "AVG"
 
     source prometheus "latency" {
-      query = "avg by (TableName, Operation, tag_namespace, tag_service) (latency)"
-      join_on = {
-        "$output{TableName}" = "$input{TableName}"
-        "$output{Operation}" = "$input{Operation}"
-      }
+      query = "avg by (TableName, Operation, tag_namespace, tag_service) (latency{TableName!='',Operation!=''})"
     }
   }
 }
-
 
 ingester aws_dynamodb_table module {
   frequency  = 60
@@ -102,7 +83,7 @@ ingester aws_dynamodb_table module {
   resolution = 60
   lag        = 60
 
-  inputs = "$input{input}"
+  inputs = "[]"
 
   using = {
     "default" = "$input{using}"
@@ -113,7 +94,6 @@ ingester aws_dynamodb_table module {
     name = "$output{tag_namespace}"
   }
 
-
   label {
     type = "service"
     name = "$output{tag_service}"
@@ -121,12 +101,12 @@ ingester aws_dynamodb_table module {
 
   physical_component {
     type = "dynamodb"
-    name = "$input{TableName}"
+    name = "DYNAMODB"
   }
 
   data_for_graph_node {
-    type = "dynamodb"
-    name = "$input{TableName}"
+    type = "dynamodb_logical"
+    name = "$output{TableName}"
   }
 
   gauge "rcu" {
@@ -136,10 +116,7 @@ ingester aws_dynamodb_table module {
     aggregator  = "SUM"
 
     source prometheus "rcu" {
-      query = "sum by (TableName, tag_namespace, tag_service) (rcu)"
-      join_on = {
-        "$output{TableName}" = "$input{TableName}"
-      }
+      query = "sum by (TableName, tag_namespace, tag_service) (rcu{TableName!=''})"
     }
   }
 
@@ -150,10 +127,7 @@ ingester aws_dynamodb_table module {
     aggregator  = "SUM"
 
     source prometheus "wcu" {
-      query = "sum by (TableName, tag_namespace, tag_service) (wcu)"
-      join_on = {
-        "$output{TableName}" = "$input{TableName}"
-      }
+      query = "sum by (TableName, tag_namespace, tag_service) (wcu{TableName!=''})"
     }
   }
 
@@ -164,10 +138,7 @@ ingester aws_dynamodb_table module {
     aggregator  = "SUM"
 
     source prometheus "read_throttled" {
-      query = "sum by (TableName, tag_namespace, tag_service) (read_throttled)"
-      join_on = {
-        "$output{TableName}" = "$input{TableName}"
-      }
+      query = "sum by (TableName, tag_namespace, tag_service) (read_throttled{TableName!=''})"
     }
   }
 
@@ -178,10 +149,7 @@ ingester aws_dynamodb_table module {
     aggregator  = "SUM"
 
     source prometheus "write_throttled" {
-      query = "sum by (TableName, tag_namespace, tag_service) (write_throttled)"
-      join_on = {
-        "$output{TableName}" = "$input{TableName}"
-      }
+      query = "sum by (TableName, tag_namespace, tag_service) (write_throttled{TableName!=''})"
     }
   }
 }

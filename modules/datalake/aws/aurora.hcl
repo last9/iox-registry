@@ -36,6 +36,7 @@ ingester aws_aurora_instance_logical module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "MAX"
+
     source prometheus "connections" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (connections)"
 
@@ -50,6 +51,7 @@ ingester aws_aurora_instance_logical module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "AVG"
+
     source prometheus "read_throughput" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (read_throughput)"
 
@@ -59,12 +61,12 @@ ingester aws_aurora_instance_logical module {
     }
   }
 
-
   gauge "read_latency" {
     index       = 3
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
+
     source prometheus "read_latency" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (read_latency)"
 
@@ -79,6 +81,7 @@ ingester aws_aurora_instance_logical module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "AVG"
+
     source prometheus "write_throughput" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (write_throughput)"
 
@@ -93,6 +96,7 @@ ingester aws_aurora_instance_logical module {
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
+
     source prometheus "write_latency" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (write_latency)"
 
@@ -107,6 +111,7 @@ ingester aws_aurora_instance_logical module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "AVG"
+
     source prometheus "update_throughput" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (update_throughput)"
 
@@ -121,6 +126,7 @@ ingester aws_aurora_instance_logical module {
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
+
     source prometheus "update_latency" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (update_latency)"
 
@@ -135,6 +141,7 @@ ingester aws_aurora_instance_logical module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "AVG"
+
     source prometheus "delete_throughput" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (delete_throughput)"
 
@@ -149,6 +156,7 @@ ingester aws_aurora_instance_logical module {
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
+
     source prometheus "delete_latency" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (delete_latency)"
 
@@ -163,6 +171,7 @@ ingester aws_aurora_instance_logical module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
+
     source prometheus "deadlocks" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (deadlocks)"
 
@@ -211,6 +220,7 @@ ingester aws_aurora_instance_physical module {
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
+
     source prometheus "network_in" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (network_in)"
 
@@ -225,6 +235,7 @@ ingester aws_aurora_instance_physical module {
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
+
     source prometheus "network_out" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (network_out)"
 
@@ -239,6 +250,7 @@ ingester aws_aurora_instance_physical module {
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
+
     source prometheus "cpu" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (cpu)"
 
@@ -253,6 +265,7 @@ ingester aws_aurora_instance_physical module {
     input_unit  = "bytes"
     output_unit = "bytes"
     aggregator  = "MIN"
+
     source prometheus "free_space" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (free_space)"
 
@@ -267,6 +280,7 @@ ingester aws_aurora_instance_physical module {
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
+
     source prometheus "replica_lag" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (replica_lag)"
 
@@ -281,6 +295,7 @@ ingester aws_aurora_instance_physical module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
+
     source prometheus "queue_depth" {
       query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (queue_depth)"
 

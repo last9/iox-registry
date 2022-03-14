@@ -16,7 +16,6 @@ ingester aws_lambda module {
     name = "$output{tag_namespace}"
   }
 
-
   label {
     type = "service"
     name = "$output{tag_service}"
@@ -40,6 +39,7 @@ ingester aws_lambda module {
 
     source prometheus "invocations" {
       query = "sum by (FunctionName, tag_namespace, tag_service) (invocations)"
+
       join_on = {
         "$output{FunctionName}" = "$input{FunctionName}"
       }
@@ -56,6 +56,7 @@ ingester aws_lambda module {
 
     source prometheus "throughput" {
       query = "avg by (FunctionName, tag_namespace, tag_service) (latency_histo{le='throughput'})"
+
       join_on = {
         "$output{FunctionName}" = "$input{FunctionName}"
       }
@@ -63,6 +64,7 @@ ingester aws_lambda module {
 
     source prometheus "p50" {
       query = "avg by (FunctionName, tag_namespace, tag_service) (latency_histo{le='p50'})"
+
       join_on = {
         "$output{FunctionName}" = "$input{FunctionName}"
       }
@@ -70,6 +72,7 @@ ingester aws_lambda module {
 
     source prometheus "p75" {
       query = "avg by (FunctionName, tag_namespace, tag_service) (latency_histo{le='p75'})"
+
       join_on = {
         "$output{FunctionName}" = "$input{FunctionName}"
       }
@@ -77,6 +80,7 @@ ingester aws_lambda module {
 
     source prometheus "p90" {
       query = "avg by (FunctionName, tag_namespace, tag_service) (latency_histo{le='p90'})"
+
       join_on = {
         "$output{FunctionName}" = "$input{FunctionName}"
       }
@@ -84,6 +88,7 @@ ingester aws_lambda module {
 
     source prometheus "p99" {
       query = "avg by (FunctionName, tag_namespace, tag_service) (latency_histo{le='p99'})"
+
       join_on = {
         "$output{FunctionName}" = "$input{FunctionName}"
       }
@@ -91,6 +96,7 @@ ingester aws_lambda module {
 
     source prometheus "p100" {
       query = "avg by (FunctionName, tag_namespace, tag_service) (latency_histo{le='p100'})"
+
       join_on = {
         "$output{FunctionName}" = "$input{FunctionName}"
       }
@@ -105,6 +111,7 @@ ingester aws_lambda module {
 
     source prometheus "concurrent_executions" {
       query = "sum by (FunctionName, tag_namespace, tag_service) (concurrent_executions)"
+
       join_on = {
         "$output{FunctionName}" = "$input{FunctionName}"
       }
@@ -119,6 +126,7 @@ ingester aws_lambda module {
 
     source prometheus "concurrency_spillover" {
       query = "sum by (FunctionName, tag_namespace, tag_service) (concurrency_spillover)"
+
       join_on = {
         "$output{FunctionName}" = "$input{FunctionName}"
       }
@@ -133,6 +141,7 @@ ingester aws_lambda module {
 
     source prometheus "throttles" {
       query = "sum by (FunctionName, tag_namespace, tag_service) (throttles)"
+
       join_on = {
         "$output{FunctionName}" = "$input{FunctionName}"
       }
@@ -147,10 +156,10 @@ ingester aws_lambda module {
 
     source prometheus "errors" {
       query = "sum by (FunctionName, tag_namespace, tag_service) (errors)"
+
       join_on = {
         "$output{FunctionName}" = "$input{FunctionName}"
       }
     }
   }
-
 }
