@@ -113,32 +113,36 @@ ingester aws_elasticache_redis module {
     }
   }
 
-  latency "latency_histo" {
-    error_margin = 0.05
-    index        = 6
-    input_unit   = "ms"
-    output_unit  = "ms"
-    aggregator   = "PERCENTILE"
-    multiplier   = 0.001
+  gauge "latency_min" {
+    index       = 8
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MIN"
 
-    source prometheus "throughput" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='throughput',CacheClusterId!='',CacheNodeId!=''})"
+    source prometheus "latency_min" {
+      query = "min by (CacheClusterId, CacheNodeId, tag_service, tag_namespace) (latency{CacheClusterId!='',CacheNodeId!='', stat='min'})"
     }
+  }
 
-    source prometheus "p50" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p50',CacheClusterId!='',CacheNodeId!=''})"
+  gauge "latency_max" {
+    index       = 9
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
+
+    source prometheus "latency_max" {
+      query = "max by (CacheClusterId, CacheNodeId, tag_service, tag_namespace) (latency{CacheClusterId!='',CacheNodeId!='', stat='max'})"
     }
+  }
 
-    source prometheus "p75" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p75',CacheClusterId!='',CacheNodeId!=''})"
-    }
+  gauge "latency_avg" {
+    index       = 11
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
 
-    source prometheus "p90" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p90',CacheClusterId!='',CacheNodeId!=''})"
-    }
-
-    source prometheus "p99" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p99',CacheClusterId!='',CacheNodeId!=''})"
+    source prometheus "latency_avg" {
+      query = "avg by (CacheClusterId, CacheNodeId, tag_service, tag_namespace) (latency{CacheClusterId!='',CacheNodeId!='', stat='avg'})"
     }
   }
 }
