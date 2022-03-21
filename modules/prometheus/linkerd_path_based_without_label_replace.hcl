@@ -1,4 +1,4 @@
-ingester prometheus_linkerd_path module {
+ingester prometheus_linkerd_http_path module {
   frequency  = 120
   lookback   = 600
   timeout    = 90

@@ -1,4 +1,4 @@
-ingester prometheus_linkerd_workload module {
+ingester prometheus_linkerd_http_workload module {
   frequency  = 120
   lookback   = 600
   timeout    = 90
@@ -132,7 +132,7 @@ ingester prometheus_linkerd_workload module {
   }
 }
 
-ingester prometheus_linkerd_k8s_pod module {
+ingester prometheus_linkerd_http_k8s_pod module {
   frequency  = 120
   lookback   = 600
   timeout    = 90

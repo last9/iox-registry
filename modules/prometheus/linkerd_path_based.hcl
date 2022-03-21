@@ -1,4 +1,4 @@
-ingester prometheus_linkerd_path module {
+ingester prometheus_linkerd_http_path module {
   frequency  = 120
   lookback   = 600
   timeout    = 90
@@ -38,7 +38,6 @@ ingester prometheus_linkerd_path module {
     aggregator  = "SUM"
 
     source prometheus "throughput" {
-      // query = "label_set(label_replace((sum by (cluster, workload_ns, dst, rt_route) (increase(route_request_total{direction='outbound', dst=~'.*svc.cluster.local.*', rt_route!=''})[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
       query = "label_replace(label_replace((sum by (cluster, workload_ns, dst, rt_route) (increase(route_request_total{direction='outbound', dst=~'.*svc.cluster.local.*', rt_route!=''}[1m]))), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}', '', '')"
 
       join_on = {
@@ -55,8 +54,7 @@ ingester prometheus_linkerd_path module {
 
     source prometheus "status_2xx" {
       histo_column = "status_code"
-      // query        = "label_set(label_replace((sum by (cluster, workload_ns, dst, rt_route, status_code) (increase(route_response_total{direction='outbound', dst=~'.*svc.cluster.local.*', status_code=~'^2.*', rt_route!=''})[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
-      query = "label_replace(label_replace((sum by (cluster, workload_ns, dst, rt_route, status_code) (increase(route_response_total{direction='outbound', dst=~'.*svc.cluster.local.*', status_code=~'^2.*', rt_route!=''}[1m]))), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}', '', '')"
+      query        = "label_replace(label_replace((sum by (cluster, workload_ns, dst, rt_route, status_code) (increase(route_response_total{direction='outbound', dst=~'.*svc.cluster.local.*', status_code=~'^2.*', rt_route!=''}[1m]))), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}', '', '')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -72,8 +70,7 @@ ingester prometheus_linkerd_path module {
 
     source prometheus "status_3xx" {
       histo_column = "status_code"
-      // query        = "label_set(label_replace((sum by (cluster, workload_ns, dst, rt_route, status_code) (increase(route_response_total{direction='outbound', dst=~'.*svc.cluster.local.*', status_code=~'^3.*', rt_route!=''})[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
-      query = "label_replace(label_replace((sum by (cluster, workload_ns, dst, rt_route, status_code) (increase(route_response_total{direction='outbound', dst=~'.*svc.cluster.local.*', status_code=~'^3.*', rt_route!=''}[1m]))), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}', '', '')"
+      query        = "label_replace(label_replace((sum by (cluster, workload_ns, dst, rt_route, status_code) (increase(route_response_total{direction='outbound', dst=~'.*svc.cluster.local.*', status_code=~'^3.*', rt_route!=''}[1m]))), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}', '', '')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -89,8 +86,7 @@ ingester prometheus_linkerd_path module {
 
     source prometheus "status_4xx" {
       histo_column = "status_code"
-      // query        = "label_set(label_replace((sum by (cluster, workload_ns, dst, rt_route, status_code) (increase(route_response_total{direction='outbound', dst=~'.*svc.cluster.local.*', status_code=~'^4.*', rt_route!=''})[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
-      query = "label_replace(label_replace((sum by (cluster, workload_ns, dst, rt_route, status_code) (increase(route_response_total{direction='outbound', dst=~'.*svc.cluster.local.*', status_code=~'^4.*', rt_route!=''}[1m]))), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}', '', '')"
+      query        = "label_replace(label_replace((sum by (cluster, workload_ns, dst, rt_route, status_code) (increase(route_response_total{direction='outbound', dst=~'.*svc.cluster.local.*', status_code=~'^4.*', rt_route!=''}[1m]))), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}', '', '')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
@@ -106,8 +102,7 @@ ingester prometheus_linkerd_path module {
 
     source prometheus "status_5xx" {
       histo_column = "status_code"
-      // query        = "label_set(label_replace((sum by (cluster, workload_ns, dst, rt_route, status_code) (increase(route_response_total{direction='outbound', dst=~'.*svc.cluster.local.*', status_code=~'^5.*', rt_route!=''})[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}')"
-      query = "label_replace(label_replace((sum by (cluster, workload_ns, dst, rt_route, status_code) (increase(route_response_total{direction='outbound', dst=~'.*svc.cluster.local.*', status_code=~'^5.*', rt_route!=''}[1m]))), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}', '', '')"
+      query        = "label_replace(label_replace((sum by (cluster, workload_ns, dst, rt_route, status_code) (increase(route_response_total{direction='outbound', dst=~'.*svc.cluster.local.*', status_code=~'^5.*', rt_route!=''}[1m]))), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'cluster', '$input{cluster}', '', '')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
