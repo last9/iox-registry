@@ -23,7 +23,7 @@ ingester prometheus_linkerd_grpc_path module {
   }
 
   data_for_graph_node {
-    type = "linkerd_grpc_path"
+    type = "grpc_linkerd_path"
     name = "$output{rt_route} $input{cluster}"
   }
 

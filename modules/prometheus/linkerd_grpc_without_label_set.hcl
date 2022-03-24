@@ -18,7 +18,7 @@ ingester prometheus_linkerd_grpc_workload module {
   }
 
   physical_address {
-    type = "k8s_linkerd_grpc_pod"
+    type = "grpc_k8s_linkerd_pod"
     name = "$output{pod}"
   }
 
@@ -28,7 +28,7 @@ ingester prometheus_linkerd_grpc_workload module {
   }
 
   data_for_graph_node {
-    type = "linkerd_grpc_deployment"
+    type = "grpc_linkerd_deployment"
     name = "$output{deployment}-$input{cluster}"
   }
 
@@ -219,7 +219,7 @@ ingester prometheus_linkerd_grpc_k8s_pod module {
   }
 
   physical_address {
-    type = "k8s_linkerd_grpc_pod"
+    type = "grpc_k8s_linkerd_pod"
     name = "$output{pod}"
   }
 
@@ -229,7 +229,7 @@ ingester prometheus_linkerd_grpc_k8s_pod module {
   }
 
   data_for_graph_node {
-    type = "k8s_linkerd_grpc_pod"
+    type = "grpc_k8s_linkerd_pod"
     name = "$output{pod}"
   }
 
