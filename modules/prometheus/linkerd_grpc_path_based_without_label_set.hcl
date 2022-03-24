@@ -81,112 +81,112 @@ ingester prometheus_linkerd_grpc_path module {
     aggregator  = "SUM"
 
     source prometheus "status_401" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='1', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'CANCELLED', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='1', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_402" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='2', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'UNKNOWN', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='2', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_403" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='3', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'INVALID_ARGUMENT', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='3', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_404" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='4', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'DEADLINE_EXCEEDED', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='4', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_405" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='5', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'NOT_FOUND', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='5', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_406" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='6', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'ALREADY_EXISTS', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='6', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_407" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='7', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'PERMISSION_DENIED', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='7', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_408" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='8', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'RESOURCE_EXHAUSTED', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='8', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_409" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='9', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'FAILED_PRECONDITION', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='9', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_410" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='10', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'ABORTED', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='10', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_411" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='11', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'OUT_OF_RANGE', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='11', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_412" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='12', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'UNIMPLEMENTED', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='12', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_413" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='13', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'INTERNAL', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='13', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_414" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='14', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'UNAVAILABLE', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='14', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_415" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='15', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'DATA_LOSS', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='15', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
     }
 
     source prometheus "status_416" {
-      query = "label_replace(label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='16', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*'), 'grpc_code', 'UNAUTHENTICATED', '', '')"
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status='16', direction='inbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
       join_on = {
         "$output{cluster}" = "$input{cluster}"
       }
