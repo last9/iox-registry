@@ -1,4 +1,4 @@
-ingester aws_aurora_instance_logical_cloudwatch module {
+ingester aws_aurora_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -211,43 +211,9 @@ ingester aws_aurora_instance_logical_cloudwatch module {
       }
     }
   }
-}
-
-ingester aws_aurora_instance_physical_cloudwatch module {
-  frequency  = 60
-  lookback   = 600
-  timeout    = 30
-  resolution = 60
-  lag        = 60
-
-  label {
-    type = "service"
-    name = "$input{service}"
-  }
-
-  label {
-    type = "namespace"
-    name = "$input{namespace}"
-  }
-
-  physical_component {
-    type = "aurora_instance"
-    name = "$input{DBInstanceIdentifier}"
-  }
-
-  data_for_graph_node {
-    type = "aurora_instance"
-    name = "$input{DBInstanceIdentifier}"
-  }
-
-  using = {
-    default = "$input{using}"
-  }
-
-  inputs = "$input{inputs}"
 
   gauge "network_in" {
-    index       = 1
+    index       = 12
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
@@ -265,7 +231,7 @@ ingester aws_aurora_instance_physical_cloudwatch module {
   }
 
   gauge "network_out" {
-    index       = 2
+    index       = 13
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
@@ -283,7 +249,7 @@ ingester aws_aurora_instance_physical_cloudwatch module {
   }
 
   gauge "cpu" {
-    index       = 3
+    index       = 14
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -301,7 +267,7 @@ ingester aws_aurora_instance_physical_cloudwatch module {
   }
 
   gauge "free_space" {
-    index       = 4
+    index       = 15
     input_unit  = "bytes"
     output_unit = "bytes"
     aggregator  = "MIN"
@@ -319,7 +285,7 @@ ingester aws_aurora_instance_physical_cloudwatch module {
   }
 
   gauge "replica_lag" {
-    index       = 5
+    index       = 16
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
@@ -337,7 +303,7 @@ ingester aws_aurora_instance_physical_cloudwatch module {
   }
 
   gauge "queue_depth" {
-    index       = 6
+    index       = 17
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"

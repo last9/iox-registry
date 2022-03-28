@@ -1,4 +1,4 @@
-ingester aws_rds_logical_cloudwatch module {
+ingester aws_rds_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -241,51 +241,8 @@ ingester aws_rds_logical_cloudwatch module {
     }
   }
 
-}
-
-ingester aws_rds_physical_cloudwatch module {
-  frequency  = 60
-  lookback   = 600
-  timeout    = 30
-  resolution = 60
-  lag        = 60
-
-  label {
-    type = "service"
-    name = "$input{service}"
-  }
-
-  label {
-    type = "namespace"
-    name = "$input{namespace}"
-  }
-
-  physical_component {
-    type = "rds"
-    name = "$input{DBInstanceIdentifier}"
-  }
-
-  data_for_graph_node {
-    type = "rds"
-    name = "$input{DBInstanceIdentifier}"
-  }
-
-  using = {
-    default = "$input{using}"
-  }
-
-  inputs = "$input{inputs}"
-
-  input_query = <<-EOF
-  label_set(
-    label_replace(
-      rds_db{$input{tag_filter}}, 'id=DBInstanceIdentifier'
-    ), "Service", "$input{service}"
-  )
-  EOF
-
   gauge "network_in" {
-    index       = 1
+    index       = 15
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
@@ -303,7 +260,7 @@ ingester aws_rds_physical_cloudwatch module {
   }
 
   gauge "network_out" {
-    index       = 2
+    index       = 16
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
@@ -320,5 +277,49 @@ ingester aws_rds_physical_cloudwatch module {
     }
   }
 
-
 }
+
+# ingester aws_rds_physical_cloudwatch module {
+#   frequency  = 60
+#   lookback   = 600
+#   timeout    = 30
+#   resolution = 60
+#   lag        = 60
+#
+#   label {
+#     type = "service"
+#     name = "$input{service}"
+#   }
+#
+#   label {
+#     type = "namespace"
+#     name = "$input{namespace}"
+#   }
+#
+#   physical_component {
+#     type = "rds"
+#     name = "$input{DBInstanceIdentifier}"
+#   }
+#
+#   data_for_graph_node {
+#     type = "rds"
+#     name = "$input{DBInstanceIdentifier}"
+#   }
+#
+#   using = {
+#     default = "$input{using}"
+#   }
+#
+#   inputs = "$input{inputs}"
+#
+#   input_query = <<-EOF
+#   label_set(
+#     label_replace(
+#       rds_db{$input{tag_filter}}, 'id=DBInstanceIdentifier'
+#     ), "Service", "$input{service}"
+#   )
+#   EOF
+#
+#
+#
+# }
