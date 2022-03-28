@@ -1,5 +1,4 @@
-// Elasticache Metrics Ingesters
-ingester aws_elasticache_redis_cloudwatch module {
+ingester aws_elasticache_cloudwatch module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -244,51 +243,9 @@ ingester aws_elasticache_redis_cloudwatch module {
       }
     }
   }
-}
-
-ingester aws_elasticache_cluster_cloudwatch module {
-  frequency  = 60
-  lookback   = 600
-  timeout    = 30
-  resolution = 60
-  lag        = 60
-
-  label {
-    type = "service"
-    name = "$input{service}"
-  }
-
-  label {
-    type = "namespace"
-    name = "$input{namespace}"
-  }
-
-  physical_component {
-    type = "elasticache_cluster"
-    name = "$input{CacheClusterId}"
-  }
-
-  data_for_graph_node {
-    type = "elasticache_cluster"
-    name = "$input{CacheClusterId}"
-  }
-
-  using = {
-    default = "$input{using}"
-  }
-
-  inputs = "$input{inputs}"
-
-  input_query = <<-EOF
-  label_set(
-    label_replace(
-      elasticache_cluster{$input{tag_filter}}, 'id=CacheClusterId'
-    ), "service", "$input{service}"
-  )
-  EOF
 
   gauge "replication_lag" {
-    index       = 4
+    index       = 8
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
@@ -306,8 +263,27 @@ ingester aws_elasticache_cluster_cloudwatch module {
     }
   }
 
+  gauge "cpu_used" {
+    index       = 9
+    input_unit  = "percent"
+    output_unit = "percent"
+    aggregator  = "AVG"
+
+    source cloudwatch "EngineCPUUtilization" {
+      query {
+        aggregator  = "Average"
+        namespace   = "AWS/ElastiCache"
+        metric_name = "EngineCPUUtilization"
+        dimensions = {
+          CacheClusterId = "$input{CacheClusterId}"
+          CacheNodeId    = "0001"
+        }
+      }
+    }
+  }
+
   gauge "bytes_out" {
-    index       = 2
+    index       = 11
     input_unit  = "bytes"
     output_unit = "bps"
     aggregator  = "SUM"
@@ -326,7 +302,7 @@ ingester aws_elasticache_cluster_cloudwatch module {
   }
 
   gauge "bytes_in" {
-    index       = 3
+    index       = 12
     input_unit  = "bytes"
     output_unit = "bps"
     aggregator  = "SUM"
@@ -344,27 +320,8 @@ ingester aws_elasticache_cluster_cloudwatch module {
     }
   }
 
-  gauge "cpu_used" {
-    index       = 1
-    input_unit  = "percent"
-    output_unit = "percent"
-    aggregator  = "AVG"
-
-    source cloudwatch "EngineCPUUtilization" {
-      query {
-        aggregator  = "Average"
-        namespace   = "AWS/ElastiCache"
-        metric_name = "EngineCPUUtilization"
-        dimensions = {
-          CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "0001"
-        }
-      }
-    }
-  }
-
   gauge "memory_used" {
-    index       = 5
+    index       = 13
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -381,6 +338,4 @@ ingester aws_elasticache_cluster_cloudwatch module {
       }
     }
   }
-
-
 }
