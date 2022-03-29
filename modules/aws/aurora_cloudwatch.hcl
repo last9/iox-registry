@@ -31,6 +31,14 @@ ingester aws_aurora_cloudwatch module {
 
   inputs = "$input{inputs}"
 
+  input_query = <<-EOF
+  label_set(
+    label_replace(
+      rds_db{$input{tag_filter}}, 'id=DBInstanceIdentifier'
+    ), "Service", "$input{service}"
+  )
+  EOF
+
   gauge "connections" {
     index       = 1
     input_unit  = "count"
