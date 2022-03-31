@@ -97,38 +97,9 @@ ingester gcp_cloudsql_logical module {
       }
     }
   }
-}
-
-ingester gcp_cloudsql_physical module {
-  lookback   = 600
-  frequency  = 60
-  timeout    = 30
-  resolution = 60
-  lag        = 0
-
-  label {
-    type = "service"
-    name = "$input{service}"
-  }
-
-  physical_component {
-    type = "cloudsql_cluster"
-    name = "$input{database_id}"
-  }
-
-  data_for_graph_node {
-    type = "cloudsql_cluster"
-    name = "$input{database_id}"
-  }
-
-  using = {
-    "default" : "$input{using}"
-  }
-
-  inputs = "$input{inputs}"
 
   gauge "cpu" {
-    index       = 3
+    index       = 4
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -148,7 +119,7 @@ ingester gcp_cloudsql_physical module {
   }
 
   gauge "network_in" {
-    index       = 1
+    index       = 5
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
@@ -168,7 +139,7 @@ ingester gcp_cloudsql_physical module {
   }
 
   gauge "network_out" {
-    index       = 2
+    index       = 6
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
@@ -188,7 +159,7 @@ ingester gcp_cloudsql_physical module {
   }
 
   gauge "replica_lag" {
-    index       = 5
+    index       = 7
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "AVG"
@@ -206,52 +177,4 @@ ingester gcp_cloudsql_physical module {
       }
     }
   }
-
-  # gauge "memory_utilization" {
-  #   index = 1
-  #   input_unit       = "percent"
-  #   output_unit       = "percent"
-  #   aggregator = "AVG"
-  #
-  #   source stackdriver "memory_utilization" {
-  #     query {
-  #       resource {}
-  #       aggregation {
-  #         per_series_aligner   = ""
-  #         cross_series_reducer = ""
-  #         group_by_fields      = []
-  #       }
-  #       metric {
-  #         type = "cloudsql.googleapis.com/database/memory/utilization"
-  #       }
-  #     }
-  #     join_on = {
-  #       "$output{database_id}" = "$input{database_id}"
-  #     }
-  #   }
-  # }
-  #
-  # gauge "disk_utilization" {
-  #   index = 1
-  #   input_unit       = "percent"
-  #   output_unit       = "percent"
-  #   aggregator = "AVG"
-  #
-  #   source stackdriver "disk_utilization" {
-  #     query {
-  #       resource {}
-  #       aggregation {
-  #         per_series_aligner   = ""
-  #         cross_series_reducer = ""
-  #         group_by_fields      = []
-  #       }
-  #       metric {
-  #         type = "cloudsql.googleapis.com/database/disk/utilization"
-  #       }
-  #     }
-  #     join_on = {
-  #       "$output{database_id}" = "$input{database_id}"
-  #     }
-  #   }
-  # }
 }
