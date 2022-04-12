@@ -38,7 +38,7 @@ ingester prometheus_linkerd_http_path module {
     aggregator  = "SUM"
 
     source prometheus "throughput" {
-      query = "label_replace((sum by (cluster, workload_ns, dst, rt_route) (increase(route_request_total{rt_route=~'.*/.*', direction='outbound', dst=~'.*svc.cluster.local.*', cluster='$input{cluster}', rt_route!=''}[1m]))), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
+      query = "label_replace((sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{rt_route=~'.*/.*', direction='outbound', dst=~'.*svc.cluster.local.*', cluster='$input{cluster}', rt_route!=''}[1m]))), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
 
       join_on = {
         "$output{cluster}" = "$input{cluster}"
