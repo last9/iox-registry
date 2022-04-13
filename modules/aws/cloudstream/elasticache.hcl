@@ -5,6 +5,8 @@ ingester aws_elasticache_cloudstream module {
   resolution = 60
   lag = 60
 
+  inputs = "$input{inputs}"
+
   label {
     type = "service"
     name = "$input{service}"
@@ -42,13 +44,7 @@ ingester aws_elasticache_cloudstream module {
 
     source prometheus "CurrConnections" {
       query = "sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_CurrConnections{quantile='1',CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
-        aggregator  = "Maximum"
-        namespace   = "AWS_ElastiCache"
-        metric_name = "CurrConnections"
-        dimensions = {
-          CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "0001"
-        }
+
       join_on = {
         "$output{CacheClusterId}" = "$input{CacheClusterId}"
       }
@@ -61,7 +57,7 @@ ingester aws_elasticache_cloudstream module {
     output_unit = "count"
     aggregator  = "AVG"
 
-    source cloudwatch "NewConnections" {
+    source prometheus "NewConnections" {
       query = "sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_NewConnections{quantile='1',CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
 
       join_on = {
@@ -76,7 +72,7 @@ ingester aws_elasticache_cloudstream module {
     output_unit = "count"
     aggregator  = "MAX"
 
-    source cloudwatch "CurrItems" {
+    source prometheus "CurrItems" {
       query = "sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_CurrItems{quantile='1',CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
 
       join_on = {
@@ -91,7 +87,7 @@ ingester aws_elasticache_cloudstream module {
     output_unit = "percent"
     aggregator  = "MIN"
 
-    source cloudwatch "CacheHitRate" {
+    source prometheus "CacheHitRate" {
       query = "sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_CacheHitRate{quantile='0',CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
 
       join_on = {
@@ -106,7 +102,7 @@ ingester aws_elasticache_cloudstream module {
     output_unit = "count"
     aggregator  = "MAX"
 
-    source cloudwatch "CacheHits" {
+    source prometheus "CacheHits" {
       query = "sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_CacheHits{quantile='1',CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
 
       join_on = {
@@ -121,7 +117,7 @@ ingester aws_elasticache_cloudstream module {
     output_unit = "count"
     aggregator  = "MAX"
 
-    source cloudwatch "CacheMisses" {
+    source prometheus "CacheMisses" {
       query = "sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_CacheMisses{quantile='1',CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
 
       join_on = {
@@ -135,7 +131,7 @@ ingester aws_elasticache_cloudstream module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
-    source cloudwatch "Evictions" {
+    source prometheus "Evictions" {
       query = "sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_Evictions_sum{CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
 
       join_on = {
@@ -150,7 +146,7 @@ ingester aws_elasticache_cloudstream module {
     output_unit = "s"
     aggregator  = "MAX"
 
-    source cloudwatch "ReplicationLag" {
+    source prometheus "ReplicationLag" {
       query = "sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_ReplicationLag{quantile='1',CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
 
       join_on = {
@@ -165,7 +161,7 @@ ingester aws_elasticache_cloudstream module {
     output_unit = "percent"
     aggregator  = "AVG"
 
-    source cloudwatch "EngineCPUUtilization" {
+    source prometheus "EngineCPUUtilization" {
       query = "sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_EngineCPUUtilization_sum{CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'}) / sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_EngineCPUUtilization_count{CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
 
       join_on = {
@@ -180,7 +176,7 @@ ingester aws_elasticache_cloudstream module {
     output_unit = "bps"
     aggregator  = "SUM"
 
-    source cloudwatch "NetworkBytesOut" {
+    source prometheus "NetworkBytesOut" {
       query = "sum by (CacheClusterId) (amazonaws_com_AWS_NetworkBytesOut_sum{CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
 
       join_on = {
@@ -195,7 +191,7 @@ ingester aws_elasticache_cloudstream module {
     output_unit = "bps"
     aggregator  = "SUM"
 
-    source cloudwatch "NetworkBytesIn" {
+    source prometheus "NetworkBytesIn" {
       query = "sum by (CacheClusterId) (amazonaws_com_AWS_NetworkBytesIn_sum{CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
 
       join_on = {
@@ -210,7 +206,7 @@ ingester aws_elasticache_cloudstream module {
     output_unit = "percent"
     aggregator  = "AVG"
 
-    source cloudwatch "DatabaseMemoryUsagePercentage" {
+    source prometheus "DatabaseMemoryUsagePercentage" {
       query = "sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_DatabaseMemoryUsagePercentage_sum{CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'}) / sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_DatabaseMemoryUsagePercentage_count{CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
 
       join_on = {
