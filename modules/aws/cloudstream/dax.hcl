@@ -19,7 +19,7 @@ ingester aws_dax_cloudstream module {
 
   physical_address {
     type = "dax_node"
-    name = "$input{NodeId}"
+    name = "$output{NodeId}"
   }
 
   physical_component {
