@@ -33,7 +33,7 @@ ingester cloudflare_cdn module {
   }
 
   using = {
-    "default" : "$input{using}"
+    "default" = "$input{using}"
   }
 
   inputs = "$input{inputs}"
@@ -43,6 +43,7 @@ ingester cloudflare_cdn module {
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source cloudflare "throughput" {
       query = <<-EOH
 {
@@ -292,9 +293,11 @@ EOH
     }
   }
   EOH
+
       value = "count"
+
       dimensions = {
-        "host" : "dimensions.clientRequestHTTPHost"
+        "host" = "dimensions.clientRequestHTTPHost"
       }
     }
   }
@@ -304,6 +307,7 @@ EOH
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source cloudflare "bypass" {
       query = <<-EOH
   {
@@ -322,9 +326,11 @@ EOH
     }
   }
   EOH
+
       value = "count"
+
       dimensions = {
-        "host" : "dimensions.clientRequestHTTPHost"
+        "host" = "dimensions.clientRequestHTTPHost"
       }
     }
   }
@@ -334,6 +340,7 @@ EOH
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source cloudflare "jschallenge" {
       query = <<-EOH
   {
@@ -352,9 +359,11 @@ EOH
     }
   }
   EOH
+
       value = "count"
+
       dimensions = {
-        "host" : "dimensions.clientRequestHTTPHost"
+        "host" = "dimensions.clientRequestHTTPHost"
       }
     }
   }
@@ -364,6 +373,7 @@ EOH
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source cloudflare "log" {
       query = <<-EOH
   {
@@ -382,9 +392,11 @@ EOH
     }
   }
   EOH
+
       value = "count"
+
       dimensions = {
-        "host" : "dimensions.clientRequestHTTPHost"
+        "host" = "dimensions.clientRequestHTTPHost"
       }
     }
   }
@@ -394,6 +406,7 @@ EOH
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source cloudflare "block" {
       query = <<-EOH
   {
@@ -412,9 +425,11 @@ EOH
     }
   }
   EOH
+
       value = "count"
+
       dimensions = {
-        "host" : "dimensions.clientRequestHTTPHost"
+        "host" = "dimensions.clientRequestHTTPHost"
       }
     }
   }
@@ -424,6 +439,7 @@ EOH
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source cloudflare "2xx" {
       query = <<-EOH
   {
@@ -445,9 +461,11 @@ EOH
     }
   }
   EOH
+
       value = "count"
+
       dimensions = {
-        "host" : "dimensions.clientRequestHTTPHost"
+        "host" = "dimensions.clientRequestHTTPHost"
       }
     }
   }
@@ -457,6 +475,7 @@ EOH
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source cloudflare "4xx" {
       query = <<-EOH
   {
@@ -478,9 +497,11 @@ EOH
     }
   }
   EOH
+
       value = "count"
+
       dimensions = {
-        "host" : "dimensions.clientRequestHTTPHost"
+        "host" = "dimensions.clientRequestHTTPHost"
       }
     }
   }
@@ -490,6 +511,7 @@ EOH
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "SUM"
+
     source cloudflare "5xx" {
       query = <<-EOH
   {
@@ -511,9 +533,11 @@ EOH
     }
   }
   EOH
+
       value = "count"
+
       dimensions = {
-        "host" : "dimensions.clientRequestHTTPHost"
+        "host" = "dimensions.clientRequestHTTPHost"
       }
     }
   }
