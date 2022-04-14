@@ -46,7 +46,6 @@ ingester aws_dax_cloudstream module {
 
       join_on = {
         "$output{ClusterId}" = "$input{ClusterId}"
-        "$output{NodeId}"    = "$input{NodeId}"
       }
     }
   }
@@ -57,11 +56,10 @@ ingester aws_dax_cloudstream module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "errors" {
-      query = "sum by (ClusterId) (amazonaws_com_AWS_DAX_ErrorRequestCount_sum{ClusterId=~'$input{ClusterId}',NodeId='$input{NodeId}'})"
+      query = "sum by (ClusterId, NodeId) (amazonaws_com_AWS_DAX_ErrorRequestCount_sum{ClusterId=~'$input{ClusterId}',NodeId!=''})"
 
       join_on = {
-          "$output{ClusterId}" = "$input{ClusterId}"
-          "$output{NodeId}"    = "$input{NodeId}"
+        "$output{ClusterId}" = "$input{ClusterId}"
       }
     }
   }
@@ -72,11 +70,10 @@ ingester aws_dax_cloudstream module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "throttled" {
-      query = "sum by (ClusterId) (amazonaws_com_AWS_DAX_ThrottledRequestCount_sum{ClusterId=~'$input{ClusterId}',NodeId='$input{NodeId}'})"
+      query = "sum by (ClusterId, NodeId) (amazonaws_com_AWS_DAX_ThrottledRequestCount_sum{ClusterId=~'$input{ClusterId}',NodeId!=''})"
 
       join_on = {
           "$output{ClusterId}" = "$input{ClusterId}"
-          "$output{NodeId}"    = "$input{NodeId}"
       }
     }
   }
@@ -86,11 +83,10 @@ ingester aws_dax_cloudstream module {
     output_unit = "count"
     aggregator  = "MAX"
     source prometheus "connections" {
-      query = "sum by (ClusterId) (amazonaws_com_AWS_DAX_ClientConnections{quantile='1',ClusterId=~'$input{ClusterId}',NodeId='$input{NodeId}'})"
+      query = "sum by (ClusterId, NodeId) (amazonaws_com_AWS_DAX_ClientConnections{quantile='1',ClusterId=~'$input{ClusterId}',NodeId!=''})"
 
       join_on = {
           "$output{ClusterId}" = "$input{ClusterId}"
-          "$output{NodeId}"    = "$input{NodeId}"
       }
     }
   }
@@ -100,11 +96,10 @@ ingester aws_dax_cloudstream module {
     output_unit = "count"
     aggregator  = "SUM"
     source prometheus "memory" {
-      query = "sum by (ClusterId) (amazonaws_com_AWS_DAX_QueryCacheMisses_sum{ClusterId=~'$input{ClusterId}',NodeId='$input{NodeId}'})"
+      query = "sum by (ClusterId, NodeId) (amazonaws_com_AWS_DAX_QueryCacheMisses_sum{ClusterId=~'$input{ClusterId}',NodeId!=''})"
 
       join_on = {
           "$output{ClusterId}" = "$input{ClusterId}"
-          "$output{NodeId}"    = "$input{NodeId}"
       }
     }
   }
@@ -114,11 +109,10 @@ ingester aws_dax_cloudstream module {
     output_unit = "percent"
     aggregator  = "AVG"
     source prometheus "memory" {
-      query = "sum by (ClusterId) (amazonaws_com_AWS_DAX_CacheMemoryUtilization_sum{ClusterId=~'$input{ClusterId}',NodeId='$input{NodeId}'}) / sum by (ClusterId) (amazonaws_com_AWS_DAX_CacheMemoryUtilization_count{ClusterId=~'$input{ClusterId}',NodeId='$input{NodeId}'})"
+      query = "sum by (ClusterId, NodeId) (amazonaws_com_AWS_DAX_CacheMemoryUtilization_sum{ClusterId=~'$input{ClusterId}',NodeId!=''}) / sum by (ClusterId, NodeId) (amazonaws_com_AWS_DAX_CacheMemoryUtilization_count{ClusterId=~'$input{ClusterId}',NodeId!=''})"
 
       join_on = {
           "$output{ClusterId}" = "$input{ClusterId}"
-          "$output{NodeId}"    = "$input{NodeId}"
       }
     }
   }
@@ -128,11 +122,10 @@ ingester aws_dax_cloudstream module {
     output_unit = "percent"
     aggregator  = "AVG"
     source prometheus "cpu" {
-      query = "sum by (ClusterId) (amazonaws_com_AWS_DAX_CPUUtilization_sum{ClusterId=~'$input{ClusterId}',NodeId='$input{NodeId}'}) / sum by (ClusterId) (amazonaws_com_AWS_DAX_CPUUtilization_count{ClusterId=~'$input{ClusterId}',NodeId='$input{NodeId}'})"
+      query = "sum by (ClusterId, NodeId) (amazonaws_com_AWS_DAX_CPUUtilization_sum{ClusterId=~'$input{ClusterId}',NodeId!=''}) / sum by (ClusterId, NodeId) (amazonaws_com_AWS_DAX_CPUUtilization_count{ClusterId=~'$input{ClusterId}',NodeId!=''})"
 
       join_on = {
           "$output{ClusterId}" = "$input{ClusterId}"
-          "$output{NodeId}"    = "$input{NodeId}"
       }
     }
   }
