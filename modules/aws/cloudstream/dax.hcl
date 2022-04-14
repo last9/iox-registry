@@ -42,7 +42,7 @@ ingester aws_dax_cloudstream module {
     output_unit = "rpm"
     aggregator  = "SUM"
     source prometheus "throughput" {
-      query = "sum by (ClusterId) (amazonaws_com_AWS_DAX_TotalRequestCount_sum{ClusterId=~'$input{ClusterId}',NodeId=~'$input{NodeId}'})"
+      query = "sum by (ClusterId, NodeId) (amazonaws_com_AWS_DAX_TotalRequestCount_sum{ClusterId=~'$input{ClusterId}',NodeId!=''})"
 
       join_on = {
         "$output{ClusterId}" = "$input{ClusterId}"
