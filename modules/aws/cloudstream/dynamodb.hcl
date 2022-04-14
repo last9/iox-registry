@@ -56,7 +56,7 @@ ingester aws_dynamodb_table_cloudstream module {
       query = "sum by (TableName) (amazonaws_com_AWS_DynamoDB_ConsumedWriteCapacityUnits_sum{TableName=~'$input{TableName}'})"
 
       join_on = {
-          "$output{TableName}" = "$input{TableName}"
+        "$output{TableName}" = "$input{TableName}"
       }
     }
   }
@@ -71,7 +71,7 @@ ingester aws_dynamodb_table_cloudstream module {
       query = "sum by (TableName) (amazonaws_com_AWS_DynamoDB_ReadThrottledEvents_sum{TableName=~'$input{TableName}'})"
 
       join_on = {
-          "$output{TableName}" = "$input{TableName}"
+        "$output{TableName}" = "$input{TableName}"
       }
     }
   }
@@ -86,7 +86,7 @@ ingester aws_dynamodb_table_cloudstream module {
       query = "sum by (TableName) (amazonaws_com_AWS_DynamoDB_WriteThrottledEvents_sum{TableName=~'$input{TableName}'})"
 
       join_on = {
-          "$output{TableName}" = "$input{TableName}"
+        "$output{TableName}" = "$input{TableName}"
       }
     }
   }

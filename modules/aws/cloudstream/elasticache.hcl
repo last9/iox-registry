@@ -1,9 +1,9 @@
 ingester aws_elasticache_cloudstream module {
-  frequency = 60
-  lookback = 600
-  timeout = 30
+  frequency  = 60
+  lookback   = 600
+  timeout    = 30
   resolution = 60
-  lag = 60
+  lag        = 60
 
   inputs = "$input{inputs}"
 
@@ -131,6 +131,7 @@ ingester aws_elasticache_cloudstream module {
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
+
     source prometheus "Evictions" {
       query = "sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_Evictions_sum{CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
 
