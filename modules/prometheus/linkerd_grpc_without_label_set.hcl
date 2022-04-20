@@ -29,7 +29,7 @@ ingester prometheus_linkerd_grpc_workload module {
 
   data_for_graph_node {
     type = "grpc_linkerd_deployment"
-    name = "$output{deployment}-$input{cluster}"
+    name = "$output{deployment}-$input{cluster}-grpc"
   }
 
   using = {
