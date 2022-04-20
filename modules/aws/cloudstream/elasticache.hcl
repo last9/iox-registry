@@ -178,7 +178,7 @@ ingester aws_elasticache_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "NetworkBytesOut" {
-      query = "sum by (CacheClusterId) (amazonaws_com_AWS_NetworkBytesOut_sum{CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
+      query = "sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_NetworkBytesOut_sum{CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
 
       join_on = {
         "$output{CacheClusterId}" = "$input{CacheClusterId}"
@@ -193,7 +193,7 @@ ingester aws_elasticache_cloudstream module {
     aggregator  = "SUM"
 
     source prometheus "NetworkBytesIn" {
-      query = "sum by (CacheClusterId) (amazonaws_com_AWS_NetworkBytesIn_sum{CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
+      query = "sum by (CacheClusterId) (amazonaws_com_AWS_ElastiCache_NetworkBytesIn_sum{CacheClusterId=~'$input{CacheClusterId}',CacheNodeId='0001'})"
 
       join_on = {
         "$output{CacheClusterId}" = "$input{CacheClusterId}"
