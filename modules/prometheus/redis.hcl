@@ -39,7 +39,6 @@ ingester redis_single_node module {
     aggregator  = "AVG"
 
     source prometheus "cache_miss_rate" {
-      # query = "label_replace( (sum by (cluster) (redis_keyspace_hits_total{}) / (sum by (cluster) (redis_keyspace_hits_total{}) + sum by (cluster) (redis_keyspace_misses_total{}))), '$input{dummy_label}', '', '')"
       query = "label_replace(100 - sum by (cluster) (redis_keyspace_hits_total{}) / (sum by (cluster) (redis_keyspace_hits_total{}) + sum by (cluster) (redis_keyspace_misses_total{}))*100, 'dummy_label', '$input{dummy_label}', '', '')"
 
       join_on = {
@@ -55,7 +54,6 @@ ingester redis_single_node module {
     aggregator  = "MIN"
 
     source prometheus "uptime" {
-      # query = "label_replace( (sum by (cluster) (redis_keyspace_hits_total{}) / (sum by (cluster) (redis_keyspace_hits_total{}) + sum by (cluster) (redis_keyspace_misses_total{}))), '$input{dummy_label}', '', '')"
       query = "label_replace(min by (cluster) (rate(redis_uptime_in_seconds{})), 'dummy_label', '$input{dummy_label}', '', '')"
 
       join_on = {
