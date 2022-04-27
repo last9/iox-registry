@@ -161,10 +161,10 @@ ingester aws_efs_cloudwatch module {
     index       = 8
     input_unit  = "count"
     output_unit = "count"
-    aggregator  = "SUM"
+    aggregator  = "MAX"
     source cloudwatch "connections" {
       query {
-        aggregator  = "Sum"
+        aggregator  = "Maximum"
         namespace   = "AWS/EFS"
         metric_name = "ClientConnections"
 
