@@ -8,11 +8,11 @@ ingester aws_alb_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
-      ), "service", "$input{service}", "namespace", "$input{namespace}"
-    )
+  label_set(
+    label_replace(
+      elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
+    ), "service", "$input{service}", "namespace", "$input{namespace}"
+  )
   EOF
 
   label {
@@ -42,7 +42,7 @@ ingester aws_alb_cloudwatch module {
   gauge "throughput" {
     index       = 1
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "throughput" {
       query {
@@ -128,7 +128,7 @@ ingester aws_alb_cloudwatch module {
   status_histo status_5xx {
     index       = 5
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
 
     source cloudwatch "status_500" {
@@ -143,10 +143,11 @@ ingester aws_alb_cloudwatch module {
       }
     }
   }
+
   status_histo status_4xx {
     index       = 4
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
 
     source cloudwatch "status_400" {
@@ -162,10 +163,30 @@ ingester aws_alb_cloudwatch module {
     }
   }
 
+  status_histo status_2xx {
+    index       = 9
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+
+    source cloudwatch "status_200" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "HTTPCode_Target_2XX_Count"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+
+
   gauge lb_5xx {
     index       = 8
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "lb_500" {
       query {
@@ -179,10 +200,11 @@ ingester aws_alb_cloudwatch module {
       }
     }
   }
+
   gauge lb_4xx {
     index       = 7
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "lb_400" {
       query {
@@ -291,11 +313,11 @@ ingester aws_alb_endpoint_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
-      ), "service", "$input{service}", "namespace", "$input{namespace}"
-    )
+  label_set(
+    label_replace(
+      elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
+    ), "service", "$input{service}", "namespace", "$input{namespace}"
+  )
   EOF
 
   label {
@@ -321,7 +343,7 @@ ingester aws_alb_endpoint_cloudwatch module {
   gauge "throughput" {
     index       = 1
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "throughput" {
       query {
@@ -416,7 +438,7 @@ ingester aws_alb_endpoint_cloudwatch module {
   status_histo status_5xx {
     index       = 5
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
 
     source cloudwatch "status_500" {
@@ -434,7 +456,7 @@ ingester aws_alb_endpoint_cloudwatch module {
   status_histo status_4xx {
     index       = 4
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
 
     source cloudwatch "status_400" {
@@ -453,7 +475,7 @@ ingester aws_alb_endpoint_cloudwatch module {
   status_histo status_3xx {
     index       = 3
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "status_300" {
       query {
@@ -481,7 +503,7 @@ ingester aws_alb_endpoint_cloudwatch module {
   status_histo status_2xx {
     index       = 2
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "status_200" {
       query {
@@ -511,11 +533,11 @@ ingester aws_alb_tg_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
-      ), "service", "$input{service}", "namespace", "$input{namespace}"
-    )
+  label_set(
+    label_replace(
+      elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
+    ), "service", "$input{service}", "namespace", "$input{namespace}"
+  )
   EOF
 
   label {
@@ -546,7 +568,7 @@ ingester aws_alb_tg_cloudwatch module {
   gauge "throughput" {
     index       = 1
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "throughput" {
       query {
@@ -648,7 +670,7 @@ ingester aws_alb_tg_cloudwatch module {
   status_histo status_5xx {
     index       = 5
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
 
     source cloudwatch "status_500" {
@@ -667,7 +689,7 @@ ingester aws_alb_tg_cloudwatch module {
   status_histo status_4xx {
     index       = 4
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
 
     source cloudwatch "status_400" {
@@ -687,7 +709,7 @@ ingester aws_alb_tg_cloudwatch module {
   status_histo status_3xx {
     index       = 3
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "status_300" {
       query {
@@ -705,7 +727,7 @@ ingester aws_alb_tg_cloudwatch module {
   status_histo status_2xx {
     index       = 2
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "status_200" {
       query {
@@ -732,11 +754,11 @@ ingester aws_alb_internal_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
-      ), "service", "$input{service}", "namespace", "$input{namespace}"
-    )
+  label_set(
+    label_replace(
+      elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
+    ), "service", "$input{service}", "namespace", "$input{namespace}"
+  )
   EOF
 
   label {
@@ -766,7 +788,7 @@ ingester aws_alb_internal_cloudwatch module {
   gauge "throughput" {
     index       = 1
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "throughput" {
       query {
@@ -851,7 +873,7 @@ ingester aws_alb_internal_cloudwatch module {
   status_histo status_5xx {
     index       = 5
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
 
     source cloudwatch "status_500" {
@@ -869,7 +891,7 @@ ingester aws_alb_internal_cloudwatch module {
   status_histo status_4xx {
     index       = 4
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
 
     source cloudwatch "status_400" {
@@ -885,10 +907,30 @@ ingester aws_alb_internal_cloudwatch module {
     }
   }
 
+  status_histo status_2xx {
+    index       = 9
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+
+    source cloudwatch "status_200" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "HTTPCode_Target_2XX_Count"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+
+
   gauge lb_5xx {
     index       = 8
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "lb_500" {
       query {
@@ -905,7 +947,7 @@ ingester aws_alb_internal_cloudwatch module {
   gauge lb_4xx {
     index       = 7
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "lb_400" {
       query {
@@ -1013,11 +1055,11 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
-      ), "service", "$input{service}", "namespace", "$input{namespace}"
-    )
+  label_set(
+    label_replace(
+      elasticloadbalancing_loadbalancer{id=~"^app/.*",$input{tag_filter}}, 'id=LoadBalancer'
+    ), "service", "$input{service}", "namespace", "$input{namespace}"
+  )
   EOF
 
   label {
@@ -1043,7 +1085,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   gauge "throughput" {
     index       = 1
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "throughput" {
       query {
@@ -1138,7 +1180,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   status_histo status_5xx {
     index       = 5
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
 
     source cloudwatch "status_500" {
@@ -1156,7 +1198,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   status_histo status_4xx {
     index       = 4
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
 
     source cloudwatch "status_400" {
@@ -1175,7 +1217,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   status_histo status_3xx {
     index       = 3
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "status_300" {
       query {
@@ -1203,7 +1245,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
   status_histo status_2xx {
     index       = 2
     input_unit  = "count"
-    output_unit = "rpm"
+    output_unit = "count"
     aggregator  = "SUM"
     source cloudwatch "status_200" {
       query {
