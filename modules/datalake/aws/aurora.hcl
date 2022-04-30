@@ -1,9 +1,11 @@
-ingester aws_aurora_instance_logical module {
+ingester aws_aurora_instance module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
   resolution = 60
   lag        = 60
+
+  inputs = "[]"
 
   label {
     type = "service"
@@ -17,19 +19,17 @@ ingester aws_aurora_instance_logical module {
 
   physical_component {
     type = "aurora_instance"
-    name = "$input{DBInstanceIdentifier}"
+    name = "aurora_instance"
   }
 
   data_for_graph_node {
     type = "aurora_instance_database"
-    name = "$input{DBInstanceIdentifier}-db"
+    name = "$output{DBInstanceIdentifier}"
   }
 
   using = {
     default = "$input{using}"
   }
-
-  inputs = "$input{inputs}"
 
   gauge "connections" {
     index       = 1
@@ -38,11 +38,7 @@ ingester aws_aurora_instance_logical module {
     aggregator  = "MAX"
 
     source prometheus "connections" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (connections)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (connections{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -53,11 +49,7 @@ ingester aws_aurora_instance_logical module {
     aggregator  = "AVG"
 
     source prometheus "read_throughput" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (read_throughput)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (read_throughput{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -68,11 +60,7 @@ ingester aws_aurora_instance_logical module {
     aggregator  = "MAX"
 
     source prometheus "read_latency" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (read_latency)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (read_latency{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -83,11 +71,7 @@ ingester aws_aurora_instance_logical module {
     aggregator  = "AVG"
 
     source prometheus "write_throughput" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (write_throughput)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (write_throughput{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -98,11 +82,7 @@ ingester aws_aurora_instance_logical module {
     aggregator  = "MAX"
 
     source prometheus "write_latency" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (write_latency)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (write_latency{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -113,11 +93,7 @@ ingester aws_aurora_instance_logical module {
     aggregator  = "AVG"
 
     source prometheus "update_throughput" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (update_throughput)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (update_throughput{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -128,11 +104,7 @@ ingester aws_aurora_instance_logical module {
     aggregator  = "MAX"
 
     source prometheus "update_latency" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (update_latency)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (update_latency{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -143,11 +115,7 @@ ingester aws_aurora_instance_logical module {
     aggregator  = "AVG"
 
     source prometheus "delete_throughput" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (delete_throughput)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (delete_throughput{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -158,11 +126,7 @@ ingester aws_aurora_instance_logical module {
     aggregator  = "MAX"
 
     source prometheus "delete_latency" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (delete_latency)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (delete_latency{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -173,47 +137,9 @@ ingester aws_aurora_instance_logical module {
     aggregator  = "MAX"
 
     source prometheus "deadlocks" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (deadlocks)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (deadlocks{DBInstanceIdentifier!=''})"
     }
   }
-}
-
-ingester aws_aurora_instance_physical module {
-  frequency  = 60
-  lookback   = 600
-  timeout    = 30
-  resolution = 60
-  lag        = 60
-
-  label {
-    type = "service"
-    name = "$output{tag_service}"
-  }
-
-  label {
-    type = "namespace"
-    name = "$output{tag_namespace}"
-  }
-
-  physical_component {
-    type = "aurora_instance"
-    name = "$input{DBInstanceIdentifier}"
-  }
-
-  data_for_graph_node {
-    type = "aurora_instance"
-    name = "$input{DBInstanceIdentifier}"
-  }
-
-  using = {
-    default = "$input{using}"
-  }
-
-  inputs = "$input{inputs}"
 
   gauge "network_in" {
     index       = 1
@@ -222,11 +148,7 @@ ingester aws_aurora_instance_physical module {
     aggregator  = "AVG"
 
     source prometheus "network_in" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (network_in)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (network_in{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -237,11 +159,7 @@ ingester aws_aurora_instance_physical module {
     aggregator  = "AVG"
 
     source prometheus "network_out" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (network_out)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (network_out{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -252,11 +170,7 @@ ingester aws_aurora_instance_physical module {
     aggregator  = "AVG"
 
     source prometheus "cpu" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (cpu)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (cpu{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -267,11 +181,7 @@ ingester aws_aurora_instance_physical module {
     aggregator  = "MIN"
 
     source prometheus "free_space" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (free_space)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (free_space{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -282,11 +192,7 @@ ingester aws_aurora_instance_physical module {
     aggregator  = "MAX"
 
     source prometheus "replica_lag" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (replica_lag)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (replica_lag{DBInstanceIdentifier!=''})"
     }
   }
 
@@ -297,11 +203,7 @@ ingester aws_aurora_instance_physical module {
     aggregator  = "MAX"
 
     source prometheus "queue_depth" {
-      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (queue_depth)"
-
-      join_on = {
-        "$output{DBInstanceIdentifier}" = "$input{DBInstanceIdentifier}"
-      }
+      query = "max by (DBInstanceIdentifier, tag_namespace, tag_service) (queue_depth{DBInstanceIdentifier!=''})"
     }
   }
 }
