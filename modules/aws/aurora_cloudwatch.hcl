@@ -327,4 +327,23 @@ ingester aws_aurora_cloudwatch module {
       }
     }
   }
+
+  gauge "db_load" {
+    index       = 18
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "MAX"
+    source cloudwatch "db_load" {
+      query {
+        aggregator  = "Average"
+        namespace   = "AWS/RDS"
+        metric_name = "DBLoad"
+
+        dimensions = {
+          "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
+        }
+      }
+    }
+  }
+
 }
