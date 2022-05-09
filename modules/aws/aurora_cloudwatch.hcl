@@ -57,8 +57,26 @@ ingester aws_aurora_cloudwatch module {
     }
   }
 
-  gauge "read_throughput" {
+  gauge "db_load" {
     index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "AVG"
+    source cloudwatch "db_load" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/RDS"
+        metric_name = "DBLoad"
+
+        dimensions = {
+          "DBInstanceIdentifier" = "$input{DBInstanceIdentifier}"
+        }
+      }
+    }
+  }
+
+  gauge "read_throughput" {
+    index       = 3
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "AVG"
@@ -77,7 +95,7 @@ ingester aws_aurora_cloudwatch module {
 
 
   gauge "read_latency" {
-    index       = 3
+    index       = 4
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
@@ -95,7 +113,7 @@ ingester aws_aurora_cloudwatch module {
   }
 
   gauge "write_throughput" {
-    index       = 4
+    index       = 5
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "AVG"
@@ -113,7 +131,7 @@ ingester aws_aurora_cloudwatch module {
   }
 
   gauge "write_latency" {
-    index       = 5
+    index       = 6
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
@@ -131,7 +149,7 @@ ingester aws_aurora_cloudwatch module {
   }
 
   gauge "update_throughput" {
-    index       = 6
+    index       = 7
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "AVG"
@@ -149,7 +167,7 @@ ingester aws_aurora_cloudwatch module {
   }
 
   gauge "update_latency" {
-    index       = 7
+    index       = 8
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
@@ -167,7 +185,7 @@ ingester aws_aurora_cloudwatch module {
   }
 
   gauge "delete_throughput" {
-    index       = 8
+    index       = 9
     input_unit  = "count"
     output_unit = "rpm"
     aggregator  = "AVG"
@@ -185,7 +203,7 @@ ingester aws_aurora_cloudwatch module {
   }
 
   gauge "delete_latency" {
-    index       = 9
+    index       = 11
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
@@ -203,7 +221,7 @@ ingester aws_aurora_cloudwatch module {
   }
 
   gauge "deadlocks" {
-    index       = 11
+    index       = 12
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
@@ -221,7 +239,7 @@ ingester aws_aurora_cloudwatch module {
   }
 
   gauge "network_in" {
-    index       = 12
+    index       = 13
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
@@ -239,7 +257,7 @@ ingester aws_aurora_cloudwatch module {
   }
 
   gauge "network_out" {
-    index       = 13
+    index       = 14
     input_unit  = "bps"
     output_unit = "bps"
     aggregator  = "AVG"
@@ -257,7 +275,7 @@ ingester aws_aurora_cloudwatch module {
   }
 
   gauge "cpu" {
-    index       = 14
+    index       = 15
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -275,7 +293,7 @@ ingester aws_aurora_cloudwatch module {
   }
 
   gauge "free_space" {
-    index       = 15
+    index       = 16
     input_unit  = "bytes"
     output_unit = "bytes"
     aggregator  = "MIN"
@@ -293,7 +311,7 @@ ingester aws_aurora_cloudwatch module {
   }
 
   gauge "replica_lag" {
-    index       = 16
+    index       = 17
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
@@ -311,7 +329,7 @@ ingester aws_aurora_cloudwatch module {
   }
 
   gauge "queue_depth" {
-    index       = 17
+    index       = 18
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "MAX"
