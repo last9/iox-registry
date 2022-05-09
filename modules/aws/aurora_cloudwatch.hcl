@@ -61,10 +61,10 @@ ingester aws_aurora_cloudwatch module {
     index       = 2
     input_unit  = "count"
     output_unit = "count"
-    aggregator  = "AVG"
+    aggregator  = "MAX"
     source cloudwatch "db_load" {
       query {
-        aggregator  = "Maximum"
+        aggregator  = "Average"
         namespace   = "AWS/RDS"
         metric_name = "DBLoad"
 
