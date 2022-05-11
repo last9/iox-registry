@@ -24,7 +24,7 @@ ingester aws_efs_cloudwatch module {
 
   data_for_graph_node {
     type = "aws_efs"
-    name = "$input{FileSystemId}-efs"
+    name = "$input{FileSystemId}-$input{FileSystemName}"
   }
 
   using = {
