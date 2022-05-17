@@ -22,7 +22,7 @@ ingester aws_rds_cloudwatch module {
 
   data_for_graph_node {
     type = "rds_database"
-    name = "$input{DBInstanceIdentifier}-db"
+    name = "coalesce_on_interpolation(\"$input{DBInstanceIdentifier}-db-$input{custom_tag}\",\"$input{DBInstanceIdentifier}-db\")"
   }
 
   using = {
