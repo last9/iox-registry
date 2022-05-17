@@ -27,7 +27,7 @@ ingester aws_elasticache_cloudwatch module {
 
   data_for_graph_node {
     type = "elasticache_database"
-    name = "$input{CacheClusterId}-db"
+    name = "coalesce_on_interpolation(\"$input{CacheClusterId}-db-$input{custom_tag}\",\"$input{CacheClusterId}-db\")"
   }
 
   using = {
