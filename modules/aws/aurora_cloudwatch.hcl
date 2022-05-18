@@ -22,7 +22,7 @@ ingester aws_aurora_cloudwatch module {
 
   data_for_graph_node {
     type = "aurora_instance_database"
-    name = "$input{DBInstanceIdentifier}-db"
+    name = "coalesce_on_interpolation(\"$input{DBInstanceIdentifier}-db-$input{custom_tag}\",\"$input{DBInstanceIdentifier}-db\")"
   }
 
   using = {

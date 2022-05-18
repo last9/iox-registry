@@ -22,7 +22,7 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
 
   data_for_graph_node {
     type = "dynamodb_operation"
-    name = "$input{Operation}"
+    name = "coalesce_on_interpolation(\"$input{Operation}-$input{custom_tag}\",\"$input{Operation}\")"
   }
 
   using = {
@@ -32,11 +32,11 @@ ingester aws_dynamodb_table_operation_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        dynamodb_table{$input{tag_filter}}, 'id=TableName'
-      ), "service", "$input{service}"
-    )
+  label_set(
+    label_replace(
+      dynamodb_table{$input{tag_filter}}, 'id=TableName'
+    ), "service", "$input{service}"
+  )
   EOF
 
   gauge "system_errors" {
@@ -144,7 +144,7 @@ ingester aws_dynamodb_table_cloudwatch module {
 
   data_for_graph_node {
     type = "dynamodb"
-    name = "$input{TableName}"
+    name = "coalesce_on_interpolation(\"$input{TableName}-$input{custom_tag}\",\"$input{TableName}\")"
   }
 
   using = {
@@ -154,11 +154,11 @@ ingester aws_dynamodb_table_cloudwatch module {
   inputs = "$input{inputs}"
 
   input_query = <<-EOF
-    label_set(
-      label_replace(
-        dynamodb_table{$input{tag_filter}}, 'id=TableName'
-      ), "service", "$input{service}"
-    )
+  label_set(
+    label_replace(
+      dynamodb_table{$input{tag_filter}}, 'id=TableName'
+    ), "service", "$input{service}"
+  )
   EOF
 
   gauge "rcu" {
