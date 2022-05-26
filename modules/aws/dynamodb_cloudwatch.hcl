@@ -139,7 +139,7 @@ ingester aws_dynamodb_table_cloudwatch module {
 
   physical_component {
     type = "dynamodb"
-    name = "coalesce_on_interpolation(\"$input{TableName}-$input{custom_tag}\",\"$input{TableName}\")"
+    name = "$input{TableName}"
   }
 
   data_for_graph_node {
