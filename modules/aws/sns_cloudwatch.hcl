@@ -10,6 +10,11 @@ ingester aws_sns_cloudwatch module {
     name = "$input{service}"
   }
 
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
   physical_component {
     type = "sns"
     name = "$input{TopicName}"
@@ -107,7 +112,7 @@ ingester aws_sns_cloudwatch module {
   }
 
   gauge "size" {
-    index       = 1
+    index       = 5
     input_unit  = "bytes"
     output_unit = "bytes"
     aggregator  = "AVG"
