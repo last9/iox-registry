@@ -10,6 +10,11 @@ ingester aws_sqs_cloudwatch module {
     name = "$input{service}"
   }
 
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
   physical_component {
     type = "sqs"
     name = "$input{QueueName}"
