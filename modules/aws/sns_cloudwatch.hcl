@@ -10,6 +10,11 @@ ingester aws_sns_cloudwatch module {
     name = "$input{service}"
   }
 
+  label {
+    type = "namespace"
+    name = "$input{namespace}"
+  }
+
   physical_component {
     type = "sns"
     name = "$input{TopicName}"
