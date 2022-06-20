@@ -1,4 +1,4 @@
-ingester aws_elasticache_redis module {
+ingester aws_elasticache module {
   frequency  = 60
   lookback   = 600
   timeout    = 30
@@ -18,7 +18,7 @@ ingester aws_elasticache_redis module {
   }
 
   physical_component {
-    type = "elasticache_cluster"
+    type = "elasticache_physical"
     name = "ELASTICACHE_CLUSTER"
   }
 
@@ -28,7 +28,7 @@ ingester aws_elasticache_redis module {
   }
 
   data_for_graph_node {
-    type = "elasticache_database"
+    type = "elasticache"
     name = "$output{CacheClusterId}"
   }
 
@@ -113,71 +113,8 @@ ingester aws_elasticache_redis module {
     }
   }
 
-  latency "latency_histo" {
-    error_margin = 0.05
-    index        = 6
-    input_unit   = "ms"
-    output_unit  = "ms"
-    aggregator   = "PERCENTILE"
-    multiplier   = 0.001
-
-    source prometheus "throughput" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='throughput',CacheClusterId!='',CacheNodeId!=''})"
-    }
-
-    source prometheus "p50" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p50',CacheClusterId!='',CacheNodeId!=''})"
-    }
-
-    source prometheus "p75" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p75',CacheClusterId!='',CacheNodeId!=''})"
-    }
-
-    source prometheus "p90" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p90',CacheClusterId!='',CacheNodeId!=''})"
-    }
-
-    source prometheus "p99" {
-      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency_histo{le='p99',CacheClusterId!='',CacheNodeId!=''})"
-    }
-  }
-}
-
-ingester aws_elasticache_cluster module {
-  frequency  = 60
-  lookback   = 600
-  timeout    = 30
-  resolution = 60
-  lag        = 60
-
-  inputs = "[]"
-
-  label {
-    type = "service"
-    name = "$output{tag_service}"
-  }
-
-  label {
-    type = "namespace"
-    name = "$output{tag_namespace}"
-  }
-
-  physical_component {
-    type = "elasticache_cluster"
-    name = "ELASTICACHE_CLUSTER"
-  }
-
-  data_for_graph_node {
-    type = "elasticache_cluster_logical"
-    name = "$output{CacheClusterId}"
-  }
-
-  using = {
-    "default" = "$input{using}"
-  }
-
   gauge "replication_lag" {
-    index       = 4
+    index       = 8
     input_unit  = "s"
     output_unit = "s"
     aggregator  = "MAX"
@@ -188,7 +125,7 @@ ingester aws_elasticache_cluster module {
   }
 
   gauge "bytes_out" {
-    index       = 2
+    index       = 9
     input_unit  = "bytes"
     output_unit = "bps"
     aggregator  = "SUM"
@@ -199,7 +136,7 @@ ingester aws_elasticache_cluster module {
   }
 
   gauge "bytes_in" {
-    index       = 3
+    index       = 11
     input_unit  = "bytes"
     output_unit = "bps"
     aggregator  = "SUM"
@@ -210,7 +147,7 @@ ingester aws_elasticache_cluster module {
   }
 
   gauge "cpu_used" {
-    index       = 1
+    index       = 12
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
@@ -221,13 +158,46 @@ ingester aws_elasticache_cluster module {
   }
 
   gauge "memory_used" {
-    index       = 5
+    index       = 13
     input_unit  = "percent"
     output_unit = "percent"
     aggregator  = "AVG"
 
     source prometheus "memory_used" {
       query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (memory_used{CacheClusterId!='',CacheNodeId!=''})"
+    }
+  }
+
+  gauge "latency_min" {
+    index       = 14
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "MIN"
+
+    source prometheus "latency_min" {
+      query = "min by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency{stat='min',CacheClusterId!='',CacheNodeId!=''})"
+    }
+  }
+
+  gauge "latency_avg" {
+    index       = 15
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "AVG"
+
+    source prometheus "latency_avg" {
+      query = "avg by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency{stat='avg',CacheClusterId!='',CacheNodeId!=''})"
+    }
+  }
+
+  gauge "latency_max" {
+    index       = 16
+    input_unit  = "s"
+    output_unit = "s"
+    aggregator  = "MAX"
+
+    source prometheus "latency_max" {
+      query = "max by (CacheClusterId, CacheNodeId, tag_namespace, tag_service) (latency{stat='max',CacheClusterId!='',CacheNodeId!=''})"
     }
   }
 }

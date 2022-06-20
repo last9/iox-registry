@@ -9,7 +9,7 @@ ingester aws_cloudfront module {
     default = "$input{using}"
   }
 
-  inputs = "$input{inputs}"
+  inputs = "[]"
 
   label {
     type = "service"
@@ -18,17 +18,17 @@ ingester aws_cloudfront module {
 
   label {
     type = "namespace"
-    name = "$output{domain}"
+    name = "$output{tag_namespace}"
   }
 
   physical_component {
-    type = "cloudfront_distribution"
-    name = "$input{DistributionId}"
+    type = "cloudfront_distribution_physical"
+    name = "CLOUDFRONT_DISTRIBUTION"
   }
 
   data_for_graph_node {
     type = "cloudfront_distribution"
-    name = "$input{DistributionId}"
+    name = "$output{DistributionId}"
   }
 
   gauge "status_5xx" {
@@ -38,12 +38,7 @@ ingester aws_cloudfront module {
     aggregator  = "SUM"
 
     source prometheus "status_5xx" {
-      query = "sum by (DistributionId, Region, tag_domain, tag_service) (status_5xx)"
-
-      join_on = {
-        "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}"         = "$input{Region}"
-      }
+      query = "sum by (DistributionId, Region, tag_namespace, tag_service) (status_5xx{DistributionId!=''})"
     }
   }
 
@@ -54,12 +49,7 @@ ingester aws_cloudfront module {
     aggregator  = "SUM"
 
     source prometheus "status_4xx" {
-      query = "sum by (DistributionId, Region, tag_domain, tag_service) (status_4xx)"
-
-      join_on = {
-        "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}"         = "$input{Region}"
-      }
+      query = "sum by (DistributionId, Region, tag_namespace, tag_service) (status_4xx{DistributionId!=''})"
     }
   }
 
@@ -70,12 +60,7 @@ ingester aws_cloudfront module {
     aggregator  = "SUM"
 
     source prometheus "bytes_out" {
-      query = "sum by (DistributionId, Region, tag_domain, tag_service) (bytes_out)"
-
-      join_on = {
-        "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}"         = "$input{Region}"
-      }
+      query = "sum by (DistributionId, Region, tag_namespace, tag_service) (bytes_out{DistributionId!=''})"
     }
   }
 
@@ -86,12 +71,7 @@ ingester aws_cloudfront module {
     aggregator  = "SUM"
 
     source prometheus "bytes_in" {
-      query = "sum by (DistributionId, Region, tag_domain, tag_service) (bytes_in)"
-
-      join_on = {
-        "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}"         = "$input{Region}"
-      }
+      query = "sum by (DistributionId, Region, tag_namespace, tag_service) (bytes_in{DistributionId!=''})"
     }
   }
 
@@ -102,12 +82,7 @@ ingester aws_cloudfront module {
     aggregator  = "SUM"
 
     source prometheus "throughput" {
-      query = "sum by (DistributionId, Region, tag_domain, tag_service) (throughput)"
-
-      join_on = {
-        "$output{DistributionId}" = "$input{DistributionId}"
-        "$output{Region}"         = "$input{Region}"
-      }
+      query = "sum by (DistributionId, Region, tag_namespace, tag_service) (throughput{DistributionId!=''})"
     }
   }
 }
