@@ -517,6 +517,110 @@ ingester aws_alb_endpoint_cloudwatch module {
       }
     }
   }
+
+    gauge "new_connections" {
+    index       = 7
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+    source cloudwatch "new_connections" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "NewConnectionCount"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+  gauge "rejected_connections" {
+    index       = 8
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+    source cloudwatch "rejected_connections" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "RejectedConnectionCount"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+  gauge "processed_bytes" {
+    index       = 9
+    input_unit  = "bytes"
+    output_unit = "bytes"
+    aggregator  = "SUM"
+    source cloudwatch "processed_bytes" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "ProcessedBytes"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+  gauge "lcu" {
+    index       = 11
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+    source cloudwatch "lcu" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "ConsumedLCUs"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+    gauge lb_5xx {
+    index       = 12
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+    source cloudwatch "lb_500" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "HTTPCode_ELB_5XX_Count"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+
+  gauge lb_4xx {
+    index       = 13
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+    source cloudwatch "lb_400" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "HTTPCode_ELB_4XX_Count"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
 }
 
 ingester aws_alb_tg_cloudwatch module {
@@ -1100,11 +1204,11 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
     }
   }
   latency "latency_histo" {
-    error_margin = 0.05
     index        = 6
     input_unit   = "ms"
     output_unit  = "ms"
     aggregator   = "PERCENTILE"
+    error_margin = 0.05
     source cloudwatch "throughput" {
       query {
         aggregator  = "Sum"
@@ -1252,6 +1356,110 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/ApplicationELB"
         metric_name = "HTTPCode_Target_2XX_Count"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+
+    gauge "new_connections" {
+    index       = 7
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+    source cloudwatch "new_connections" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "NewConnectionCount"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+  gauge "rejected_connections" {
+    index       = 8
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+    source cloudwatch "rejected_connections" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "RejectedConnectionCount"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+  gauge "processed_bytes" {
+    index       = 9
+    input_unit  = "bytes"
+    output_unit = "bytes"
+    aggregator  = "SUM"
+    source cloudwatch "processed_bytes" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "ProcessedBytes"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+  gauge "lcu" {
+    index       = 11
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+    source cloudwatch "lcu" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "ConsumedLCUs"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+    gauge lb_5xx {
+    index       = 12
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+    source cloudwatch "lb_500" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "HTTPCode_ELB_5XX_Count"
+
+        dimensions = {
+          "LoadBalancer" = "$input{LoadBalancer}"
+        }
+      }
+    }
+  }
+
+  gauge lb_4xx {
+    index       = 13
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+    source cloudwatch "lb_400" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "HTTPCode_ELB_4XX_Count"
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}"
