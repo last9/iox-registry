@@ -518,7 +518,7 @@ ingester aws_alb_endpoint_cloudwatch module {
     }
   }
 
-    gauge "new_connections" {
+  gauge "new_connections" {
     index       = 7
     input_unit  = "count"
     output_unit = "count"
@@ -586,7 +586,7 @@ ingester aws_alb_endpoint_cloudwatch module {
       }
     }
   }
-    gauge lb_5xx {
+  gauge lb_5xx {
     index       = 12
     input_unit  = "count"
     output_unit = "count"
@@ -1364,7 +1364,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
     }
   }
 
-    gauge "new_connections" {
+  gauge "new_connections" {
     index       = 7
     input_unit  = "count"
     output_unit = "count"
@@ -1432,7 +1432,7 @@ ingester aws_alb_internal_endpoint_cloudwatch module {
       }
     }
   }
-    gauge lb_5xx {
+  gauge lb_5xx {
     index       = 12
     input_unit  = "count"
     output_unit = "count"
