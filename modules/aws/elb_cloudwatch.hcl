@@ -755,6 +755,41 @@ ingester aws_elb_endpoint_cloudwatch module {
       }
     }
   }
+
+  gauge lb_5xx {
+    index       = 8
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+    source cloudwatch "lb_500" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ELB"
+        metric_name = "HTTPCode_ELB_5XX"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+  gauge lb_4xx {
+    index       = 7
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+    source cloudwatch "lb_400" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ELB"
+        metric_name = "HTTPCode_ELB_4XX"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
 }
 
 ingester aws_elb_internal_endpoint_cloudwatch module {
@@ -954,6 +989,40 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
         aggregator  = "Sum"
         namespace   = "AWS/ELB"
         metric_name = "HTTPCode_Backend_2XX"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+  gauge lb_5xx {
+    index       = 8
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+    source cloudwatch "lb_500" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ELB"
+        metric_name = "HTTPCode_ELB_5XX"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+  gauge lb_4xx {
+    index       = 7
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+    source cloudwatch "lb_400" {
+      query {
+        aggregator  = "Sum"
+        namespace   = "AWS/ELB"
+        metric_name = "HTTPCode_ELB_4XX"
 
         dimensions = {
           "LoadBalancerName" = "$input{LoadBalancerName}"
