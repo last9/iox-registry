@@ -193,4 +193,18 @@ ingester prometheus_linkerd_grpc_path module {
     }
   }
 
+  gauge "errors" {
+    index       = 2
+    input_unit  = "count"
+    output_unit = "count"
+    aggregator  = "SUM"
+
+    source prometheus "errors" {
+      query = "label_replace(sum by (cluster, workload_ns, dst, rt_route) (increase(route_response_total{grpc_status!='0', direction='outbound', dst=~'.*svc.cluster.local.*', rt_route!~'.*/.*|^$', cluster='$input{cluster}'}[1m])), 'service', '$1', 'dst', '([a-zA-Z0-9-]*){1}.([a-zA-Z-.]*):.*')"
+      join_on = {
+        "$output{cluster}" = "$input{cluster}"
+      }
+    }
+  }
+
 }
