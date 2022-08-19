@@ -27,7 +27,7 @@ ingester aws_dax_cloudwatch module {
 
   data_for_graph_node {
     type = "dax"
-    name = "$input{ClusterId}-dax"
+    name = "coalesce_on_interpolation(\"$input{ClusterId}-$input{custom_tag}\",\"$input{ClusterId}\")""
   }
 
   using = {
