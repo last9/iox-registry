@@ -37,7 +37,7 @@ ingester aws_ec2_cloudwatch module {
 
   data_for_graph_node {
     type = "ec2_instance"
-    name = "$input{InstanceId}"
+    name = "coalesce_on_interpolation(\"$input{InstanceId}-$input{custom_tag}\",\"$input{InstanceId}\")"
   }
 
   gauge "cpu" {
