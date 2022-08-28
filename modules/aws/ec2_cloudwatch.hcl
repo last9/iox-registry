@@ -32,7 +32,7 @@ ingester aws_ec2_cloudwatch module {
 
   physical_component {
     type = "ec2_instance"
-    name = "$input{InstanceId}"
+    name = "coalesce_on_interpolation(\"$input{InstanceId}-$input{custom_tag}\",\"$input{InstanceId}\")"
   }
 
   data_for_graph_node {
