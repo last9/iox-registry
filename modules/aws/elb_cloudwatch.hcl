@@ -194,6 +194,42 @@ ingester aws_elb_cloudwatch module {
       }
     }
   }
+
+  gauge "latency_min" {
+    index       = 14
+    input_unit  = "s"
+    output_unit = "ms"
+    aggregator  = "MIN"
+    source cloudwatch "latency_min" {
+      query {
+        aggregator  = "Minimum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+  gauge "latency_max" {
+    index       = 15
+    input_unit  = "s"
+    output_unit = "ms"
+    aggregator  = "MAX"
+    source cloudwatch "latency_max" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+
   latency "latency_histo" {
     index        = 6
     input_unit   = "ms"
@@ -471,6 +507,42 @@ ingester aws_elb_internal_cloudwatch module {
       }
     }
   }
+
+  gauge "latency_min" {
+    index       = 14
+    input_unit  = "s"
+    output_unit = "ms"
+    aggregator  = "MIN"
+    source cloudwatch "latency_min" {
+      query {
+        aggregator  = "Minimum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+  gauge "latency_max" {
+    index       = 15
+    input_unit  = "s"
+    output_unit = "ms"
+    aggregator  = "MAX"
+    source cloudwatch "latency_max" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+
   latency "latency_histo" {
     index        = 6
     input_unit   = "ms"
@@ -609,6 +681,42 @@ ingester aws_elb_endpoint_cloudwatch module {
       }
     }
   }
+
+  gauge "latency_min" {
+    index       = 14
+    input_unit  = "s"
+    output_unit = "ms"
+    aggregator  = "MIN"
+    source cloudwatch "latency_min" {
+      query {
+        aggregator  = "Minimum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+  gauge "latency_max" {
+    index       = 15
+    input_unit  = "s"
+    output_unit = "ms"
+    aggregator  = "MAX"
+    source cloudwatch "latency_max" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+
   latency "latency_histo" {
     index        = 6
     input_unit   = "ms"
@@ -850,6 +958,42 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
       }
     }
   }
+
+  gauge "latency_min" {
+    index       = 14
+    input_unit  = "s"
+    output_unit = "ms"
+    aggregator  = "MIN"
+    source cloudwatch "latency_min" {
+      query {
+        aggregator  = "Minimum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+  gauge "latency_max" {
+    index       = 15
+    input_unit  = "s"
+    output_unit = "ms"
+    aggregator  = "MAX"
+    source cloudwatch "latency_max" {
+      query {
+        aggregator  = "Maximum"
+        namespace   = "AWS/ApplicationELB"
+        metric_name = "TargetResponseTime"
+
+        dimensions = {
+          "LoadBalancerName" = "$input{LoadBalancerName}"
+        }
+      }
+    }
+  }
+
   latency "latency_histo" {
     index        = 6
     input_unit   = "ms"
