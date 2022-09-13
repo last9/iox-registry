@@ -203,8 +203,8 @@ ingester aws_elb_cloudwatch module {
     source cloudwatch "latency_max" {
       query {
         aggregator  = "p99"
-        namespace   = "AWS/ApplicationELB"
-        metric_name = "TargetResponseTime"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
 
         dimensions = {
           "LoadBalancerName" = "$input{LoadBalancerName}"
@@ -499,8 +499,8 @@ ingester aws_elb_internal_cloudwatch module {
     source cloudwatch "latency_max" {
       query {
         aggregator  = "p99"
-        namespace   = "AWS/ApplicationELB"
-        metric_name = "TargetResponseTime"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
 
         dimensions = {
           "LoadBalancerName" = "$input{LoadBalancerName}"
@@ -656,8 +656,8 @@ ingester aws_elb_endpoint_cloudwatch module {
     source cloudwatch "latency_max" {
       query {
         aggregator  = "p99"
-        namespace   = "AWS/ApplicationELB"
-        metric_name = "TargetResponseTime"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
 
         dimensions = {
           "LoadBalancerName" = "$input{LoadBalancerName}"
@@ -916,8 +916,8 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
     source cloudwatch "latency_max" {
       query {
         aggregator  = "p99"
-        namespace   = "AWS/ApplicationELB"
-        metric_name = "TargetResponseTime"
+        namespace   = "AWS/ELB"
+        metric_name = "Latency"
 
         dimensions = {
           "LoadBalancerName" = "$input{LoadBalancerName}"
