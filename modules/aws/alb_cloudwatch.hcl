@@ -27,7 +27,7 @@ ingester aws_alb_cloudwatch module {
 
   physical_component {
     type = "alb"
-    name = "coalesce_on_interpolation(\"$input{LoadBalancer}-$input{custom_tag}\",\"$input{LoadBalancer}\")"
+    name = "$input{LoadBalancer}"
   }
 
   data_for_graph_node {
