@@ -341,7 +341,6 @@ ingester aws_elasticache_cloudwatch module {
 
   gauge "SetTypeCmdsLatency_p99" {
     index       = 14
-    input_unit  = "s"
     input_unit  = "ms"
     output_unit = "ms"
     aggregator  = "MAX"
