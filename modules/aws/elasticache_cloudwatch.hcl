@@ -272,13 +272,13 @@ ingester aws_elasticache_cloudwatch module {
     }
   }
 
-  gauge "SetTypeCmdsLatency_p99" {
+  gauge "set_type_cmds_latency_p99" {
     index       = 14
     input_unit  = "ms"
     output_unit = "ms"
     aggregator  = "MAX"
 
-    source cloudwatch "SetTypeCmdsLatency_p99" {
+    source cloudwatch "set_type_cmds_latency_p99" {
       query {
         aggregator  = "p99"
         namespace   = "AWS/ElastiCache"
