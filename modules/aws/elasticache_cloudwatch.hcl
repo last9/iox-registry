@@ -176,73 +176,6 @@ ingester aws_elasticache_cloudwatch module {
     }
   }
 
-  latency "latency_histo" {
-    error_margin = 0.05
-    index        = 6
-    input_unit   = "ms"
-    output_unit  = "ms"
-    aggregator   = "PERCENTILE"
-    multiplier   = 0.001
-    source cloudwatch "throughput" {
-      query {
-        aggregator  = "Sum"
-        namespace   = "AWS/ElastiCache"
-        metric_name = "SetTypeCmds"
-        dimensions = {
-          CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "0001"
-        }
-      }
-    }
-
-    source cloudwatch "p50" {
-      query {
-        aggregator  = "p50"
-        namespace   = "AWS/ElastiCache"
-        metric_name = "SetTypeCmdsLatency"
-        dimensions = {
-          CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "0001"
-        }
-      }
-    }
-
-    source cloudwatch "p75" {
-      query {
-        aggregator  = "p75"
-        namespace   = "AWS/ElastiCache"
-        metric_name = "SetTypeCmdsLatency"
-        dimensions = {
-          CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "0001"
-        }
-      }
-    }
-
-    source cloudwatch "p90" {
-      query {
-        aggregator  = "p90"
-        namespace   = "AWS/ElastiCache"
-        metric_name = "SetTypeCmdsLatency"
-        dimensions = {
-          CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "0001"
-        }
-      }
-    }
-
-    source cloudwatch "p99" {
-      query {
-        aggregator  = "p99"
-        namespace   = "AWS/ElastiCache"
-        metric_name = "SetTypeCmdsLatency"
-        dimensions = {
-          CacheClusterId = "$input{CacheClusterId}"
-          CacheNodeId    = "0001"
-        }
-      }
-    }
-  }
 
   gauge "replication_lag" {
     index       = 8
@@ -344,7 +277,6 @@ ingester aws_elasticache_cloudwatch module {
     input_unit  = "ms"
     output_unit = "ms"
     aggregator  = "MAX"
-    multiplier  = 0.001
 
     source cloudwatch "SetTypeCmdsLatency_p99" {
       query {
