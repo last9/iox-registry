@@ -338,4 +338,25 @@ ingester aws_elasticache_cloudwatch module {
       }
     }
   }
+
+  gauge "SetTypeCmdsLatency_p99" {
+    index       = 14
+    input_unit  = "s"
+    input_unit  = "ms"
+    output_unit = "ms"
+    aggregator  = "MAX"
+    multiplier  = 0.001
+
+    source cloudwatch "SetTypeCmdsLatency_p99" {
+      query {
+        aggregator  = "p99"
+        namespace   = "AWS/ElastiCache"
+        metric_name = "SetTypeCmdsLatency"
+        dimensions = {
+          CacheClusterId = "$input{CacheClusterId}"
+          CacheNodeId    = "0001"
+        }
+      }
+    }
+  }
 }
