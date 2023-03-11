@@ -744,23 +744,25 @@ ingester aws_elb_endpoint_cloudwatch module {
       }
     }
   }
-  status_histo status_5xx {
-    index       = 5
+  gauge "status_5xx" {
+    index       = 16
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
+
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ELB"
-        metric_name = "HTTPCode_Backend_5XX"
+        metric_name = "HTTPCode_Backend_4XX"
 
         dimensions = {
-          "LoadBalancerName" = "$input{LoadBalancerName}"
+          "LoadBalancer" = "$input{LoadBalancer}"
         }
       }
     }
   }
+
   status_histo status_4xx {
     index       = 4
     input_unit  = "count"
@@ -1004,23 +1006,25 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
       }
     }
   }
-  status_histo status_5xx {
-    index       = 5
+  gauge "status_5xx" {
+    index       = 16
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
+
     source cloudwatch "status_500" {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ELB"
-        metric_name = "HTTPCode_Backend_5XX"
+        metric_name = "HTTPCode_Backend_4XX"
 
         dimensions = {
-          "LoadBalancerName" = "$input{LoadBalancerName}"
+          "LoadBalancer" = "$input{LoadBalancer}"
         }
       }
     }
   }
+
   status_histo status_4xx {
     index       = 4
     input_unit  = "count"
