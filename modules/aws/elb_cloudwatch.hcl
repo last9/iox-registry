@@ -757,7 +757,7 @@ ingester aws_elb_endpoint_cloudwatch module {
         metric_name = "HTTPCode_Backend_5XX"
 
         dimensions = {
-          "LoadBalancer" = "$input{LoadBalancer}"
+          "LoadBalancerName" = "$input{LoadBalancerName}"
         }
       }
     }
@@ -1019,7 +1019,7 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
         metric_name = "HTTPCode_Backend_5XX"
 
         dimensions = {
-          "LoadBalancer" = "$input{LoadBalancer}"
+          "LoadBalancerName" = "$input{LoadBalancerName}"
         }
       }
     }
