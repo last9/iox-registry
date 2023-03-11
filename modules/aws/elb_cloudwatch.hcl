@@ -754,7 +754,7 @@ ingester aws_elb_endpoint_cloudwatch module {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ELB"
-        metric_name = "HTTPCode_Backend_4XX"
+        metric_name = "HTTPCode_Backend_5XX"
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}"
@@ -1016,7 +1016,7 @@ ingester aws_elb_internal_endpoint_cloudwatch module {
       query {
         aggregator  = "Sum"
         namespace   = "AWS/ELB"
-        metric_name = "HTTPCode_Backend_4XX"
+        metric_name = "HTTPCode_Backend_5XX"
 
         dimensions = {
           "LoadBalancer" = "$input{LoadBalancer}"
