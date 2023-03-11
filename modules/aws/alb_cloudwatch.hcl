@@ -125,7 +125,7 @@ ingester aws_alb_cloudwatch module {
     }
   }
 
-  gauge status_5xx {
+  gauge "status_5xx" {
     index       = 16
     input_unit  = "count"
     output_unit = "count"
@@ -472,8 +472,8 @@ ingester aws_alb_endpoint_cloudwatch module {
       }
     }
   }
-  status_histo status_5xx {
-    index       = 5
+  gauge "status_5xx" {
+    index       = 16
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
@@ -490,6 +490,7 @@ ingester aws_alb_endpoint_cloudwatch module {
       }
     }
   }
+
   status_histo status_4xx {
     index       = 4
     input_unit  = "count"
