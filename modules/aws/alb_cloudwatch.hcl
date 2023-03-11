@@ -125,8 +125,8 @@ ingester aws_alb_cloudwatch module {
     }
   }
 
-  status_histo status_5xx {
-    index       = 5
+  gauge status_5xx {
+    index       = 16
     input_unit  = "count"
     output_unit = "count"
     aggregator  = "SUM"
