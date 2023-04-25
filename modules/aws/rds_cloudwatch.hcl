@@ -116,7 +116,7 @@ ingester aws_rds_cloudwatch module {
 
   gauge "read_latency" {
     index       = 4
-    input_unit  = "s"
+    input_unit  = "ms"
     output_unit = "ms"
     aggregator  = "AVG"
     source cloudwatch "read_latency" {
